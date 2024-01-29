@@ -1,0 +1,112 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "#Tiles": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 409,
+                "y": 302
+            }
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx#Tiles": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx#Tiles2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx#noBKG_KnightShield_strip": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype2.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 239.99999999999997,
+                "y": 154.66666666666669
+            }
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype2.tmx#Tiles": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype2.tmx#Tiles2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tmx": {
+            "scale": 2.0425,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.39167686658507,
+                "y": 136.1077111383109
+            }
+        },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tmx#Tiles": {
+            "scaleInDock": 1
+        },
+        "MapTiled.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 2,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 474,
+                "y": 204
+            }
+        },
+        "MapTiled.tmx#Tiles": {
+            "scaleInDock": 1
+        },
+        "game.tmj": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 1.02125,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 413.219094247246,
+                "y": 319.2166462668298
+            }
+        },
+        "game.tmj#Background": {
+            "scaleInDock": 1
+        },
+        "game.tmj#Sci-Fi-Tiles": {
+            "scaleInDock": 1
+        },
+        "game.tmj#Sci-Fi-Tiles2": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/mmp2a/MMP2a/Assets/Textures",
+    "map.height": 68,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 120,
+    "openFiles": [
+    ],
+    "project": "Map.tiled-project",
+    "recentFiles": [
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx",
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype2.tmx",
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
