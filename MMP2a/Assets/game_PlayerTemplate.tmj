@@ -60,9 +60,19 @@
                          "value":false
                         }, 
                         {
+                         "name":"AttackButton",
+                         "type":"string",
+                         "value":"Q"
+                        }, 
+                        {
                          "name":"Damage",
                          "type":"int",
                          "value":25
+                        }, 
+                        {
+                         "name":"DodgeButton",
+                         "type":"string",
+                         "value":"Space"
                         }, 
                         {
                          "name":"Health",

@@ -41,7 +41,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	for (auto& go : gameObjects)
 	{
 		go->init();
-		
+
 		for (auto& renderCPs : go->getComponentsOfType<RenderCP>()) 
 		{
 			RenderManager::getInstance().addToLayers(renderCPs);
@@ -71,18 +71,21 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
+	auto removeCondition = [](const std::shared_ptr<GameObject>& go) {
+		auto stats = go->getComponentsOfType<StatsCP>();
+		if (stats.size() > 0)
+		{
+			return stats.at(0)->getHealth() <= 0;
+		}
+		return false;
+	};
+
+	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GELÖSCHT
+
 	for (auto& go : gameObjects)
 	{
 		go->update(deltaTime);
-		/*
-		if (go->getId().find("Player1") != std::string::npos)
-		{
-			std::cout << "Player Pos: " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().x << ", " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().y << std::endl;
-		}
-		*/
 	}
-
-	//checkAreaBorders();
 
 	checkPlayerLayer();
 
