@@ -6,7 +6,7 @@
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="625" columns="25">
   <image source="Textures/Tiles.png" width="400" height="400"/>
  </tileset>
- <layer id="1" name="Background" width="60" height="34" visible="0" locked="1">
+ <layer id="1" name="Background" width="60" height="34" locked="1">
   <properties>
    <property name="LayerNr" type="int" value="0"/>
   </properties>
@@ -88,7 +88,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,260,0,0,0,0,0,0,240,260,2147483908,240,0,0,0,0,0,0,2147483908,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="GameObjects" visible="0" locked="1">
+ <objectgroup id="3" name="GameObjects" locked="1">
   <properties>
    <property name="LayerNr" type="int" value="2"/>
   </properties>
@@ -143,7 +143,7 @@
    <polygon points="-2,3 318,3 318,-45 638,-45 638,3 766,3 958,3 958,-125 -2,-125"/>
   </object>
  </objectgroup>
- <layer id="4" name="Top" width="60" height="34" visible="0" locked="1">
+ <layer id="4" name="Top" width="60" height="34" locked="1">
   <properties>
    <property name="LayerNr" type="int" value="3"/>
   </properties>

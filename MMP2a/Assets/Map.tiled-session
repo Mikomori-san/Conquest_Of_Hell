@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "MapTiled.tmx",
+    "activeFile": "game.tmj",
     "expandedProjectPaths": [
     ],
     "fileStates": {
@@ -104,11 +104,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1.5,
-            "selectedLayer": 1,
+            "scale": 5.5,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 464.33333333333337,
-                "y": 368
+                "x": 490.3636363636364,
+                "y": 321.4545454545455
             }
         },
         "MapTiled.tmx#Tiles": {
