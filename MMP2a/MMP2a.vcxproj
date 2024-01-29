@@ -169,6 +169,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\CameraCP.h" />
     <ClInclude Include="Components\DecisionHandlerCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
+    <ClInclude Include="Enums\AnimationtypeBoss.h" />
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Manager\PhysicsManager.h" />
     <ClInclude Include="Manifold.h" />

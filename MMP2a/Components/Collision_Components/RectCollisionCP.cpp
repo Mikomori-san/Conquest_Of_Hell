@@ -16,21 +16,34 @@ void RectCollisionCP::update(float deltaTime)
 
         if (go->getComponentsOfType<GraphicsCP>().size() != 0)
         {
-            ani = go->getComponentsOfType<GraphicsCP>().at(0);
-            collisionRect = sf::FloatRect(
-                transf->getPosition().x,
-                transf->getPosition().y,
-                ani->getSprite().getGlobalBounds().width,
-                ani->getSprite().getGlobalBounds().height
-            );
+            if (!Component::componentId.find("BossAttackRange"))
+            {
+                ani = go->getComponentsOfType<GraphicsCP>().at(0);
+                collisionRect = sf::FloatRect(
+                    transf->getPosition().x - ani->getSprite().getGlobalBounds().width,
+                    transf->getPosition().y - ani->getSprite().getGlobalBounds().height,
+                    ani->getSprite().getGlobalBounds().width * 3,
+                    ani->getSprite().getGlobalBounds().height * 3
+                );
+            }
+            else
+            {
+                ani = go->getComponentsOfType<GraphicsCP>().at(0);
+                collisionRect = sf::FloatRect(
+                    transf->getPosition().x,
+                    transf->getPosition().y,
+                    ani->getSprite().getGlobalBounds().width * scale,
+                    ani->getSprite().getGlobalBounds().height * scale
+                );
+            }
         }
         else
         {
             collisionRect = sf::FloatRect(
                 transf->getPosition().x,
                 transf->getPosition().y,
-                colliderSize.x,
-                colliderSize.y
+                colliderSize.x * scale,
+                colliderSize.y * scale
             );
         }
     }

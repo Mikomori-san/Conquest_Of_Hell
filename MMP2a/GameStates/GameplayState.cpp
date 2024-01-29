@@ -32,7 +32,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	spriteSheetCounts["Player2"] = { 6, 6, 6, 6, 6, 6, 6, 6 };
 	spriteSheetCounts["Impostor"] = { 6, 6, 6, 6, 6, 6, 6, 6 };
 	spriteSheetCounts["Crawler"] = { 1, 1, 1, 1, 4, 4, 4, 4 };
-
+	spriteSheetCounts["Boss"] = { 4,6,5,9,6,7,2,7 };
 	loadMap("game.tmj", sf::Vector2f());
 	
 	currentLayer = 0;
@@ -234,6 +234,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
+			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
+			{
+				createBoss(object, group);
+			}
 		}
 	}
 
@@ -386,7 +390,7 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<RectCollisionCP> boundaryCollisionCP = std::make_shared<RectCollisionCP>(boundaryTemp, "BoundaryCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(),1
 	);
 	boundaryTemp->addComponent(boundaryCollisionCP);
 	
@@ -451,7 +455,7 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 		sf::Vector2f(enemyGraphicsCP->getSprite().getTextureRect().getSize().x,
 			enemyGraphicsCP->getSprite().getTextureRect().getSize().y
 		),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 1
 	);
 	enemyTemp->addComponent(enemyCollisionCP);
 
@@ -504,7 +508,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	
 	std::shared_ptr<RectCollisionCP> playerCollisionCP = std::make_shared<RectCollisionCP>(playerTemp, "PlayerCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 1
 	);
 	playerTemp->addComponent(playerCollisionCP);
 	
@@ -538,4 +542,73 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	playerTemp->addComponent(playerStats);
 
 	gameObjects.push_back(playerTemp);
+}
+
+void GameplayState::createBoss(tson::Object& object, tson::Layer group)
+{
+	int idNr = object.getProp("BossNr")->getValue<int>();
+	std::string stringId = object.getProp("BossName")->getValue<std::string>();
+	stringId += '0' + idNr;
+
+	std::shared_ptr<GameObject> bossTemp = std::make_shared<GameObject>(stringId);
+
+	const int ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
+
+	std::string texName = "";
+
+	if (bossTemp->getId().find("Boss") != std::string::npos)
+	{
+		texName = "BossTexture";
+	}
+
+	if (!AssetManager::getInstance().Textures[texName])
+	{
+		AssetManager::getInstance().loadTexture(texName, object.getProp("BossTexture")->getValue<std::string>());
+	}
+	Animationtype aniType;
+	if (bossTemp->getId().find("Boss") != std::string::npos)
+	{
+		aniType = Animationtype::Right; //might need change
+	}
+	std::shared_ptr<AnimatedGraphicsCP> bossGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
+		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], ANIMATION_SPEED, aniType
+	);
+
+	bossTemp->addComponent(bossGraphicsCP);
+
+	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
+	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
+
+	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(bossTemp, "BossTransformationCP", pos, object.getRotation(), object.getSize().x);
+	transCP->setOriginalVelocity(VELOCITY);
+	transCP->setBackupVel();
+
+	bossTemp->addComponent(transCP);
+
+	std::shared_ptr<RectCollisionCP> bossCollisionCP = std::make_shared<RectCollisionCP>(bossTemp, "BossCollisionCP",
+		sf::Vector2f(bossGraphicsCP->getSprite().getTextureRect().getSize().x,
+			bossGraphicsCP->getSprite().getTextureRect().getSize().y
+		),
+		object.getProp("isTrigger")->getValue<bool>(),1
+	);
+	bossTemp->addComponent(bossCollisionCP);
+	std::shared_ptr<RectCollisionCP> bossAttackRange = std::make_shared<RectCollisionCP>(bossTemp, "BossAttackRange", sf::Vector2f(bossGraphicsCP->getSprite().getTextureRect().getSize().x,
+		bossGraphicsCP->getSprite().getTextureRect().getSize().y), object.getProp("isTrigger")->getValue<bool>(), 4);
+	bossTemp->addComponent(bossAttackRange);
+
+	float mass = object.getProp("Mass")->getValue<float>();
+	std::shared_ptr<RigidBodyCP> bossRigidBodyCP = std::make_shared<RigidBodyCP>(bossTemp, "BossRigidBodyCP", mass, mass == 0.f ? 0.f : 1.f / mass,
+		transCP->getDirection() * transCP->getVelocity()
+	);
+	bossTemp->addComponent(bossRigidBodyCP);
+
+	std::shared_ptr<SpriteRenderCP> bossRenderCP = std::make_shared<SpriteRenderCP>(bossTemp, "BossRenderCP", window, group.getProp("LayerNr")->getValue<int>());
+	bossTemp->addComponent(bossRenderCP);
+
+	int hp = object.getProp("Health")->getValue<int>();
+	std::shared_ptr<StatsCP> bossStats = std::make_shared<StatsCP>(bossTemp, "BossStatsCP", hp, 25, "Boss");
+	//enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
+	bossTemp->addComponent(bossStats);
+
+	gameObjects.push_back(bossTemp);
 }

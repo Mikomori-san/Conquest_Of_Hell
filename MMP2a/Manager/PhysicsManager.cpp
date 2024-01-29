@@ -2,6 +2,7 @@
 #include "PhysicsManager.h"
 #include "../Components/Collision_Components/RectCollisionCP.h"
 #include "../Components/Collision_Components/RigidBodyCP.h"
+#include "../Components/StatsCP.h"
 #include <iostream>
 
 void positionalCorrection(Manifold& man)
@@ -119,6 +120,20 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 manifold->penetration = penetration;
 
                 manifolds.push_back(manifold);
+            }
+
+            if (body1->getId().find("Player") != std::string::npos && body2->getId().find("Boss") != std::string::npos)
+            {
+                std::shared_ptr<RectCollisionCP> attackRange = body2->getComponentsOfType<RectCollisionCP>().at(0)->getComponentId().find("BossAttackRange") ? body2->getComponentsOfType<RectCollisionCP>().at(1) : body2->getComponentsOfType<RectCollisionCP>().at(0);
+                if (aabbVsAabb(c1->getCollisionRect(), attackRange->getCollisionRect(), normal, penetration))
+                {
+                    std::cout << "Damage" << std::endl;
+                    int damage = body2->getComponentsOfType<StatsCP>().at(0)->getDamage();
+                    //if(boss->ani->getFrame() == AttackFrame && player->hasIFrame())
+                    //{
+                        body1->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(damage);
+                    //}
+                }
             }
         }
     }

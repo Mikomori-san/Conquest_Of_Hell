@@ -47,7 +47,7 @@ void ControllerCP::update(float deltaTime)
 		}
 		else if (nearestDistance < 500)
 		{
-			std::cout << "Near Player" << std::endl;
+			//std::cout << "Near Player" << std::endl;
 			if (!std::dynamic_pointer_cast<AttackPlayerState>(currentState))
 			{
 				currentState = std::make_shared<AttackPlayerState>(gameObject, nearestPlayer);
@@ -66,7 +66,7 @@ void ControllerCP::update(float deltaTime)
 				currentState->init();
 			}
 		}
-		std::cout << nearestDistance << std::endl;
+		//std::cout << nearestDistance << std::endl;
 	}
 
  	currentState->update(deltaTime);
