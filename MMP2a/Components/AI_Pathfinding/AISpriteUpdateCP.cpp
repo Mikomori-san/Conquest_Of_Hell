@@ -12,65 +12,139 @@ void AISpriteUpdateCP::update(float deltaTime)
         std::shared_ptr<TransformationCP> trans = go->getComponentsOfType<TransformationCP>().at(0);
 
         sf::Vector2f dir = trans->getDirection();
+        float speed = trans->getVelocity();
 
         if (dir.x > 0 && dir.x < 1 && dir.y < 0 && dir.y > -1)
         {
             if (abs(dir.x) > abs(dir.y) && abs(dir.y) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Right);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::RightIdle);
+                    lastAnimation = Player_Animationtype::RightIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Right);
+                    lastAnimation = Player_Animationtype::Right;
+                }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Up);
+                ani->setAnimationType(lastAnimation);
             }
             else
             {
-                ani->setAnimationType(Animationtype::UpRight);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::RightIdle);
+                    lastAnimation = Player_Animationtype::RightIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Right);
+                    lastAnimation = Player_Animationtype::Right;
+                }
             }
         }
         else if (dir.x > 0 && dir.x < 1 && dir.y > 0 && dir.y < 1)
         {
             if (abs(dir.x) > abs(dir.y) && abs(dir.y) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Right);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::RightIdle);
+                    lastAnimation = Player_Animationtype::RightIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Right);
+                    lastAnimation = Player_Animationtype::Right;
+                }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Down);
+                ani->setAnimationType(lastAnimation);
             }
             else
             {
-                ani->setAnimationType(Animationtype::RightDown);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::RightIdle);
+                    lastAnimation = Player_Animationtype::RightIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Right);
+                    lastAnimation = Player_Animationtype::Right;
+                }
             }
         }
         else if (dir.x < 0 && dir.x > -1 && dir.y > 0 && dir.y < 1)
         {
             if (abs(dir.x) > abs(dir.y) && abs(dir.y) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Left);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::LeftIdle);
+                    lastAnimation = Player_Animationtype::LeftIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Left);
+                    lastAnimation = Player_Animationtype::Left;
+                }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Down);
+                ani->setAnimationType(lastAnimation);
             }
             else
             {
-                ani->setAnimationType(Animationtype::DownLeft);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::LeftIdle);
+                    lastAnimation = Player_Animationtype::LeftIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Left);
+                    lastAnimation = Player_Animationtype::Left;
+                }
             }
         }
         else if (dir.x < 0 && dir.x > -1 && dir.y < 0 && dir.y > -1)
         {
             if (abs(dir.x) > abs(dir.y) && abs(dir.y) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Left);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::LeftIdle);
+                    lastAnimation = Player_Animationtype::LeftIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Left);
+                    lastAnimation = Player_Animationtype::Left;
+                }
+
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(Animationtype::Up);
+                ani->setAnimationType(lastAnimation);
             }
             else
             {
-                ani->setAnimationType(Animationtype::LeftUp);
+                if (speed == 0)
+                {
+                    ani->setAnimationType(Player_Animationtype::LeftIdle);
+                    lastAnimation = Player_Animationtype::LeftIdle;
+                }
+                else
+                {
+                    ani->setAnimationType(Player_Animationtype::Left);
+                    lastAnimation = Player_Animationtype::Left;
+                }
             }
         }
     }

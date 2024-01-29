@@ -12,4 +12,7 @@ public:
 	void init() override;
 
 	void handleMovement(Direction dir, sf::Vector2f dirVec, float vel);
+	void handleIdle(Direction dir);
+private:
+
 };

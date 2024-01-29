@@ -19,6 +19,7 @@
 #include "../Components/AI_Pathfinding/SteeringCP.h"
 #include "../Components/AI_Pathfinding/AISpriteUpdateCP.h"
 #include "../Components/AI_Pathfinding/AStarCP.h"
+#include "../Components/Player_Components/DashCP.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -28,12 +29,11 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 
 	DebugDraw::getInstance().initialize(*window);
 
-	spriteSheetCounts["Player1"] = { 6, 6, 6, 6, 6, 6, 6, 6 };
-	spriteSheetCounts["Player2"] = { 6, 6, 6, 6, 6, 6, 6, 6 };
-	spriteSheetCounts["Impostor"] = { 6, 6, 6, 6, 6, 6, 6, 6 };
-	spriteSheetCounts["Crawler"] = { 1, 1, 1, 1, 4, 4, 4, 4 };
+	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
+	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
 
-	loadMap("game.tmj", sf::Vector2f());
+
+	loadMap("game_PlayerTemplate.tmj", sf::Vector2f());
 	
 	currentLayer = 0;
 	std::cout << "Current Layer: " << currentLayer << std::endl;
@@ -423,14 +423,14 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 	{
 		AssetManager::getInstance().loadTexture(texName, object.getProp("EnemyTexture")->getValue<std::string>());
 	}
-	Animationtype aniType;
+	Player_Animationtype aniType;
 	if (enemyTemp->getId().find("Impostor") != std::string::npos)
 	{
-		aniType = Animationtype::Right;
+		aniType = Player_Animationtype::Right;
 	}
 	else if (enemyTemp->getId().find("Crawler") != std::string::npos)
 	{
-		aniType = Animationtype::LeftUp;
+		aniType = Player_Animationtype::Left;
 	}
 	std::shared_ptr<AnimatedGraphicsCP> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
 		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
@@ -495,7 +495,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	const int PLAYER_ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
 
 	std::shared_ptr<AnimatedGraphicsCP> playerGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
-		playerTemp, "PlayerSpriteCP", *AssetManager::getInstance().Textures.at("PlayerTexture"), spriteSheetCounts[playerTemp->getId()], PLAYER_ANIMATION_SPEED, Animationtype::Right
+		playerTemp, "PlayerSpriteCP", *AssetManager::getInstance().Textures.at("PlayerTexture"), spriteSheetCounts[playerTemp->getId()], PLAYER_ANIMATION_SPEED, Player_Animationtype::RightIdle
 	);
 
 	playerTemp->addComponent(playerGraphicsCP);
@@ -522,19 +522,25 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 			playerTemp, "MovementInputCP"
 		);
 		playerTemp->addComponent(movementInputCP);
+		std::shared_ptr<DashCP> dashCP = std::make_shared<DashCP>(playerTemp, "SpaceDashCP", sf::Keyboard::Enter);
+		playerTemp->addComponent(dashCP);
 	}
 	else {
 		std::shared_ptr<MovementInputWASDCP> movementInputCP = std::make_shared<MovementInputWASDCP>(
 			playerTemp, "MovementInputCP"
 		);
 		playerTemp->addComponent(movementInputCP);
+
+		std::shared_ptr<DashCP> dashCP = std::make_shared<DashCP>(playerTemp, "SpaceDashCP", sf::Keyboard::Space);
+		playerTemp->addComponent(dashCP);
 	}
 
 	std::shared_ptr<DecisionHandlerCP> decHandler = std::make_shared<DecisionHandlerCP>(playerTemp, "PlayerDecisionHandlerCP");
 	playerTemp->addComponent(decHandler);
 
 	int hp = object.getProp("Health")->getValue<int>();
-	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, 25, "Player");
+	int damage = object.getProp("Damage")->getValue<int>();
+	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, damage, "Player");
 	playerTemp->addComponent(playerStats);
 
 	gameObjects.push_back(playerTemp);

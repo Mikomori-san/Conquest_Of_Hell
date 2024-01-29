@@ -27,6 +27,9 @@ public:
 
 	int getDamage() { return damage; }
 
+	void toggleIFrames() { hasIFrames = hasIFrames ? false : true; }
+	bool getIFrameState() { return hasIFrames; }
+
 	void ifEnemyAddPatrolPoints(std::string i) { patrolPoints = i; }
 	std::string ifEnemyGetPatrolPoints() { return this->patrolPoints; }
 
@@ -36,4 +39,5 @@ private:
 	int damage;
 	std::string patrolPoints;				// IS ONLY SET _AND_ USED WHEN ENEMY
 	std::string gameObjectType;
+	bool hasIFrames = false;
 };

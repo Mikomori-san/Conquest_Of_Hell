@@ -1,7 +1,7 @@
 #pragma once
 #include "../Component.h"
 #include "../../Manager/InputManager.h"
-
+#include "../../Enums/Direction.h"
 
 class InputCP : public Component
 {
@@ -17,6 +17,12 @@ public:
 	virtual void update(float deltaTime) override {};
 	virtual void processInput() {};
 
-private:
+	virtual void toggleInputLock() { inputLock = inputLock ? false : true; }
 
+protected:
+	bool inputLock = false;
+	Direction lastDirection;
+	sf::Vector2f lastVec;
+	float vel;
+	bool hadInput = false;
 };

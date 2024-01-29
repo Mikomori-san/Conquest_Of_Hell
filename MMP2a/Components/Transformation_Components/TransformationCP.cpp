@@ -20,6 +20,7 @@ void TransformationCP::update(float deltaTime)
 	}
 
 	position = position + direction * curVelocity * deltaTime;
+	
 	if (rigid)
 	{
 		rigid->setPos(position);

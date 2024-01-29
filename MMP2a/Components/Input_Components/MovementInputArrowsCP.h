@@ -1,6 +1,6 @@
 #pragma once
 #include "InputCP.h"
-#include "../../Enums/Animationtype.h"
+#include "../../Enums/Player_Animationtype.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
 #include "../Collision_Components/RigidBodyCP.h"
@@ -15,6 +15,8 @@ public:
 	void setComponentId(std::string id) { this->componentId = id; }
 	void update(float deltatime) override;
 	void init() override;
+
+	void toggleInputLock() override { inputLock = inputLock ? false : true; }
 
 private:
 	void processInput() override;

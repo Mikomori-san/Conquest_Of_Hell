@@ -168,6 +168,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\AI_Pathfinding\SteeringCP.h" />
     <ClInclude Include="Components\CameraCP.h" />
     <ClInclude Include="Components\DecisionHandlerCP.h" />
+    <ClInclude Include="Components\Player_Components\DashCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Manager\PhysicsManager.h" />
@@ -200,6 +201,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\Collision_Components\RigidBodyCP.cpp" />
     <ClCompile Include="Components\DecisionHandlerCP.cpp" />
     <ClCompile Include="Components\Graphics_Components\AnimatedGraphicsCP.cpp" />
+    <ClCompile Include="Components\Player_Components\DashCP.cpp" />
     <ClCompile Include="Components\Render_Components\LayerCP.cpp" />
     <ClCompile Include="Components\Render_Components\SpriteRenderCP.cpp" />
     <ClCompile Include="Components\Graphics_Components\StandardGraphicsCP.cpp" />
@@ -229,7 +231,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utils.cpp" />
-    <ClInclude Include="Enums\Animationtype.h" />
+    <ClInclude Include="Enums\Player_Animationtype.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Manager\RenderManager.h" />
     <ClInclude Include="tileson.hpp" />

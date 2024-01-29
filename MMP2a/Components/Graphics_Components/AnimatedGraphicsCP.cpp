@@ -19,7 +19,7 @@ void AnimatedGraphicsCP::init()
 
 void AnimatedGraphicsCP::update(float deltaTime)
 {
-	animationTimeIndex += deltaTime * ANIMATION_SPEED;
+	animationTimeIndex += deltaTime * animationSpeed;
 	doAnimation();
 	if (!gameObject.expired())
 	{
@@ -43,9 +43,10 @@ void AnimatedGraphicsCP::setSprite(std::shared_ptr<sf::Texture> texture)
 	this->sprite->setTexture(*texture);
 }
 
-void AnimatedGraphicsCP::setAnimationType(Animationtype type)
+void AnimatedGraphicsCP::setAnimationType(Player_Animationtype type)
 {
-	this->m_animationType = type;
+	if(!animationLock)
+		this->m_animationType = type;
 }
 
 void AnimatedGraphicsCP::doAnimation()

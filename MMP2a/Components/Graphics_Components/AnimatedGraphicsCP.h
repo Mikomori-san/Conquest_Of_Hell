@@ -1,11 +1,11 @@
 #pragma once
 #include "GraphicsCP.h"
-#include "../../Enums/Animationtype.h"
+#include "../../Enums/Player_Animationtype.h"
 
 class AnimatedGraphicsCP : public GraphicsCP {
 public:
-    AnimatedGraphicsCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture, std::vector<int> animationTypeFramesCountVar, float animationSpeed, Animationtype aniType)
-        : GraphicsCP(gameObject, id, texture), animationTypeFramesCount(animationTypeFramesCountVar), ANIMATION_SPEED(animationSpeed),
+    AnimatedGraphicsCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture, std::vector<int> animationTypeFramesCountVar, float animationSpeed, Player_Animationtype aniType)
+        : GraphicsCP(gameObject, id, texture), animationTypeFramesCount(animationTypeFramesCountVar), animationSpeed(animationSpeed),
             TILING_X([this]() {
                 int max = 0;
                 for (auto& it : animationTypeFramesCount)
@@ -26,15 +26,20 @@ public:
     void init() override;
     void update(float deltaTime) override;
     void setSprite(std::shared_ptr<sf::Texture> texture) override;
-    void setAnimationType(Animationtype type);
+    void setAnimationType(Player_Animationtype type);
+    void setAnimationSpeed(float speed) { this->animationSpeed = speed; }
+    float getAnimationSpeed() { return this->animationSpeed; }
+    Player_Animationtype getAnimationType() { return m_animationType; }
     sf::Sprite& getSprite() override { return *sprite; }
-    
+    void toggleAnimationLock() { animationLock = animationLock ? false : true; }
+    void resetAnimationTimeIndex() { animationTimeIndex = 0; }
 private:
     std::vector<int> animationTypeFramesCount;
-    Animationtype m_animationType;
+    Player_Animationtype m_animationType;
     float animationTimeIndex = 0;
-    const float ANIMATION_SPEED;
+    float animationSpeed;
     const int TILING_X;
     const int TILING_Y;
     void doAnimation();
+    bool animationLock = false;
 };
