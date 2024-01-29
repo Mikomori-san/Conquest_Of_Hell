@@ -3,10 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "MapTiled.tmx",
     "expandedProjectPaths": [
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "#Tiles": {
             "scaleInDock": 1
         },
@@ -15,10 +18,10 @@
                 4
             ],
             "scale": 0.75,
-            "selectedLayer": 2,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 460,
-                "y": 174.66666666666663
+                "x": 453.9999999999999,
+                "y": 289.33333333333337
             }
         },
         "C:/Users/jenny/Downloads/game.tmj#Background": {
@@ -28,6 +31,9 @@
             "scaleInDock": 1
         },
         "C:/Users/jenny/Downloads/game.tmj#Sci-Fi-Tiles2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/Downloads/game.tmj#Tiles": {
             "scaleInDock": 1
         },
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx": {
@@ -75,29 +81,46 @@
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tmx#Tiles": {
             "scaleInDock": 1
         },
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "MapTiled.tmj": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 492,
+                "y": 328
+            }
+        },
+        "MapTiled.tmj#Tiles": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
         "MapTiled.tmx": {
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1,
-            "selectedLayer": 2,
+            "scale": 1.5,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 404,
-                "y": 310
+                "x": 464.33333333333337,
+                "y": 368
             }
         },
         "MapTiled.tmx#Tiles": {
-            "scaleInDock": 2
+            "scaleInDock": 2,
+            "scaleInEditor": 1
         },
         "game.tmj": {
-            "expandedObjectLayers": [
-                4
-            ],
-            "scale": 1.02125,
-            "selectedLayer": 2,
+            "scale": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 412.23990208078334,
-                "y": 297.6744186046512
+                "x": 294.8333333333333,
+                "y": 304.3333333333333
             }
         },
         "game.tmj#Background": {
@@ -110,27 +133,34 @@
             "scaleInDock": 1
         },
         "game.tmj#Tiles": {
-            "scaleInDock": 1
+            "scaleInDock": 2
         }
     },
     "last.exportedFilePath": "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/mmp2a/MMP2a/Assets",
     "last.imagePath": "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/mmp2a/MMP2a/Assets/Textures",
     "map.height": 68,
     "map.lastUsedExportFilter": "All Files (*)",
-    "map.lastUsedFormat": "tmx",
+    "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "map.width": 120,
     "openFiles": [
+        "MapTiled.tmx"
     ],
     "project": "Map.tiled-project",
+    "property.type": "int",
     "recentFiles": [
+        "MapTiled.tmx",
         "game.tmj",
+        "C:/Users/jenny/Downloads/game.tmj",
+        "MapTiled.tmj",
+        "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tsj",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype.tmx",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/Prototype2.tmx",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tmx"
     ],
     "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "json",
     "tileset.tileSize": {
         "height": 16,
         "width": 16

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="37">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="34" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="54">
  <editorsettings>
   <export target="game.tmj" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Tiles" tilewidth="16" tileheight="16" tilecount="625" columns="25">
   <image source="Textures/Tiles.png" width="400" height="400"/>
  </tileset>
- <layer id="1" name="Background" width="60" height="34">
+ <layer id="1" name="Background" width="60" height="34" visible="0" locked="1">
+  <properties>
+   <property name="LayerNr" type="int" value="0"/>
+  </properties>
   <data encoding="csv">
 28,28,28,28,28,28,28,55,445,446,446,447,51,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,55,445,446,446,447,51,28,28,28,28,28,28,28,
 28,28,28,28,28,28,28,55,445,446,446,447,51,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,55,445,446,446,447,51,28,28,28,28,28,28,28,
@@ -45,6 +48,9 @@
 </data>
  </layer>
  <layer id="2" name="FirstLayerTiles" width="60" height="34">
+  <properties>
+   <property name="LayerNr" type="int" value="1"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -82,198 +88,65 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,260,0,0,0,0,0,0,240,260,2147483908,240,0,0,0,0,0,0,2147483908,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="GameObjects">
-  <object id="16" x="480.333" y="416">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="ArrowKeys" type="bool" value="false"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="100"/>
-    <property name="ObjectGroup" value="Player"/>
-    <property name="PlayerNr" type="int" value="1"/>
-    <property name="PlayerTexture" value="Assets\Textures\SpaceShip.png"/>
-    <property name="Velocity" type="int" value="150"/>
-    <property name="isAI" type="bool" value="false"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="17" x="480" y="95.5">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="EnemyName" value="Impostor"/>
-    <property name="EnemyNr" type="int" value="1"/>
-    <property name="EnemyTexture" value="Assets\Textures\SpaceShip.png"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="200"/>
-    <property name="ObjectGroup" value="Enemy"/>
-    <property name="PatrolNr" value="1"/>
-    <property name="Velocity" type="int" value="70"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="18" x="561" y="262" width="29" height="25.6667">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="1"/>
-   </properties>
-  </object>
-  <object id="19" x="317" y="308">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="EnemyName" value="Crawler"/>
-    <property name="EnemyNr" type="int" value="1"/>
-    <property name="EnemyTexture" value="Assets\Textures\Crawler.png"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="0"/>
-    <property name="ObjectGroup" value="Enemy"/>
-    <property name="PatrolNr" value="0"/>
-    <property name="Velocity" type="int" value="70"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="20" x="79.8967" y="463.924">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="ArrowKeys" type="bool" value="false"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="100"/>
-    <property name="ObjectGroup" value="Player"/>
-    <property name="PlayerNr" type="int" value="1"/>
-    <property name="PlayerTexture" value="Assets\Textures\SpaceShip.png"/>
-    <property name="Velocity" type="int" value="150"/>
-    <property name="isAI" type="bool" value="false"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="21" x="140.046" y="505.373">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="ArrowKeys" type="bool" value="true"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="100"/>
-    <property name="ObjectGroup" value="Player"/>
-    <property name="PlayerNr" type="int" value="2"/>
-    <property name="PlayerTexture" value="Assets\Textures\SpaceShip.png"/>
-    <property name="Velocity" type="int" value="150"/>
-    <property name="isAI" type="bool" value="false"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="22" x="337" y="408.167">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="EnemyName" value="Impostor"/>
-    <property name="EnemyNr" type="int" value="1"/>
-    <property name="EnemyTexture" value="Assets\Textures\SpaceShip.png"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="200"/>
-    <property name="ObjectGroup" value="Enemy"/>
-    <property name="PatrolNr" value="1"/>
-    <property name="Velocity" type="int" value="70"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="23" x="361" y="512.167">
-   <properties>
-    <property name="AnimationSpeed" type="int" value="8"/>
-    <property name="EnemyName" value="Crawler"/>
-    <property name="EnemyNr" type="int" value="1"/>
-    <property name="EnemyTexture" value="Assets\Textures\Crawler.png"/>
-    <property name="Health" type="int" value="100"/>
-    <property name="Mass" type="float" value="0"/>
-    <property name="ObjectGroup" value="Enemy"/>
-    <property name="PatrolNr" value="0"/>
-    <property name="Velocity" type="int" value="70"/>
-    <property name="isTrigger" type="bool" value="false"/>
-   </properties>
-  </object>
-  <object id="24" x="0.33333" y="-43.8332" width="26.6667" height="639.333">
-   <properties>
-    <property name="Name" value="Left"/>
-    <property name="ObjectGroup" value="Boundary"/>
-    <property name="isTrigger" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="25" x="930.333" y="-43.4997" width="29.3333" height="639.333">
-   <properties>
-    <property name="Name" value="Right"/>
-    <property name="ObjectGroup" value="Boundary"/>
-    <property name="isTrigger" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="26" x="2.33333" y="567.167" width="956" height="27.333">
-   <properties>
-    <property name="Name" value="Bottom"/>
-    <property name="ObjectGroup" value="Boundary"/>
-    <property name="isTrigger" type="bool" value="true"/>
-   </properties>
-  </object>
-  <object id="27" x="3.66667" y="-42.8331" width="956" height="28.6664">
+ <objectgroup id="3" name="GameObjects" visible="0" locked="1">
+  <properties>
+   <property name="LayerNr" type="int" value="2"/>
+  </properties>
+  <object id="3" x="131.333" y="0.333467" width="58.6667" height="191.333">
    <properties>
     <property name="Name" value="Top"/>
     <property name="ObjectGroup" value="Boundary"/>
     <property name="isTrigger" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="28" x="399" y="290.834">
+  <object id="4" x="130.667" y="288.667" width="58.6667" height="94.333">
    <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="0"/>
-   </properties>
-  </object>
-  <object id="29" x="528.333" y="34.8335">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="0"/>
-   </properties>
-  </object>
-  <object id="30" x="627" y="292.167">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="0"/>
-   </properties>
-  </object>
-  <object id="31" x="644.333" y="442.834">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="1"/>
-   </properties>
-  </object>
-  <object id="32" x="809.667" y="366.834">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="1"/>
-   </properties>
-  </object>
-  <object id="33" x="805.667" y="514.834">
-   <properties>
-    <property name="ObjectGroup" value="PatrolPoint"/>
-    <property name="PatrolNr" value="1"/>
-   </properties>
-  </object>
-  <object id="34" x="322.333" y="-12.8331" width="153.333" height="92.6664">
-   <properties>
-    <property name="Name" value="Door"/>
+    <property name="Name" value="Top"/>
     <property name="ObjectGroup" value="Boundary"/>
     <property name="isTrigger" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="35" x="322.334" y="83.1668" width="27.9997" height="99.3331">
+  <object id="5" x="130" y="480.349" width="58.6667" height="64.1512">
    <properties>
-    <property name="Name" value="PathToDoorLeft"/>
+    <property name="Name" value="Top"/>
     <property name="ObjectGroup" value="Boundary"/>
     <property name="isTrigger" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="36" x="446.333" y="81.1668" width="27.9997" height="99.3331">
+  <object id="9" x="772.333" y="-1.08337" width="58.6667" height="191.333">
    <properties>
-    <property name="Name" value="PathToDoorRight"/>
+    <property name="Name" value="Top"/>
     <property name="ObjectGroup" value="Boundary"/>
     <property name="isTrigger" type="bool" value="true"/>
    </properties>
+  </object>
+  <object id="10" x="771.667" y="287.25" width="58.6667" height="94.333">
+   <properties>
+    <property name="Name" value="Top"/>
+    <property name="ObjectGroup" value="Boundary"/>
+    <property name="isTrigger" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="11" x="771" y="478.932" width="58.6667" height="64.1512">
+   <properties>
+    <property name="Name" value="Top"/>
+    <property name="ObjectGroup" value="Boundary"/>
+    <property name="isTrigger" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="15" x="2" y="125">
+   <properties>
+    <property name="Name" value="Top"/>
+    <property name="ObjectGroup" value="Boundary"/>
+    <property name="isTrigger" type="bool" value="true"/>
+   </properties>
+   <polygon points="-2,3 318,3 318,-45 638,-45 638,3 766,3 958,3 958,-125 -2,-125"/>
   </object>
  </objectgroup>
- <layer id="4" name="Top" width="60" height="34">
+ <layer id="4" name="Top" width="60" height="34" visible="0" locked="1">
+  <properties>
+   <property name="LayerNr" type="int" value="3"/>
+  </properties>
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
