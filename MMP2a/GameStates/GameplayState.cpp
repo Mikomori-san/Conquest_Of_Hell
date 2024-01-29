@@ -20,6 +20,7 @@
 #include "../Components/AI_Pathfinding/AISpriteUpdateCP.h"
 #include "../Components/AI_Pathfinding/AStarCP.h"
 #include "../Components/Player_Components/DashCP.h"
+#include "../Components//Player_Components/PlayerAttackCP.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -30,7 +31,8 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	DebugDraw::getInstance().initialize(*window);
 
 	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
-	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
+	spriteSheetCounts["Player2"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
+	spriteSheetCounts["Crawler"] = {6,6,6,6,6,6,6,6};
 
 
 	loadMap("game_PlayerTemplate.tmj", sf::Vector2f());
@@ -240,7 +242,27 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 		}
 	}
 
+																									// AB HIER NUR PROVISORISCH
+	std::shared_ptr<PlayerAttackCP> playerAttackCP;
 	for (auto& go : gameObjects)
+	{
+		if (go->getId().find("Player") != std::string::npos)
+		{
+			playerAttackCP = go->getComponentsOfType<PlayerAttackCP>().at(0);
+			break;
+		}
+	}
+	for (auto& go : gameObjects)
+	{
+		if (go->getId().find("Crawler") != std::string::npos)
+		{
+			playerAttackCP->addEnemy(go); 
+		}
+	}
+
+	
+
+	/*for (auto& go : gameObjects)
 	{
 		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
 		{
@@ -277,7 +299,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 				go->addComponent(enemyAISpriteUpdateCP);
 			}
 		}
-	}
+	}*/
 }
 
 void GameplayState::checkAreaBorders()
@@ -545,6 +567,10 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	int damage = object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, damage, "Player");
 	playerTemp->addComponent(playerStats);
+
+	std::vector<std::weak_ptr<GameObject>> weak = {};
+	std::shared_ptr<PlayerAttackCP> playerAttackCP = std::make_shared<PlayerAttackCP>(playerTemp, "PlayerAttackCP", 200, weak, sf::Keyboard::Q);
+	playerTemp->addComponent(playerAttackCP);
 
 	gameObjects.push_back(playerTemp);
 }

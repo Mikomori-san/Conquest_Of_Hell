@@ -120,6 +120,68 @@
                  "width":0,
                  "x":152.226720647773,
                  "y":186.774628879892
+                }, 
+                {
+                 "height":0,
+                 "id":28,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"AnimationSpeed",
+                         "type":"int",
+                         "value":8
+                        }, 
+                        {
+                         "name":"EnemyName",
+                         "type":"string",
+                         "value":"Crawler"
+                        }, 
+                        {
+                         "name":"EnemyNr",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"EnemyTexture",
+                         "type":"string",
+                         "value":"Assets\\Textures\\Crawler.png"
+                        }, 
+                        {
+                         "name":"Health",
+                         "type":"int",
+                         "value":100
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Enemy"
+                        }, 
+                        {
+                         "name":"PatrolNr",
+                         "type":"string",
+                         "value":"0"
+                        }, 
+                        {
+                         "name":"Velocity",
+                         "type":"int",
+                         "value":70
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":329.284750337382,
+                 "y":331.443994601889
                 }],
          "opacity":1,
          "properties":[
@@ -134,7 +196,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":27,
+ "nextobjectid":29,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
