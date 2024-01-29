@@ -465,7 +465,7 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 	enemyTemp->addComponent(enemyRenderCP);
 
 	int hp = object.getProp("Health")->getValue<int>();
-	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, "Enemy");
+	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, 25, "Enemy");
 	enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
 	enemyTemp->addComponent(enemyStats);
 
@@ -534,7 +534,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	playerTemp->addComponent(decHandler);
 
 	int hp = object.getProp("Health")->getValue<int>();
-	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, "Player");
+	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, 25, "Player");
 	playerTemp->addComponent(playerStats);
 
 	gameObjects.push_back(playerTemp);
