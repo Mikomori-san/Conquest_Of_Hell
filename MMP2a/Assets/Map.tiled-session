@@ -107,8 +107,8 @@
             "scale": 5.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 490.3636363636364,
-                "y": 321.4545454545455
+                "x": 479.90909090909093,
+                "y": 271.8181818181818
             }
         },
         "MapTiled.tmx#Tiles": {
@@ -116,11 +116,11 @@
             "scaleInEditor": 1
         },
         "game.tmj": {
-            "scale": 3,
+            "scale": 8,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 294.8333333333333,
-                "y": 304.3333333333333
+                "x": 74.9375,
+                "y": 369.75
             }
         },
         "game.tmj#Background": {
@@ -145,7 +145,8 @@
     "map.tileWidth": 16,
     "map.width": 120,
     "openFiles": [
-        "MapTiled.tmx"
+        "MapTiled.tmx",
+        "game.tmj"
     ],
     "project": "Map.tiled-project",
     "property.type": "int",
