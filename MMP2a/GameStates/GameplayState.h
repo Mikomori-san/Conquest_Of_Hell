@@ -25,9 +25,7 @@ private:
 	void checkAreaBorders();
 	void checkPlayerLayer();
 	void createPlayers(tson::Object& object, tson::Layer group);
-	void createEnemies(tson::Object& object, tson::Layer group);
 	void createBoundary(tson::Object& object, tson::Layer group);
-	void createPatrolPoints(tson::Object& object, tson::Layer group);
 	void createBoss(tson::Object& object, tson::Layer group);
 	int maxLayer = 0;
 	int currentLayer = 0;

@@ -126,24 +126,20 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
 
             if (body2->getId().find("Boss") != std::string::npos)
             {
-                if (body1->getId().find("Player") != std::string::npos)
-                {
-                    std::shared_ptr<RectCollisionCP> attackRange = body2->getComponentsOfType<RectCollisionCP>().at(0)->getComponentId().find("BossAttackRange") ? body2->getComponentsOfType<RectCollisionCP>().at(1) : body2->getComponentsOfType<RectCollisionCP>().at(0);
-                    if (aabbVsAabb(c1->getCollisionRect(), attackRange->getCollisionRect(), normal, penetration))
-                    {
-                        body2->getComponentsOfType<BossAttackCP>().at(0)
-                            ->execute(body2->getComponentsOfType<TransformationCP>().at(0)->getPosition(), 
-                                body1->getComponentsOfType<TransformationCP>().at(0)->getPosition());
-                    }
-
-                }
                 std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(body2->getComponentsOfType<BossAttackCP>().at(0)->getAbility2());
                 if (charm)
                 {
-                    if (aabbVsAabb(c1->getCollisionRect(), charm->getSprite().getGlobalBounds(), normal, penetration))
+                    if (body1->getId().find("Player") != std::string::npos && aabbVsAabb(c1->getCollisionRect(), charm->getSprite().getGlobalBounds(), normal, penetration))
                     {
                         charm->execute();
                         charm->setDead();
+                    }
+                    if (body1->getId().find("Boundary") != std::string::npos)
+                    {
+                        if (aabbVsAabb(c1->getCollisionRect(), charm->getSprite().getGlobalBounds(), normal, penetration))
+                        {
+                            charm->setDead();
+                        }
                     }
                 }
             }
