@@ -30,7 +30,7 @@ void DecisionHandlerCP::handleMovement(Direction dir, sf::Vector2f dirVec, float
     if (!gameObject.expired())
     {
         std::shared_ptr<GameObject> go = gameObject.lock();
-        std::shared_ptr<AnimatedGraphicsCP> aniGraphics = go->getComponentsOfType<AnimatedGraphicsCP>().at(0);
+        std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> aniGraphics = go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
         std::shared_ptr<TransformationCP> transformation = go->getComponentsOfType<TransformationCP>().at(0);
         std::shared_ptr<RigidBodyCP> rigidBody = go->getComponentsOfType<RigidBodyCP>().at(0);
 
@@ -71,7 +71,7 @@ void DecisionHandlerCP::handleIdle(Direction dir)
     if (!gameObject.expired())
     {
         std::shared_ptr<GameObject> go = gameObject.lock();
-        std::shared_ptr<AnimatedGraphicsCP> aniGraphics = go->getComponentsOfType<AnimatedGraphicsCP>().at(0);
+        std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> aniGraphics = go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
 
         switch (dir)
         {

@@ -21,7 +21,7 @@ void DashCP::update(float deltaTime)
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		std::shared_ptr<AnimatedGraphicsCP> ani = go->getComponentsOfType<AnimatedGraphicsCP>().at(0);
+		std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani = go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
 		std::shared_ptr<StatsCP> stats = go->getComponentsOfType<StatsCP>().at(0);
 		std::shared_ptr<TransformationCP> transf = go->getComponentsOfType<TransformationCP>().at(0);
 		std::shared_ptr<InputCP> input = go->getComponentsOfType<InputCP>().at(0);

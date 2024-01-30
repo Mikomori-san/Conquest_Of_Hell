@@ -2,13 +2,14 @@
 #include "AISpriteUpdateCP.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
+#include "../../Enums/Enemy_Animationtype.h"
 
 void AISpriteUpdateCP::update(float deltaTime)
 {
     if (!gameObject.expired())
     {
         std::shared_ptr<GameObject> go = gameObject.lock();
-        std::shared_ptr<AnimatedGraphicsCP> ani = go->getComponentsOfType<AnimatedGraphicsCP>().at(0);
+        std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> ani = go->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0);
         std::shared_ptr<TransformationCP> trans = go->getComponentsOfType<TransformationCP>().at(0);
 
         sf::Vector2f dir = trans->getDirection();
@@ -20,13 +21,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::RightIdle);
-                    lastAnimation = Player_Animationtype::RightIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleRight);
+                    lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Right);
-                    lastAnimation = Player_Animationtype::Right;
+                    ani->setAnimationType(Enemy_Animationtype::WalkRight);
+                    lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
@@ -37,13 +38,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::RightIdle);
-                    lastAnimation = Player_Animationtype::RightIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleRight);
+                    lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Right);
-                    lastAnimation = Player_Animationtype::Right;
+                    ani->setAnimationType(Enemy_Animationtype::WalkRight);
+                    lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
         }
@@ -53,13 +54,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::RightIdle);
-                    lastAnimation = Player_Animationtype::RightIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleRight);
+                    lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Right);
-                    lastAnimation = Player_Animationtype::Right;
+                    ani->setAnimationType(Enemy_Animationtype::WalkRight);
+                    lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
@@ -70,13 +71,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::RightIdle);
-                    lastAnimation = Player_Animationtype::RightIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleRight);
+                    lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Right);
-                    lastAnimation = Player_Animationtype::Right;
+                    ani->setAnimationType(Enemy_Animationtype::WalkRight);
+                    lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
         }
@@ -86,13 +87,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::LeftIdle);
-                    lastAnimation = Player_Animationtype::LeftIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleLeft);
+                    lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Left);
-                    lastAnimation = Player_Animationtype::Left;
+                    ani->setAnimationType(Enemy_Animationtype::WalkLeft);
+                    lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
@@ -103,13 +104,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::LeftIdle);
-                    lastAnimation = Player_Animationtype::LeftIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleLeft);
+                    lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Left);
-                    lastAnimation = Player_Animationtype::Left;
+                    ani->setAnimationType(Enemy_Animationtype::WalkLeft);
+                    lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
         }
@@ -119,13 +120,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::LeftIdle);
-                    lastAnimation = Player_Animationtype::LeftIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleLeft);
+                    lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Left);
-                    lastAnimation = Player_Animationtype::Left;
+                    ani->setAnimationType(Enemy_Animationtype::WalkLeft);
+                    lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
 
             }
@@ -137,13 +138,13 @@ void AISpriteUpdateCP::update(float deltaTime)
             {
                 if (speed == 0)
                 {
-                    ani->setAnimationType(Player_Animationtype::LeftIdle);
-                    lastAnimation = Player_Animationtype::LeftIdle;
+                    ani->setAnimationType(Enemy_Animationtype::IdleLeft);
+                    lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
-                    ani->setAnimationType(Player_Animationtype::Left);
-                    lastAnimation = Player_Animationtype::Left;
+                    ani->setAnimationType(Enemy_Animationtype::WalkLeft);
+                    lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
         }

@@ -1,6 +1,7 @@
 #pragma once
 #include "../Component.h"
-#include "../../Enums/Player_Animationtype.h"
+#include "../../Enums/Enemy_Animationtype.h"
+
 
 class AISpriteUpdateCP : public Component
 {
@@ -12,5 +13,5 @@ public:
 	void init() override;
 
 private:
-	Player_Animationtype lastAnimation = Player_Animationtype::RightIdle;
+	Enemy_Animationtype lastAnimation = Enemy_Animationtype::IdleRight;
 };

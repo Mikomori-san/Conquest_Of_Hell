@@ -21,6 +21,7 @@
 #include "../Components/AI_Pathfinding/AStarCP.h"
 #include "../Components/Player_Components/DashCP.h"
 #include "../Components//Player_Components/PlayerAttackCP.h"
+#include "../Enums/Enemy_Animationtype.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -31,11 +32,9 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	DebugDraw::getInstance().initialize(*window);
 
 	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
-	spriteSheetCounts["Player2"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
-	spriteSheetCounts["Crawler"] = {6,6,6,6,6,6,6,6};
+	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
 
-
-	loadMap("game_PlayerTemplate.tmj", sf::Vector2f());
+	loadMap("game_EnemyTemplate.tmj", sf::Vector2f());
 	
 	currentLayer = 0;
 	std::cout << "Current Layer: " << currentLayer << std::endl;
@@ -227,10 +226,6 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createPlayers(object, group);
 			}
-			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "PatrolPoint")
-			{
-				createPatrolPoints(object, group);
-			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Enemy")
 			{
 				createEnemies(object, group);
@@ -254,86 +249,9 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 	for (auto& go : gameObjects)
 	{
-		if (go->getId().find("Crawler") != std::string::npos)
+		if (go->getId().find("Skeleton") != std::string::npos)
 		{
 			playerAttackCP->addEnemy(go); 
-		}
-	}
-
-	
-
-	/*for (auto& go : gameObjects)
-	{
-		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
-		{
-			std::string objectType = stats.at(0)->getObjectType();
-			if (objectType == "Enemy")
-			{
-				std::vector<std::shared_ptr<GameObject>> players;
-				std::vector<std::shared_ptr<GameObject>> patrolPoints;
-				for (auto& go1 : gameObjects)
-				{
-					if (go1->getId().find("Player") != std::string::npos)
-					{
-						players.push_back(go1);
-					}
-					else if (go1->getId().find("PatrolPoint") != std::string::npos)
-					{
-						if (go1->getId().find(stats.at(0)->ifEnemyGetPatrolPoints()) != std::string::npos)
-						{
-							patrolPoints.push_back(go1);
-						}
-					}
-				}
-
-				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players, patrolPoints);
-				go->addComponent(enemyAIController);
-
-				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
-				go->addComponent(enemyAStarCP);
-
-				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
-				go->addComponent(enemySteeringCP);
-
-				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
-				go->addComponent(enemyAISpriteUpdateCP);
-			}
-		}
-	}*/
-}
-
-void GameplayState::checkAreaBorders()
-{
-	auto left = window->getView().getCenter().x - window->getView().getSize().x / 2;
-	auto top = window->getView().getCenter().y - window->getView().getSize().y / 2;
-	auto right = window->getView().getCenter().x + window->getView().getSize().x / 2;
-	auto bottom = window->getView().getCenter().y + window->getView().getSize().y / 2;
-
-	std::shared_ptr<TransformationCP> transf;
-	std::shared_ptr<RectCollisionCP> collision;
-
-	for (auto& go : gameObjects)
-	{
-		//Check for both players
-		if (go->getId().find("Player") != std::string::npos)
-		{
-			if ((transf = go->getComponentsOfType<TransformationCP>().at(0)) && (collision = go->getComponentsOfType<RectCollisionCP>().at(0)))
-			{
-				if (transf && collision)
-				{
-					if (transf->getPosition().y > bottom - collision->getCollisionRect().height / 2)
-						transf->setPosition(sf::Vector2f(transf->getPosition().x, bottom - collision->getCollisionRect().height / 2));
-
-					if (transf->getPosition().y < top + collision->getCollisionRect().height / 2)
-						transf->setPosition(sf::Vector2f(transf->getPosition().x, top + collision->getCollisionRect().height / 2));
-
-					if (transf->getPosition().x > right - collision->getCollisionRect().width / 2)
-						transf->setPosition(sf::Vector2f(right - collision->getCollisionRect().width / 2, transf->getPosition().y));
-
-					if (transf->getPosition().x < left + collision->getCollisionRect().width / 2)
-						transf->setPosition(sf::Vector2f(left + collision->getCollisionRect().width / 2, transf->getPosition().y));
-				}
-			}
 		}
 	}
 }
@@ -391,18 +309,6 @@ void GameplayState::checkPlayerLayer()
 	}
 }
 
-void GameplayState::createPatrolPoints(tson::Object& object, tson::Layer group)
-{
-	std::string id = "PatrolPoint" + object.getProp("PatrolNr")->getValue<std::string>();
-	std::shared_ptr<GameObject> patrolPointTemp = std::make_shared<GameObject>(id);
-
-	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
-	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(patrolPointTemp, "PatrolTransformationCP", pos, object.getRotation(), object.getSize().x);
-	patrolPointTemp->addComponent(transCP);
-
-	gameObjects.push_back(patrolPointTemp);
-}
-
 void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 {
 	std::string id = "Boundary " + object.getProp("Name")->getValue<std::string>();
@@ -435,29 +341,15 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 
 	std::string texName = "";
 
-	if (enemyTemp->getId().find("Impostor") != std::string::npos)
-	{
-		texName = "ImpostorTexture";
-	}
-	else if (enemyTemp->getId().find("Crawler") != std::string::npos)
-	{
-		texName = "CrawlerTexture";
-	}
+	texName = object.getProp("EnemyName")->getValue<std::string>().append("Texture");
 
 	if (!AssetManager::getInstance().Textures[texName])
 	{
 		AssetManager::getInstance().loadTexture(texName, object.getProp("EnemyTexture")->getValue<std::string>());
 	}
-	Player_Animationtype aniType;
-	if (enemyTemp->getId().find("Impostor") != std::string::npos)
-	{
-		aniType = Player_Animationtype::Right;
-	}
-	else if (enemyTemp->getId().find("Crawler") != std::string::npos)
-	{
-		aniType = Player_Animationtype::Left;
-	}
-	std::shared_ptr<AnimatedGraphicsCP> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
+	Enemy_Animationtype aniType = Enemy_Animationtype::IdleRight;
+
+	std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP<Enemy_Animationtype>>(
 		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
 	);
 
@@ -491,7 +383,6 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 
 	int hp = object.getProp("Health")->getValue<int>();
 	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, 25, "Enemy");
-	enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
 	enemyTemp->addComponent(enemyStats);
 
 	gameObjects.push_back(enemyTemp);
@@ -519,7 +410,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	const int PLAYER_ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
 
-	std::shared_ptr<AnimatedGraphicsCP> playerGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
+	std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> playerGraphicsCP = std::make_shared<AnimatedGraphicsCP<Player_Animationtype>>(
 		playerTemp, "PlayerSpriteCP", *AssetManager::getInstance().Textures.at("PlayerTexture"), spriteSheetCounts[playerTemp->getId()], PLAYER_ANIMATION_SPEED, Player_Animationtype::RightIdle
 	);
 

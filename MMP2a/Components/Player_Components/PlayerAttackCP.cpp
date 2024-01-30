@@ -15,7 +15,7 @@ void PlayerAttackCP::update(float deltaTime)
 	if (!gameObject.expired())
 	{
 		auto transf = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0);
-		auto ani = gameObject.lock()->getComponentsOfType<AnimatedGraphicsCP>().at(0);
+		auto ani = gameObject.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
 		auto stats = gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
 		auto input = gameObject.lock()->getComponentsOfType<InputCP>().at(0);
 

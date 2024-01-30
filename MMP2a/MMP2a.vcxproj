@@ -172,6 +172,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
     <ClInclude Include="Enums\Direction.h" />
+    <ClInclude Include="Enums\Enemy_Animationtype.h" />
     <ClInclude Include="Manager\PhysicsManager.h" />
     <ClInclude Include="Manifold.h" />
     <ClInclude Include="Components\Collision_Components\RectCollisionCP.h" />
@@ -201,7 +202,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\Collision_Components\RectCollisionCP.cpp" />
     <ClCompile Include="Components\Collision_Components\RigidBodyCP.cpp" />
     <ClCompile Include="Components\DecisionHandlerCP.cpp" />
-    <ClCompile Include="Components\Graphics_Components\AnimatedGraphicsCP.cpp" />
     <ClCompile Include="Components\Player_Components\DashCP.cpp" />
     <ClCompile Include="Components\Player_Components\PlayerAttackCP.cpp" />
     <ClCompile Include="Components\Render_Components\LayerCP.cpp" />

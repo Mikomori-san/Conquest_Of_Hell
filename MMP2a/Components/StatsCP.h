@@ -30,14 +30,10 @@ public:
 	void toggleIFrames() { hasIFrames = hasIFrames ? false : true; }
 	bool getIFrameState() { return hasIFrames; }
 
-	void ifEnemyAddPatrolPoints(std::string i) { patrolPoints = i; }
-	std::string ifEnemyGetPatrolPoints() { return this->patrolPoints; }
-
 	std::string getObjectType() { return this->gameObjectType; }
 private:
 	int health;
 	int damage;
-	std::string patrolPoints;				// IS ONLY SET _AND_ USED WHEN ENEMY
 	std::string gameObjectType;
 	bool hasIFrames = false;
 };

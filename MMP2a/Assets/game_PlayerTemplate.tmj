@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"game_EnemyTemplate.tmj"
+        }
+    },
  "height":20,
  "infinite":false,
  "layers":[
@@ -134,7 +142,7 @@
                         {
                          "name":"EnemyName",
                          "type":"string",
-                         "value":"Crawler"
+                         "value":"Skeleton"
                         }, 
                         {
                          "name":"EnemyNr",
@@ -144,7 +152,7 @@
                         {
                          "name":"EnemyTexture",
                          "type":"string",
-                         "value":"Assets\\Textures\\Crawler.png"
+                         "value":"Assets\\Textures\\enemy.png"
                         }, 
                         {
                          "name":"Health",
@@ -160,11 +168,6 @@
                          "name":"ObjectGroup",
                          "type":"string",
                          "value":"Enemy"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
                         }, 
                         {
                          "name":"Velocity",
