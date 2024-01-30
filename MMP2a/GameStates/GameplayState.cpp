@@ -236,7 +236,6 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			}
 		}
 	}
-
 																									// AB HIER NUR PROVISORISCH
 	std::shared_ptr<PlayerAttackCP> playerAttackCP;
 	for (auto& go : gameObjects)
@@ -254,6 +253,38 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			playerAttackCP->addEnemy(go); 
 		}
 	}
+
+	for (auto& go : gameObjects)
+	{
+		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
+		{
+			std::string objectType = stats.at(0)->getObjectType();
+			if (objectType == "Enemy")
+			{
+				std::vector<std::shared_ptr<GameObject>> players;
+				for (auto& go1 : gameObjects)
+				{
+					if (go1->getId().find("Player") != std::string::npos)
+					{
+						players.push_back(go1);
+					}
+				}
+
+				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
+				go->addComponent(enemyAIController);
+
+				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
+				go->addComponent(enemyAStarCP);
+
+				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
+				go->addComponent(enemySteeringCP);
+
+				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
+				go->addComponent(enemyAISpriteUpdateCP);
+			}
+		}
+	}
+
 }
 
 void GameplayState::checkPlayerLayer()
@@ -382,7 +413,8 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 	enemyTemp->addComponent(enemyRenderCP);
 
 	int hp = object.getProp("Health")->getValue<int>();
-	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, 25, "Enemy");
+	int dmg = object.getProp("Damage")->getValue<int>();
+	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, dmg, "Enemy");
 	enemyTemp->addComponent(enemyStats);
 
 	gameObjects.push_back(enemyTemp);

@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"game_EnemyTemplate.tmj"
-        }
-    },
  "height":20,
  "infinite":false,
  "layers":[
@@ -140,6 +132,11 @@
                          "value":8
                         }, 
                         {
+                         "name":"Damage",
+                         "type":"string",
+                         "value":"25"
+                        }, 
+                        {
                          "name":"EnemyName",
                          "type":"string",
                          "value":"Skeleton"
@@ -185,6 +182,114 @@
                  "width":0,
                  "x":329.284750337382,
                  "y":331.443994601889
+                }, 
+                {
+                 "height":639.333,
+                 "id":29,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Name",
+                         "type":"string",
+                         "value":"Left"
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boundary"
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":26.6667,
+                 "x":1.78135985155194,
+                 "y":-0.098348852901438
+                }, 
+                {
+                 "height":28.6664,
+                 "id":30,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Name",
+                         "type":"string",
+                         "value":"Top"
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boundary"
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":956,
+                 "x":2.43184885290161,
+                 "y":1.86113198380571
+                }, 
+                {
+                 "height":639.333,
+                 "id":31,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Name",
+                         "type":"string",
+                         "value":"Right"
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boundary"
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":29.3333,
+                 "x":928.923093589744,
+                 "y":0.981273279352237
+                }, 
+                {
+                 "height":27.333,
+                 "id":32,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Name",
+                         "type":"string",
+                         "value":"Bottom"
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boundary"
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":956,
+                 "x":3.51147098515527,
+                 "y":610.355092442645
                 }],
          "opacity":1,
          "properties":[
@@ -199,7 +304,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":29,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

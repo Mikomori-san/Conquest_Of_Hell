@@ -15,6 +15,8 @@ public:
 	void init() override;
 	int getLayerNr() override { return layerNr; }
 	void setLayerNr(int nr) override { layerNr = nr; }
+	std::weak_ptr<GameObject> getGameObjectRef() override { return this->gameObject; }
+
 private:
 	std::vector<std::shared_ptr<GraphicsCP>> renderComponents;
 };

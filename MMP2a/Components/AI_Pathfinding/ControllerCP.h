@@ -7,7 +7,7 @@ typedef GameObject;
 class ControllerCP : public Component
 {
 public:
-	ControllerCP(std::weak_ptr<GameObject> gameObject, std::string id, std::vector<std::shared_ptr<GameObject>> incPlayers, std::vector<std::shared_ptr<GameObject>> incPatrolPoints) : Component(gameObject, id), players(incPlayers), patrolPoints(incPatrolPoints) { health = 0; maxHealth = 0; };
+	ControllerCP(std::weak_ptr<GameObject> gameObject, std::string id, std::vector<std::shared_ptr<GameObject>> incPlayers) : Component(gameObject, id), players(incPlayers) { health = 0; maxHealth = 0; };
 	void update(float deltaTime) override;
 	std::string getComponentId() override { return this->componentId; };
 	void setComponentId(std::string id) override { this->componentId = id; };

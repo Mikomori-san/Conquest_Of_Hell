@@ -14,6 +14,7 @@ public:
 	virtual void init() override = 0;
 	virtual int getLayerNr() = 0;
 	virtual void setLayerNr(int nr) = 0;
+	virtual std::weak_ptr<GameObject> getGameObjectRef() = 0;
 protected:
 	std::shared_ptr<sf::RenderWindow> window;
 	int layerNr;
