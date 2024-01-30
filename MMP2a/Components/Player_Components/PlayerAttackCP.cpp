@@ -19,7 +19,7 @@ void PlayerAttackCP::update(float deltaTime)
 		auto stats = gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
 		auto input = gameObject.lock()->getComponentsOfType<InputCP>().at(0);
 
-		if (InputManager::getInstance().getKeyDown(sf::Keyboard::Q))
+		if (InputManager::getInstance().getKeyDown(attackKey))
 		{
 			float distance;
 			sf::Vector2f playerPos;

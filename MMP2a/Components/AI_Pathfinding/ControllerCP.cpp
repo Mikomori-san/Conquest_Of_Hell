@@ -7,6 +7,7 @@
 #include "States/AttackPlayerState.h"
 #include "SteeringCP.h"
 #include <iostream>
+#include "../Enemy_Components/EnemyAttackCP.h"
 
 void ControllerCP::update(float deltaTime)
 {
@@ -18,23 +19,31 @@ void ControllerCP::update(float deltaTime)
 		float nearestDistance = std::numeric_limits<float>::max();
 		sf::Vector2f myPos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 		std::shared_ptr<GameObject> nearestPlayer;
-
+		std::vector<std::weak_ptr<GameObject>> newPlayers;
+		
 		for (auto& player : players)
 		{
-			sf::Vector2f playerPos = player->getComponentsOfType<TransformationCP>().at(0)->getPosition();
-			
-			float distance = (playerPos.x - myPos.x) * (playerPos.x - myPos.x) + (playerPos.y - myPos.y) * (playerPos.y - myPos.y);
-
-			if (nearestDistance > distance)
+			if (!player.expired())
 			{
-				nearestDistance = distance;
-				nearestPlayer = player;
+				newPlayers.push_back(player);
+				auto existingPlayer = player.lock();
+
+				sf::Vector2f playerPos = existingPlayer->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+				float distance = (playerPos.x - myPos.x) * (playerPos.x - myPos.x) + (playerPos.y - myPos.y) * (playerPos.y - myPos.y);
+
+				if (nearestDistance > distance)
+				{
+					nearestDistance = distance;
+					nearestPlayer = existingPlayer;
+				}
 			}
 		}
+		players = newPlayers;
 
 		nearestDistance /= 100;
 
-		std::cout << "Near Player" << std::endl;
+		go->getComponentsOfType<EnemyAttackCP>().at(0)->setClosestPlayer(nearestPlayer);
+		
 		if (!std::dynamic_pointer_cast<AttackPlayerState>(currentState))
 		{
 			currentState = std::make_shared<AttackPlayerState>(gameObject, nearestPlayer);

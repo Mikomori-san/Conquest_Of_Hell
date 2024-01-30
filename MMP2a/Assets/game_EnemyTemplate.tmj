@@ -62,7 +62,7 @@
                         {
                          "name":"AttackButton",
                          "type":"string",
-                         "value":"Q"
+                         "value":"E"
                         }, 
                         {
                          "name":"Damage",

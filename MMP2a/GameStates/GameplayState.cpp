@@ -22,6 +22,8 @@
 #include "../Components/Player_Components/DashCP.h"
 #include "../Components//Player_Components/PlayerAttackCP.h"
 #include "../Enums/Enemy_Animationtype.h"
+#include "../Components/Enemy_Components/EnemyAttackCP.h"
+#include <iostream>
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -238,6 +240,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 																									// AB HIER NUR PROVISORISCH
 	std::shared_ptr<PlayerAttackCP> playerAttackCP;
+
 	for (auto& go : gameObjects)
 	{
 		if (go->getId().find("Player") != std::string::npos)
@@ -246,22 +249,18 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			break;
 		}
 	}
-	for (auto& go : gameObjects)
-	{
-		if (go->getId().find("Skeleton") != std::string::npos)
-		{
-			playerAttackCP->addEnemy(go); 
-		}
-	}
 
 	for (auto& go : gameObjects)
 	{
+
 		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
 		{
 			std::string objectType = stats.at(0)->getObjectType();
 			if (objectType == "Enemy")
 			{
-				std::vector<std::shared_ptr<GameObject>> players;
+				playerAttackCP->addEnemy(go);
+
+				std::vector<std::weak_ptr<GameObject>> players;
 				for (auto& go1 : gameObjects)
 				{
 					if (go1->getId().find("Player") != std::string::npos)
@@ -281,6 +280,9 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 
 				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
 				go->addComponent(enemyAISpriteUpdateCP);
+
+				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
+				go->addComponent(enemyAttackCP);
 			}
 		}
 	}
@@ -492,7 +494,8 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	playerTemp->addComponent(playerStats);
 
 	std::vector<std::weak_ptr<GameObject>> weak = {};
-	std::shared_ptr<PlayerAttackCP> playerAttackCP = std::make_shared<PlayerAttackCP>(playerTemp, "PlayerAttackCP", 200, weak, sf::Keyboard::Q);
+	sf::Keyboard::Key attackKey = sf::Keyboard::Q; //static_cast<sf::Keyboard::Key>(object.getProp("AttackButton")->getValue<std::string>()[0]);
+	std::shared_ptr<PlayerAttackCP> playerAttackCP = std::make_shared<PlayerAttackCP>(playerTemp, "PlayerAttackCP", 200, weak, attackKey);
 	playerTemp->addComponent(playerAttackCP);
 
 	gameObjects.push_back(playerTemp);

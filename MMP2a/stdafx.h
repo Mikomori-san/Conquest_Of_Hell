@@ -9,3 +9,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "tileson.hpp"
+#include "Trigonometry.h"
+#include "VectorAlgebra2D.h"
