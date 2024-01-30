@@ -19,6 +19,7 @@
 #include "../Components/AI_Pathfinding/SteeringCP.h"
 #include "../Components/AI_Pathfinding/AISpriteUpdateCP.h"
 #include "../Components/AI_Pathfinding/AStarCP.h"
+#include "../Boss/BossAttackCP.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -404,76 +405,76 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 
 void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 {
-	int idNr = object.getProp("EnemyNr")->getValue<int>();
-	std::string stringId = object.getProp("EnemyName")->getValue<std::string>();
-	stringId += '0' + idNr;
+	//int idNr = object.getProp("EnemyNr")->getValue<int>();
+	//std::string stringId = object.getProp("EnemyName")->getValue<std::string>();
+	//stringId += '0' + idNr;
 
-	std::shared_ptr<GameObject> enemyTemp = std::make_shared<GameObject>(stringId);
+	//std::shared_ptr<GameObject> enemyTemp = std::make_shared<GameObject>(stringId);
 
-	const int ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
+	//const int ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
 
-	std::string texName = "";
+	//std::string texName = "";
 
-	if (enemyTemp->getId().find("Impostor") != std::string::npos)
-	{
-		texName = "ImpostorTexture";
-	}
-	else if (enemyTemp->getId().find("Crawler") != std::string::npos)
-	{
-		texName = "CrawlerTexture";
-	}
+	//if (enemyTemp->getId().find("Impostor") != std::string::npos)
+	//{
+	//	texName = "ImpostorTexture";
+	//}
+	//else if (enemyTemp->getId().find("Crawler") != std::string::npos)
+	//{
+	//	texName = "CrawlerTexture";
+	//}
 
-	if (!AssetManager::getInstance().Textures[texName])
-	{
-		AssetManager::getInstance().loadTexture(texName, object.getProp("EnemyTexture")->getValue<std::string>());
-	}
-	Animationtype aniType;
-	if (enemyTemp->getId().find("Impostor") != std::string::npos)
-	{
-		aniType = Animationtype::Right;
-	}
-	else if (enemyTemp->getId().find("Crawler") != std::string::npos)
-	{
-		aniType = Animationtype::LeftUp;
-	}
-	std::shared_ptr<AnimatedGraphicsCP> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
-		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
-	);
+	//if (!AssetManager::getInstance().Textures[texName])
+	//{
+	//	AssetManager::getInstance().loadTexture(texName, object.getProp("EnemyTexture")->getValue<std::string>());
+	//}
+	//Animationtype aniType;
+	//if (enemyTemp->getId().find("Impostor") != std::string::npos)
+	//{
+	//	aniType = Animationtype::Right;
+	//}
+	//else if (enemyTemp->getId().find("Crawler") != std::string::npos)
+	//{
+	//	aniType = Animationtype::LeftUp;
+	//}
+	//std::shared_ptr<AnimatedGraphicsCP> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
+	//	enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
+	//);
 
-	enemyTemp->addComponent(enemyGraphicsCP);
+	//enemyTemp->addComponent(enemyGraphicsCP);
 
-	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
-	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
+	//const float VELOCITY = object.getProp("Velocity")->getValue<int>();
+	//sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
 
-	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(enemyTemp, "EnemyTransformationCP", pos, object.getRotation(), object.getSize().x);
-	transCP->setOriginalVelocity(VELOCITY);
-	transCP->setBackupVel();
+	//std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(enemyTemp, "EnemyTransformationCP", pos, object.getRotation(), object.getSize().x);
+	//transCP->setOriginalVelocity(VELOCITY);
+	//transCP->setBackupVel();
 
-	enemyTemp->addComponent(transCP);
+	//enemyTemp->addComponent(transCP);
 
-	std::shared_ptr<RectCollisionCP> enemyCollisionCP = std::make_shared<RectCollisionCP>(enemyTemp, "EnemyCollisionCP",
-		sf::Vector2f(enemyGraphicsCP->getSprite().getTextureRect().getSize().x,
-			enemyGraphicsCP->getSprite().getTextureRect().getSize().y
-		),
-		object.getProp("isTrigger")->getValue<bool>(), 1
-	);
-	enemyTemp->addComponent(enemyCollisionCP);
+	//std::shared_ptr<RectCollisionCP> enemyCollisionCP = std::make_shared<RectCollisionCP>(enemyTemp, "EnemyCollisionCP",
+	//	sf::Vector2f(enemyGraphicsCP->getSprite().getTextureRect().getSize().x,
+	//		enemyGraphicsCP->getSprite().getTextureRect().getSize().y
+	//	),
+	//	object.getProp("isTrigger")->getValue<bool>(), 1
+	//);
+	//enemyTemp->addComponent(enemyCollisionCP);
 
-	float mass = object.getProp("Mass")->getValue<float>();
-	std::shared_ptr<RigidBodyCP> enemyRigidBodyCP = std::make_shared<RigidBodyCP>(enemyTemp, "EnemyRigidBodyCP", mass, mass == 0.f ? 0.f : 1.f / mass,
-		transCP->getDirection() * transCP->getVelocity()
-	);
-	enemyTemp->addComponent(enemyRigidBodyCP);
+	//float mass = object.getProp("Mass")->getValue<float>();
+	//std::shared_ptr<RigidBodyCP> enemyRigidBodyCP = std::make_shared<RigidBodyCP>(enemyTemp, "EnemyRigidBodyCP", mass, mass == 0.f ? 0.f : 1.f / mass,
+	//	transCP->getDirection() * transCP->getVelocity()
+	//);
+	//enemyTemp->addComponent(enemyRigidBodyCP);
 
-	std::shared_ptr<SpriteRenderCP> enemyRenderCP = std::make_shared<SpriteRenderCP>(enemyTemp, "EnemyRenderCP", window, group.getProp("LayerNr")->getValue<int>());
-	enemyTemp->addComponent(enemyRenderCP);
+	//std::shared_ptr<SpriteRenderCP> enemyRenderCP = std::make_shared<SpriteRenderCP>(enemyTemp, "EnemyRenderCP", window, group.getProp("LayerNr")->getValue<int>());
+	//enemyTemp->addComponent(enemyRenderCP);
 
-	int hp = object.getProp("Health")->getValue<int>();
-	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, 25, "Enemy");
-	enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
-	enemyTemp->addComponent(enemyStats);
+	//int hp = object.getProp("Health")->getValue<int>();
+	//std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, 25, "Enemy");
+	//enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
+	//enemyTemp->addComponent(enemyStats);
 
-	gameObjects.push_back(enemyTemp);
+	//gameObjects.push_back(enemyTemp);
 }
 
 void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
@@ -571,7 +572,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 		aniType = Animationtype::Right; //might need change
 	}
 	std::shared_ptr<AnimatedGraphicsCP> bossGraphicsCP = std::make_shared<AnimatedGraphicsCP>(
-		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], ANIMATION_SPEED, aniType
+		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, aniType
 	);
 
 	bossTemp->addComponent(bossGraphicsCP);
@@ -607,8 +608,9 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 
 	int hp = object.getProp("Health")->getValue<int>();
 	std::shared_ptr<StatsCP> bossStats = std::make_shared<StatsCP>(bossTemp, "BossStatsCP", hp, 25, "Boss");
-	//enemyStats->ifEnemyAddPatrolPoints(object.getProp("PatrolNr")->getValue<std::string>());
 	bossTemp->addComponent(bossStats);
 
+	std::shared_ptr<BossAttackCP> attack = std::make_shared<BossAttackCP>(BossAttackCP(bossTemp, "BossAttackCP"));
+	bossTemp->addComponent(attack);
 	gameObjects.push_back(bossTemp);
 }

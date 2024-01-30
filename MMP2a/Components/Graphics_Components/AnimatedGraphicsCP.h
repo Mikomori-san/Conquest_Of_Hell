@@ -1,7 +1,7 @@
 #pragma once
 #include "GraphicsCP.h"
 #include "../../Enums/Animationtype.h"
-
+#include "../../Enums/AnimationtypeBoss.h"
 class AnimatedGraphicsCP : public GraphicsCP {
 public:
     AnimatedGraphicsCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture, std::vector<int> animationTypeFramesCountVar, float animationSpeed, Animationtype aniType)
@@ -32,6 +32,7 @@ public:
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
+    AnimationtypeBoss m_bossAnimation = Idle;
     float animationTimeIndex = 0;
     const float ANIMATION_SPEED;
     const int TILING_X;

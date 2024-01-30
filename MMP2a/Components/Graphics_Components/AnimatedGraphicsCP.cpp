@@ -8,7 +8,6 @@ void AnimatedGraphicsCP::init()
 {
 	sprite->setScale(sf::Vector2f(1, 1));
 	sprite->setPosition(sf::Vector2f(0, 0));
-
 	sprite->setTextureRect(sf::IntRect(
 		0,
 		0,
@@ -50,13 +49,27 @@ void AnimatedGraphicsCP::setAnimationType(Animationtype type)
 
 void AnimatedGraphicsCP::doAnimation()
 {
-	auto animationFrame = (int)animationTimeIndex % animationTypeFramesCount[(int)m_animationType];
+	if (!gameObject.expired())
+	{
+		std::shared_ptr<GameObject> go = gameObject.lock();
+		int animationFrame;
+		if (go->getId().find("Boss") != std::string::npos)
+		{
+			animationFrame = (int)animationTimeIndex % animationTypeFramesCount[(int)m_bossAnimation];
+		}
+		else
+		{
+			animationFrame = (int)animationTimeIndex % animationTypeFramesCount[(int)m_animationType];
+		}
+	
+		
 
-	sf::IntRect textureRect;
-	textureRect.left = animationFrame * sprite->getTextureRect().width;
-	textureRect.top = m_animationType * sprite->getTextureRect().height;
-	textureRect.width = sprite->getTextureRect().width;
-	textureRect.height = sprite->getTextureRect().height;
+		sf::IntRect textureRect;
+		textureRect.left = animationFrame * sprite->getTextureRect().width;
+		textureRect.top = m_animationType * sprite->getTextureRect().height;
+		textureRect.width = sprite->getTextureRect().width;
+		textureRect.height = sprite->getTextureRect().height;
 
-	sprite->setTextureRect(textureRect);
+		sprite->setTextureRect(textureRect);
+	}
 }

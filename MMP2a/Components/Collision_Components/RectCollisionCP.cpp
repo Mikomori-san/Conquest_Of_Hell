@@ -20,10 +20,10 @@ void RectCollisionCP::update(float deltaTime)
             {
                 ani = go->getComponentsOfType<GraphicsCP>().at(0);
                 collisionRect = sf::FloatRect(
-                    transf->getPosition().x - ani->getSprite().getGlobalBounds().width,
-                    transf->getPosition().y - ani->getSprite().getGlobalBounds().height,
-                    ani->getSprite().getGlobalBounds().width * 3,
-                    ani->getSprite().getGlobalBounds().height * 3
+                    transf->getPosition().x - ani->getSprite().getGlobalBounds().width * 2,
+                    transf->getPosition().y - ani->getSprite().getGlobalBounds().height * 2,
+                    ani->getSprite().getGlobalBounds().width * 6,
+                    ani->getSprite().getGlobalBounds().height * 6
                 );
             }
             else
