@@ -1,5 +1,6 @@
 #pragma once
 #include "../Component.h"
+#include "../../Enums/Player_Animationtype.h"
 
 class PlayerAttackCP : public Component
 {
@@ -15,4 +16,16 @@ private:
     std::vector<std::weak_ptr<GameObject>> enemies;
     sf::Keyboard::Key attackKey;
     int attackRange;
+
+    bool hasAttacked;
+    bool inputLocked;
+    bool animationLocked;
+
+    float attackTimer;
+    float attackCooldown;
+
+    int originalAnimationSpeed;
+    Player_Animationtype lastAnimation;
+
+    sf::Color lastColor;
 };
