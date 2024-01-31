@@ -2,6 +2,7 @@
 #include "RenderManager.h"
 #include <algorithm>
 #include "InputManager.h"
+#include <iostream>
 
 bool compareByLayerNr(const std::shared_ptr<RenderCP>& a, const std::shared_ptr<RenderCP>& b);
 
@@ -9,15 +10,14 @@ void RenderManager::render()
 {
 	std::sort(layersToRender.begin(), layersToRender.end(), compareByLayerNr);
 
-	std::vector<std::shared_ptr<RenderCP>> newLayersToRender;
-
 	for (auto& comp : layersToRender)
 	{
-		if (!comp->getGameObjectRef().expired())
+		if (comp->getComponentId().find("Enemy") != std::string::npos)
 		{
-			comp->draw();
-			newLayersToRender.push_back(comp);
+			int a = 0;
 		}
+		comp->draw();
+		std::cout << comp->getComponentId() << std::endl;
 	}
 	layersToRender = newLayersToRender;
 }
@@ -31,3 +31,7 @@ bool compareByLayerNr(const std::shared_ptr<RenderCP>& a, const std::shared_ptr<
 	return a->getLayerNr() < b->getLayerNr();
 }
 
+void RenderManager::resetLayers(std::vector<std::shared_ptr<RenderCP>> newLayersToRender) 
+{
+	layersToRender = newLayersToRender;
+}

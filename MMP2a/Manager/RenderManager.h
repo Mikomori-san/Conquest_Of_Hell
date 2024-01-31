@@ -13,6 +13,7 @@ public:
 
 	void render();
 	void addToLayers(std::shared_ptr<RenderCP> renderCP);
+	void resetLayers(std::vector<std::shared_ptr<RenderCP>> newLayersToRender);
 	std::vector<std::shared_ptr<RenderCP>>& getLayers() { return layersToRender; }
 
 private:

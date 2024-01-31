@@ -124,10 +124,28 @@ void GameplayState::update(float deltaTime)
 
 	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GELÖSCHT
 
+	std::vector<std::shared_ptr<RenderCP>> renderCPs;
 	for (auto& go : gameObjects)
 	{
 		go->update(deltaTime);
+		if(go->getId().find("Impostor") != std::string::npos)
+		{
+			int i = 0;
+		}
+		for (auto& renderCP : go->getComponentsOfType<RenderCP>())
+		{
+			renderCPs.push_back(renderCP);
+		}
+
+		//std::cout << "go ID " << go->getId() << std::endl;
+		/*
+		if (go->getId().find("Player1") != std::string::npos)
+		{
+			std::cout << "Player Pos: " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().x << ", " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().y << std::endl;
+		}
+		*/
 	}
+	RenderManager::getInstance().resetLayers(renderCPs);
 
 	PhysicsManager::getInstance().update(gameObjects, deltaTime);
 }
@@ -264,11 +282,15 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Enemy")
 			{
-				createEnemies(object, group);
+				//createEnemies(object, group);
 			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boundary")
 			{
 				createBoundary(object, group);
+			}
+			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			{
+				createSpawner(object, group);
 			}
 		}
 	}
@@ -291,6 +313,33 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 }
 
+void GameplayState::createSpawner(tson::Object& object, tson::Layer group)
+{
+
+	
+	GameObjectPtr enemy1 = createEnemies(object, group, 0);
+	GameObjectPtr enemy2 = createEnemies(object, group, 1);
+
+	//--------------------------------------------------------------------------------------------------------------------------------
+
+	std::string id = "Spawner " + object.getProp("SpawnerNr")->getValue<std::string>();
+	std::shared_ptr<GameObject> spawnerTemp = std::make_shared<GameObject>(id);
+
+	std::string enemyName = object.getProp("EnemyName")->getValue<std::string>();
+	int maxEnemy = object.getProp("MaxEnemies")->getValue<int>();
+	float spawnTime = object.getProp("SpawnTime")->getValue<float>();
+
+	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
+
+	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime);
+	
+
+	spawnerTemp->addComponent(spawnerCP);
+
+
+	gameObjects.push_back(spawnerTemp);
+
+}
 void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 {
 	std::string id = "Boundary " + object.getProp("Name")->getValue<std::string>();
@@ -311,11 +360,11 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 	gameObjects.push_back(boundaryTemp);
 }
 
-void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
+GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer group, int id)
 {
 	int idNr = object.getProp("EnemyNr")->getValue<int>();
 	std::string stringId = object.getProp("EnemyName")->getValue<std::string>();
-	stringId += '0' + idNr;
+	stringId += id + idNr;
 
 	std::shared_ptr<GameObject> enemyTemp = std::make_shared<GameObject>(stringId);
 
@@ -343,7 +392,6 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(enemyTemp, "EnemyTransformationCP", pos, object.getRotation(), object.getSize().x);
 	transCP->setOriginalVelocity(VELOCITY);
 	transCP->setBackupVel();
-
 	enemyTemp->addComponent(transCP);
 
 	std::shared_ptr<RectCollisionCP> enemyCollisionCP = std::make_shared<RectCollisionCP>(enemyTemp, "EnemyCollisionCP",
@@ -367,8 +415,9 @@ void GameplayState::createEnemies(tson::Object& object, tson::Layer group)
 	int dmg = object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, dmg, "Enemy");
 	enemyTemp->addComponent(enemyStats);
-
-	gameObjects.push_back(enemyTemp);
+	std::shared_ptr<GameObject>& enemyREF = enemyTemp;
+	return enemyTemp;
+	/*gameObjects.push_back(enemyTemp);*/
 }
 
 void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
