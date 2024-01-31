@@ -48,14 +48,8 @@ void SpriteRenderCP::draw()
 					}
 					break;
 				}
-
-
 				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
 				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);
-
-				collision = go->getComponentsOfType<RectCollisionCP>().at(1)
-					->getComponentId().find("BossAttackRange") ? go->getComponentsOfType<RectCollisionCP>().at(0) : go->getComponentsOfType<RectCollisionCP>().at(1);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Red);
 			}
 		}
 	}

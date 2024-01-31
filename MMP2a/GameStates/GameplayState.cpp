@@ -236,46 +236,11 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 
 	for (auto& go : gameObjects)
 	{
-		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
-		{
-			std::string objectType = stats.at(0)->getObjectType();
-			if (objectType == "Enemy")
-			{
-				std::vector<std::shared_ptr<GameObject>> players;
-				std::vector<std::shared_ptr<GameObject>> patrolPoints;
-				for (auto& go1 : gameObjects)
-				{
-					if (go1->getId().find("Player") != std::string::npos)
-					{
-						players.push_back(go1);
-					}
-					else if (go1->getId().find("PatrolPoint") != std::string::npos)
-					{
-						if (go1->getId().find(stats.at(0)->ifEnemyGetPatrolPoints()) != std::string::npos)
-						{
-							patrolPoints.push_back(go1);
-						}
-					}
-				}
-
-				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players, patrolPoints);
-				go->addComponent(enemyAIController);
-
-				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
-				go->addComponent(enemyAStarCP);
-
-				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
-				go->addComponent(enemySteeringCP);
-
-				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
-				go->addComponent(enemyAISpriteUpdateCP);
-			}
-		}
 		if (go->getId().find("Boss") != std::string::npos)
 		{
 			for (auto& go1 : gameObjects)
 			{
-				if (go1->getId().find("Player1") != std::string::npos)
+				if (go1->getId().find("Player") != std::string::npos)
 				{
 					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go, "BossAttackCP", go1));
 					go->addComponent(attack);
@@ -510,9 +475,6 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 		object.getProp("isTrigger")->getValue<bool>(),1
 	);
 	bossTemp->addComponent(bossCollisionCP);
-	std::shared_ptr<RectCollisionCP> bossAttackRange = std::make_shared<RectCollisionCP>(bossTemp, "BossAttackRange", sf::Vector2f(bossGraphicsCP->getSprite().getTextureRect().getSize().x,
-		bossGraphicsCP->getSprite().getTextureRect().getSize().y), object.getProp("isTrigger")->getValue<bool>(), 4);
-	bossTemp->addComponent(bossAttackRange);
 
 	float mass = object.getProp("Mass")->getValue<float>();
 	std::shared_ptr<RigidBodyCP> bossRigidBodyCP = std::make_shared<RigidBodyCP>(bossTemp, "BossRigidBodyCP", mass, mass == 0.f ? 0.f : 1.f / mass,

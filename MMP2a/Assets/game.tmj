@@ -41,12 +41,12 @@
         }, 
         {
          "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3489, 3505, 3490, 3506, 3489, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3608, 3609, 3610, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3624, 3625, 3626, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3652, 3604, 3653, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3652, 3604, 3653, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3652, 3604, 3653, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -83,7 +83,7 @@
          "objects":[
                 {
                  "height":0,
-                 "id":4,
+                 "id":5,
                  "name":"",
                  "properties":[
                         {
@@ -115,68 +115,6 @@
                          "name":"PlayerNr",
                          "type":"int",
                          "value":1
-                        }, 
-                        {
-                         "name":"PlayerTexture",
-                         "type":"string",
-                         "value":"Assets\\Textures\\SpaceShip.png"
-                        }, 
-                        {
-                         "name":"Velocity",
-                         "type":"int",
-                         "value":150
-                        }, 
-                        {
-                         "name":"isAI",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":80.8966666666666,
-                 "y":507.756666666667
-                }, 
-                {
-                 "height":0,
-                 "id":5,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"AnimationSpeed",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"ArrowKeys",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"Health",
-                         "type":"int",
-                         "value":100
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":100
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Player"
-                        }, 
-                        {
-                         "name":"PlayerNr",
-                         "type":"int",
-                         "value":2
                         }, 
                         {
                          "name":"PlayerTexture",
@@ -204,130 +142,6 @@
                  "width":0,
                  "x":141.04625199362,
                  "y":549.205741626794
-                }, 
-                {
-                 "height":0,
-                 "id":7,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"AnimationSpeed",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"EnemyName",
-                         "type":"string",
-                         "value":"Impostor"
-                        }, 
-                        {
-                         "name":"EnemyNr",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"EnemyTexture",
-                         "type":"string",
-                         "value":"Assets\\Textures\\SpaceShip.png"
-                        }, 
-                        {
-                         "name":"Health",
-                         "type":"int",
-                         "value":100
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":200
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Enemy"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"1"
-                        }, 
-                        {
-                         "name":"Velocity",
-                         "type":"int",
-                         "value":70
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":338,
-                 "y":452
-                }, 
-                {
-                 "height":0,
-                 "id":8,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"AnimationSpeed",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"EnemyName",
-                         "type":"string",
-                         "value":"Crawler"
-                        }, 
-                        {
-                         "name":"EnemyNr",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"EnemyTexture",
-                         "type":"string",
-                         "value":"Assets\\Textures\\Crawler.png"
-                        }, 
-                        {
-                         "name":"Health",
-                         "type":"int",
-                         "value":100
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":0
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Enemy"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
-                        }, 
-                        {
-                         "name":"Velocity",
-                         "type":"int",
-                         "value":70
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":362,
-                 "y":556
                 }, 
                 {
                  "height":639.333333333333,
@@ -439,219 +253,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":16,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":400,
-                 "y":334.666666666666
-                }, 
-                {
-                 "height":0,
-                 "id":17,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":529.333333333334,
-                 "y":78.666666666667
-                }, 
-                {
-                 "height":0,
-                 "id":18,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":628,
-                 "y":336
-                }, 
-                {
-                 "height":0,
-                 "id":19,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":645.333333333333,
-                 "y":486.666666666667
-                }, 
-                {
-                 "height":0,
-                 "id":21,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":810.666666666667,
-                 "y":410.666666666667
-                }, 
-                {
-                 "height":0,
-                 "id":22,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"1"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":806.666666666666,
-                 "y":558.666666666667
-                }, 
-                {
-                 "height":92.6664,
-                 "id":23,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"Name",
-                         "type":"string",
-                         "value":"Door"
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Boundary"
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":153.333333333333,
-                 "x":323.333333333333,
-                 "y":31.0001333333333
-                }, 
-                {
-                 "height":99.3330666666667,
-                 "id":24,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"Name",
-                         "type":"string",
-                         "value":"PathToDoorLeft"
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Boundary"
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":27.9996666666667,
-                 "x":323.3335,
-                 "y":127.000133333333
-                }, 
-                {
-                 "height":99.3331,
-                 "id":25,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"Name",
-                         "type":"string",
-                         "value":"PathToDoorRight"
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Boundary"
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":27.9997,
-                 "x":447.333483333333,
-                 "y":125.000116666667
-                }, 
-                {
-                 "height":0,
                  "id":26,
                  "name":"Boss",
                  "properties":[
@@ -721,12 +322,12 @@
         }, 
         {
          "data":[3409, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3455, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3592, 3593, 3594, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3409, 0, 0, 0, 3410, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3409, 0, 0, 0, 3410, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3409, 0, 0, 0, 3410, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3409, 0, 0, 0, 3410, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
-            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3409, 0, 0, 0, 3410, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
+            3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
             3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
             3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
             3409, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3410,
