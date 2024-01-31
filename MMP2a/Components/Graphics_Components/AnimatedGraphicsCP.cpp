@@ -56,20 +56,34 @@ void AnimatedGraphicsCP::doAnimation()
 		if (go->getId().find("Boss") != std::string::npos)
 		{
 			animationFrame = (int)animationTimeIndex % animationTypeFramesCount[(int)m_bossAnimation];
+			sf::IntRect textureRect;
+			textureRect.left = animationFrame * sprite->getTextureRect().width;
+			textureRect.top = m_bossAnimation * sprite->getTextureRect().height;
+			textureRect.width = sprite->getTextureRect().width;
+			textureRect.height = sprite->getTextureRect().height;
+
+			sprite->setTextureRect(textureRect);
 		}
-		else
+		else if(go->getId().find("Player") != std::string::npos)
 		{
 			animationFrame = (int)animationTimeIndex % animationTypeFramesCount[(int)m_animationType];
+			sf::IntRect textureRect;
+			textureRect.left = animationFrame * sprite->getTextureRect().width;
+			textureRect.top = m_animationType * sprite->getTextureRect().height;
+			textureRect.width = sprite->getTextureRect().width;
+			textureRect.height = sprite->getTextureRect().height;
+
+			sprite->setTextureRect(textureRect);
 		}
 	
 		
 
-		sf::IntRect textureRect;
-		textureRect.left = animationFrame * sprite->getTextureRect().width;
-		textureRect.top = m_animationType * sprite->getTextureRect().height;
-		textureRect.width = sprite->getTextureRect().width;
-		textureRect.height = sprite->getTextureRect().height;
+		//sf::IntRect textureRect;
+		//textureRect.left = animationFrame * sprite->getTextureRect().width;
+		//textureRect.top = m_animationType * sprite->getTextureRect().height;
+		//textureRect.width = sprite->getTextureRect().width;
+		//textureRect.height = sprite->getTextureRect().height;
 
-		sprite->setTextureRect(textureRect);
+		//sprite->setTextureRect(textureRect);
 	}
 }
