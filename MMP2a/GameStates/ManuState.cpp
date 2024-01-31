@@ -16,22 +16,27 @@ void MenuState::init(sf::RenderWindow& rWindow)
 {
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
 
-	this->window->setSize(sf::Vector2u(975, 650));
+	this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
 
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
 
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackground.png");
+	AssetManager::getInstance().loadTexture("Title", "Assets\\Textures\\Title.png");
 	
 	if (!AssetManager::getInstance().Textures["BackgroundImage"])
 	{
 		std::cout << "Background-Image not found " << std::endl;
 	}
 
-		sf::Texture bgTexture = *AssetManager::getInstance().Textures["BackgroundImage"];
-		backgroundSprite.setTexture(bgTexture);
+	bgTexture = *AssetManager::getInstance().Textures["BackgroundImage"];
+	backgroundSprite.setTexture(bgTexture);
+	backgroundSprite.scale(0.5f, 0.5f);
 
+	titleTexture = *AssetManager::getInstance().Textures["Title"];
+	titleSprite.setTexture(titleTexture);
+	titleSprite.scale(0.5f, 0.5f);
 
 }
 
@@ -51,4 +56,5 @@ void MenuState::render()
 
 	window->clear(sf::Color::Black);
 	window->draw(backgroundSprite);
+	window->draw(titleSprite);
 }

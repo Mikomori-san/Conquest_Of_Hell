@@ -17,4 +17,7 @@ private:
 
 	std::shared_ptr<sf::RenderWindow> window;
 	sf::Sprite backgroundSprite;
+	sf::Sprite titleSprite;
+	sf::Texture bgTexture;
+	sf::Texture titleTexture;
 };

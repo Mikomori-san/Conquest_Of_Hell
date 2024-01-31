@@ -72,7 +72,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
 
-	this->window->setSize(sf::Vector2u(975, 650));
+	this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
 
