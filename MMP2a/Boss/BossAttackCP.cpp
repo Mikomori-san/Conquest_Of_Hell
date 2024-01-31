@@ -20,7 +20,7 @@ void BossAttackCP::update(float deltaTime)
 		
 		sf::Vector2f playerPos = transPlayer->getPosition();
 		sf::Vector2f bossPos = transBoss->getPosition();
-
+		bossPos += transBoss->getOrigin(); //spawns ability at boss origin
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
 		if (squaredDistance < swapThreshold)
 		{
@@ -31,7 +31,7 @@ void BossAttackCP::update(float deltaTime)
 			executeCharm(bossPos, playerPos);
 		}
 	}
-	//ability2->update(deltaTime);
+	ability2->update(deltaTime);
 
 	
 	//ability1->update(deltaTime);

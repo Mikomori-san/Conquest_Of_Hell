@@ -43,7 +43,7 @@ void SpriteRenderCP::draw()
 					if (charm->getAlive())
 					{
 						window->draw(charm->getSprite());
-						DebugDraw::getInstance().drawRectOutline(charm->getSprite().getGlobalBounds(), sf::Color::Red);
+						DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);
 
 					}
 					break;

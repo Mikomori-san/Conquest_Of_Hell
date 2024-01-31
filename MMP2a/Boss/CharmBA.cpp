@@ -5,7 +5,7 @@ int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);
 	float PI = 3.141;
-	int rotation = static_cast<int>(angle * (-90.0f / static_cast<float>(PI)));
+	int rotation = static_cast<int>(angle * (90.f / static_cast<float>(PI)));
 	return rotation;
 }
 
@@ -52,6 +52,16 @@ void CharmBA::update(float deltaTime)
 void CharmBA::execute()
 {
 	charmPlayer();
+}
+
+const sf::FloatRect& CharmBA::getHitbox()
+{
+	hitbox = sprite.getGlobalBounds();
+	hitbox.width /= 3;
+	hitbox.height /= 3;
+	hitbox.left += hitbox.width;
+	hitbox.top += hitbox.height;
+	return hitbox;
 }
 
 void CharmBA::setAlive()

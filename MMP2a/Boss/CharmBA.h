@@ -15,12 +15,15 @@ public:
 	const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 	const sf::Sprite& getSprite() { return sprite; }
 
+	const sf::FloatRect& getHitbox();
+
 	void setAlive();
 	bool getAlive() const { return alive; };
 	void setDead();
 private:
 	void charmPlayer();
 	sf::Sprite sprite;
+	sf::FloatRect hitbox;
 	float ttl = 3;
 	float moveSpeed = 1;
 	float animationTimeIndex = 0;
