@@ -21,7 +21,7 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Gameplay", std::make_shared<GameplayState>());
 	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
 
-	GameStateManager::getInstance().setState("Gameplay", window);
+	GameStateManager::getInstance().setState("Menu", window);
 }
 
 void Game::run()

@@ -14,12 +14,31 @@
 
 void MenuState::init(sf::RenderWindow& rWindow)
 {
+	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
+
+	this->window->setSize(sf::Vector2u(975, 650));
+
+	DebugDraw::getInstance().initialize(*window);
+
+	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
+
+	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackground.png");
 	
+	if (!AssetManager::getInstance().Textures["BackgroundImage"])
+	{
+		std::cout << "Background-Image not found " << std::endl;
+	}
+
+		sf::Texture bgTexture = *AssetManager::getInstance().Textures["BackgroundImage"];
+		backgroundSprite.setTexture(bgTexture);
+
+
 }
 
 void MenuState::exit()
 {
-	
+	AssetManager::getInstance().unloadAssets();
+	DebugDraw::getInstance().unload();
 }
 
 void MenuState::update(float deltaTime)
@@ -27,40 +46,9 @@ void MenuState::update(float deltaTime)
 	
 }
 
-void MenuState::checkBackgroundPos()
-{
-	
-}
-
-
 void MenuState::render()
 {
-	
-}
 
-void MenuState::checkAreaBorders()
-{
-	
-}
-
-void MenuState::drawFloor(sf::Vector2f position, sf::Vector2i tiles, sf::Vector2i tileSize)
-{
-	
-}
-
-void MenuState::respawnPlayer()
-{
-	
-}
-
-void MenuState::addPlayerComponents(std::shared_ptr<GameObject> player, bool useArrowKeys)
-{
-	
-}
-
-
-
-void MenuState::addBackgroundComponents(std::shared_ptr<GameObject> Background)
-{
-	
+	window->clear(sf::Color::Black);
+	window->draw(backgroundSprite);
 }
