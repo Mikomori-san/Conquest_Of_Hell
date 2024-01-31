@@ -22,12 +22,12 @@ private:
 
 	void loadMap(std::string name, const sf::Vector2f& offset);
 	void createPlayers(tson::Object& object, tson::Layer group);
-	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, int id);
+	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, std::string id);
 	void createBoundary(tson::Object& object, tson::Layer group);
-	void createSpawner(tson::Object& object, tson::Layer group);
+	void createSpawner(tson::Object& object, tson::Layer group, sf::Vector2i& aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize);
 
-	template<typename T>
-	void doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize);
+	//template<typename T>
+	//void doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize);
 
 	std::unordered_map<std::string, TexturePtr> m_tileSetTexture;
 	const std::filesystem::path m_resourcePath{ "Assets" };

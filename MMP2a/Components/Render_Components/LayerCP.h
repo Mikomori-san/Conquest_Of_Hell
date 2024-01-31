@@ -20,7 +20,7 @@ public:
 
 	std::vector<std::shared_ptr<sf::Sprite>>& getLayer() { return layer; }
 
-	std::weak_ptr<GameObject> getGameObjectRef() override { return this->gameObject; }
+	std::weak_ptr<GameObject> getGO() override { return gameObject; }
 
 private:
 	std::vector<std::shared_ptr<sf::Sprite>> layer;

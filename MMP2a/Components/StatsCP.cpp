@@ -8,5 +8,6 @@ void StatsCP::update(float deltaTime)
 
 void StatsCP::init()
 {
-
+	health = 100;
+	damage = 25;
 }

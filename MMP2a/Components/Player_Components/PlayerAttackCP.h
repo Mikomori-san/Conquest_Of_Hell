@@ -7,6 +7,8 @@
 #include "../Input_Components/InputCP.h"
 #include "../Input_Components/MovementInputGamepadCP.h"
 #include "../../Enums/GamepadButton.h"
+#include "../Player_Components/DashCP.h"
+
 
 template <typename T>
 class PlayerAttackCP : public Component

@@ -124,130 +124,6 @@
          "name":"GameObjects",
          "objects":[
                 {
-                 "height":0,
-                 "id":4,
-                 "name":"Player0",
-                 "properties":[
-                        {
-                         "name":"AnimationSpeed",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"ArrowKeys",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"Health",
-                         "type":"int",
-                         "value":100
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":100
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Player"
-                        }, 
-                        {
-                         "name":"PlayerNr",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"PlayerTexture",
-                         "type":"string",
-                         "value":"Assets\\Textures\\SpaceShip.png"
-                        }, 
-                        {
-                         "name":"Velocity",
-                         "type":"int",
-                         "value":150
-                        }, 
-                        {
-                         "name":"isAI",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":456.896666666667,
-                 "y":420.756666666667
-                }, 
-                {
-                 "height":0,
-                 "id":5,
-                 "name":"Player1",
-                 "properties":[
-                        {
-                         "name":"AnimationSpeed",
-                         "type":"int",
-                         "value":8
-                        }, 
-                        {
-                         "name":"ArrowKeys",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
-                         "name":"Health",
-                         "type":"int",
-                         "value":100
-                        }, 
-                        {
-                         "name":"Mass",
-                         "type":"float",
-                         "value":100
-                        }, 
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"Player"
-                        }, 
-                        {
-                         "name":"PlayerNr",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"PlayerTexture",
-                         "type":"string",
-                         "value":"Assets\\Textures\\SpaceShip.png"
-                        }, 
-                        {
-                         "name":"Velocity",
-                         "type":"int",
-                         "value":150
-                        }, 
-                        {
-                         "name":"isAI",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
-                         "name":"isTrigger",
-                         "type":"bool",
-                         "value":false
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":503.04625199362,
-                 "y":420.205741626794
-                }, 
-                {
                  "height":656.242424242424,
                  "id":9,
                  "name":"",
@@ -300,28 +176,6 @@
                  "width":29.3333333333333,
                  "x":946.78787878788,
                  "y":-0.514984848484829
-                }, 
-                {
-                 "height":0,
-                 "id":16,
-                 "name":"",
-                 "properties":[
-                        {
-                         "name":"ObjectGroup",
-                         "type":"string",
-                         "value":"PatrolPoint"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":399,
-                 "y":345.666666666666
                 }, 
                 {
                  "height":25.4240000000001,
@@ -712,9 +566,14 @@
                          "value":8
                         }, 
                         {
+                         "name":"Damage",
+                         "type":"string",
+                         "value":"25"
+                        }, 
+                        {
                          "name":"EnemyName",
                          "type":"string",
-                         "value":"Impostor"
+                         "value":"Skeleton"
                         }, 
                         {
                          "name":"EnemyNr",
@@ -724,7 +583,7 @@
                         {
                          "name":"EnemyTexture",
                          "type":"string",
-                         "value":"Assets\\Textures\\SpaceShip.png"
+                         "value":"Assets\\Textures\\enemy.png"
                         }, 
                         {
                          "name":"Health",
@@ -734,7 +593,7 @@
                         {
                          "name":"Mass",
                          "type":"float",
-                         "value":200
+                         "value":0
                         }, 
                         {
                          "name":"MaxEnemies",
@@ -745,11 +604,6 @@
                          "name":"ObjectGroup",
                          "type":"string",
                          "value":"Spawner"
-                        }, 
-                        {
-                         "name":"PatrolNr",
-                         "type":"string",
-                         "value":"0"
                         }, 
                         {
                          "name":"SpawnTime",
@@ -804,6 +658,98 @@
                  "width":87,
                  "x":437.166666666667,
                  "y":293.038
+                }, 
+                {
+                 "height":0,
+                 "id":44,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"AnimationSpeed",
+                         "type":"int",
+                         "value":8
+                        }, 
+                        {
+                         "name":"ArrowKeys",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"AttackButton",
+                         "type":"string",
+                         "value":"E"
+                        }, 
+                        {
+                         "name":"AttackRange",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"Controller",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"ControllerNr",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"Damage",
+                         "type":"int",
+                         "value":25
+                        }, 
+                        {
+                         "name":"DodgeButton",
+                         "type":"string",
+                         "value":"Space"
+                        }, 
+                        {
+                         "name":"Health",
+                         "type":"int",
+                         "value":100
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"float",
+                         "value":100
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Player"
+                        }, 
+                        {
+                         "name":"PlayerNr",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"PlayerTexture",
+                         "type":"string",
+                         "value":"Assets\\Textures\\player.png"
+                        }, 
+                        {
+                         "name":"Velocity",
+                         "type":"int",
+                         "value":120
+                        }, 
+                        {
+                         "name":"isAI",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":461.333333333333,
+                 "y":420.666666666667
                 }],
          "opacity":1,
          "properties":[
@@ -876,7 +822,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":44,
+ "nextobjectid":45,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

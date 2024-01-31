@@ -8,7 +8,7 @@ class TransformationCP : public Component
 {
 public:
 	TransformationCP(std::weak_ptr<GameObject> gameObject, std::string id, sf::Vector2f& pos, float rotation, float scale)
-		: Component(gameObject, id), position(pos), origin(pos), scale(1), rotation(0)
+		: Component(gameObject, id), origin(pos), scale(1), rotation(0), originalPos(pos)
 	{}
 
 	virtual ~TransformationCP() = default;
@@ -59,4 +59,5 @@ protected:
 	float originalVel;
 	float backupVel = 0;
 	int posResetTimer = 0;
+	sf::Vector2f originalPos;
 };

@@ -26,47 +26,47 @@
 #include <iostream>
 #include "../Components/Input_Components/MovementInputGamepadCP.h"
 #include "../Enums/GamepadButton.h"
+#include "../Components/Spawner_Components/SpawnerCP.h"
 
-template<typename T>
-void GameplayState::doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize)
-{
-	for (auto& go : gameObjects)
-	{
-
-		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
-		{
-			std::string objectType = stats.at(0)->getObjectType();
-			if (objectType == "Enemy")
-			{
-				playerAttackCP->addEnemy(go);
-
-				std::vector<std::weak_ptr<GameObject>> players;
-				for (auto& go1 : gameObjects)
-				{
-					if (go1->getId().find("Player") != std::string::npos)
-					{
-						players.push_back(go1);
-					}
-				}
-
-				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
-				go->addComponent(enemyAIController);
-
-				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
-				go->addComponent(enemyAStarCP);
-
-				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
-				go->addComponent(enemySteeringCP);
-
-				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
-				go->addComponent(enemyAISpriteUpdateCP);
-
-				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
-				go->addComponent(enemyAttackCP);
-			}
-		}
-	}
-}
+//template<typename T>
+//void GameplayState::doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize)
+//{
+//	for (auto& go : gameObjects)
+//	{
+//		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
+//		{
+//			std::string objectType = stats.at(0)->getObjectType();
+//			if (objectType == "Enemy")
+//			{
+//				playerAttackCP->addEnemy(go);
+//
+//				std::vector<std::weak_ptr<GameObject>> players;
+//				for (auto& go1 : gameObjects)
+//				{
+//					if (go1->getId().find("Player") != std::string::npos)
+//					{
+//						players.push_back(go1);
+//					}
+//				}
+//
+//				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
+//				go->addComponent(enemyAIController);
+//
+//				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
+//				go->addComponent(enemyAStarCP);
+//
+//				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
+//				go->addComponent(enemySteeringCP);
+//
+//				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
+//				go->addComponent(enemyAISpriteUpdateCP);
+//
+//				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
+//				go->addComponent(enemyAttackCP);
+//			}
+//		}
+//	}
+//}
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -79,7 +79,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
 	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
 
-	loadMap("game_EnemyTemplate.tmj", sf::Vector2f());
+	loadMap("game.tmj", sf::Vector2f());
 
 	for (auto& go : gameObjects)
 	{
@@ -128,22 +128,11 @@ void GameplayState::update(float deltaTime)
 	for (auto& go : gameObjects)
 	{
 		go->update(deltaTime);
-		if(go->getId().find("Impostor") != std::string::npos)
-		{
-			int i = 0;
-		}
+
 		for (auto& renderCP : go->getComponentsOfType<RenderCP>())
 		{
 			renderCPs.push_back(renderCP);
 		}
-
-		//std::cout << "go ID " << go->getId() << std::endl;
-		/*
-		if (go->getId().find("Player1") != std::string::npos)
-		{
-			std::cout << "Player Pos: " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().x << ", " << go->getComponentsOfType<TransformationCP>().at(0)->getPosition().y << std::endl;
-		}
-		*/
 	}
 	RenderManager::getInstance().resetLayers(renderCPs);
 
@@ -280,45 +269,24 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createPlayers(object, group);
 			}
-			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Enemy")
-			{
-				//createEnemies(object, group);
-			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boundary")
 			{
 				createBoundary(object, group);
 			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
 			{
-				createSpawner(object, group);
-			}
-		}
-	}
-
-	for (auto& go : gameObjects)
-	{
-		if (go->getId().find("Player") != std::string::npos)
-		{
-			if (go->getComponentsOfType<MovementInputGamepadCP>().size() != 0)
-			{
-				std::shared_ptr<PlayerAttackCP<GamepadButton>> playerAttackCP = go->getComponentsOfType<PlayerAttackCP<GamepadButton>>().at(0);
-				doLeftoverComponents<std::shared_ptr<PlayerAttackCP<GamepadButton>>>(playerAttackCP, aStarGridSize, unMovablePositions, mapTileSize);
-			}
-			else
-			{
-				std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = go->getComponentsOfType<PlayerAttackCP<sf::Keyboard::Key>>().at(0);
-				doLeftoverComponents<std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>>>(playerAttackCP, aStarGridSize, unMovablePositions, mapTileSize);
+				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
 			}
 		}
 	}
 }
 
-void GameplayState::createSpawner(tson::Object& object, tson::Layer group)
+void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::Vector2i& aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize)
 {
 
 	
-	GameObjectPtr enemy1 = createEnemies(object, group, 0);
-	GameObjectPtr enemy2 = createEnemies(object, group, 1);
+	GameObjectPtr enemy1 = createEnemies(object, group, "0");
+	GameObjectPtr enemy2 = createEnemies(object, group, "1");
 
 	//--------------------------------------------------------------------------------------------------------------------------------
 
@@ -331,7 +299,7 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group)
 
 	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
 
-	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime);
+	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime, aStarGridSize, unMovablePositions, mapTileSize);
 	
 
 	spawnerTemp->addComponent(spawnerCP);
@@ -360,11 +328,10 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 	gameObjects.push_back(boundaryTemp);
 }
 
-GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer group, int id)
+GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer group, std::string id)
 {
-	int idNr = object.getProp("EnemyNr")->getValue<int>();
 	std::string stringId = object.getProp("EnemyName")->getValue<std::string>();
-	stringId += id + idNr;
+	stringId += stringId + id;
 
 	std::shared_ptr<GameObject> enemyTemp = std::make_shared<GameObject>(stringId);
 
@@ -383,7 +350,6 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP<Enemy_Animationtype>>(
 		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
 	);
-
 	enemyTemp->addComponent(enemyGraphicsCP);
 
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();

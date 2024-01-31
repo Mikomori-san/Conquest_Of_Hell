@@ -12,14 +12,9 @@ void RenderManager::render()
 
 	for (auto& comp : layersToRender)
 	{
-		if (comp->getComponentId().find("Enemy") != std::string::npos)
-		{
-			int a = 0;
-		}
 		comp->draw();
 		std::cout << comp->getComponentId() << std::endl;
 	}
-	layersToRender = newLayersToRender;
 }
 
 void RenderManager::addToLayers(std::shared_ptr<RenderCP> renderCP)

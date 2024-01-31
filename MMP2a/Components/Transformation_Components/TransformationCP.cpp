@@ -29,6 +29,7 @@ void TransformationCP::update(float deltaTime)
 
 void TransformationCP::init()
 {
+	position = originalPos;
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
