@@ -16,7 +16,7 @@ public:
 	void update(float deltaTime) override;
 	std::string getComponentId() override { return this->componentId; };
 	void setComponentId(std::string id) override { this->componentId = id; };
-	
+	void setDodgeLock(bool dl) { dodgeLock = dl; }
 private:
 	T dashKey;
 
@@ -31,6 +31,8 @@ private:
 	float originalAnimationSpeed;
 	Player_Animationtype lastAnimation;
 	void doDash(std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani, std::shared_ptr<StatsCP> stats, std::shared_ptr<TransformationCP> transf, std::shared_ptr<InputCP> input);
+	bool dodgeLock = false;
+	bool animationSpeedReset = false;
 };
 
 template <typename T>
@@ -44,17 +46,22 @@ void DashCP<T>::doDash(std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>>
 		dashCooldown = 0;
 		hasCurrentlyIFrames = true;
 		inputLocked = true;
+		animationSpeedReset = false;
 		//set player animation to dodging, toggle IFrames, set speed to enhanced, lock movement
 		lastAnimation = ani->getAnimationType();
-		if (lastAnimation == Player_Animationtype::Left || lastAnimation == Player_Animationtype::LeftIdle || lastAnimation == Player_Animationtype::LeftAttack || lastAnimation == Player_Animationtype::LeftDodge)
-			ani->setAnimationType(Player_Animationtype::LeftDodge);
-		else
+		if (!ani->isAnimationLock())
 		{
-			ani->setAnimationType(Player_Animationtype::RightDodge);
+			if (lastAnimation == Player_Animationtype::Left || lastAnimation == Player_Animationtype::LeftIdle || lastAnimation == Player_Animationtype::LeftAttack || lastAnimation == Player_Animationtype::LeftDodge)
+				ani->setAnimationType(Player_Animationtype::LeftDodge);
+			else
+			{
+				ani->setAnimationType(Player_Animationtype::RightDodge);
+			}
 		}
+		
 		animationLocked = true;
 		ani->resetAnimationTimeIndex();
-		ani->setAnimationSpeed(ani->getAnimationSpeed() * 3.5f);
+  		ani->setAnimationSpeed(ani->getAnimationSpeed() * 3.5f);
 
 		ani->toggleAnimationLock(); //toggled to true
 		input->toggleInputLock(); //toggled to true
@@ -79,7 +86,7 @@ void DashCP<T>::init()
 template <typename T>
 void DashCP<T>::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if(!dodgeLock && !gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani = go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
@@ -87,20 +94,23 @@ void DashCP<T>::update(float deltaTime)
 		std::shared_ptr<TransformationCP> transf = go->getComponentsOfType<TransformationCP>().at(0);
 		std::shared_ptr<InputCP> input = go->getComponentsOfType<InputCP>().at(0);
 
-		if (std::is_same_v<T, sf::Keyboard::Key>)
+		if (!dodgeLock)
 		{
-			if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(dashKey)))
-				doDash(ani, stats, transf, input);
-		}
-		else if (std::is_same_v<T, GamepadButton>)
-		{
-			if (go->getComponentsOfType<MovementInputGamepadCP>().at(0)->isGamepadConnected())
+			if (std::is_same_v<T, sf::Keyboard::Key>)
 			{
-				if (sf::Joystick::isButtonPressed(go->getComponentsOfType<MovementInputGamepadCP>().at(0)->getControllerNr(), static_cast<GamepadButton>(dashKey)))
+				if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(dashKey)))
 					doDash(ani, stats, transf, input);
 			}
+			else if (std::is_same_v<T, GamepadButton>)
+			{
+				if (go->getComponentsOfType<MovementInputGamepadCP>().at(0)->isGamepadConnected())
+				{
+					if (sf::Joystick::isButtonPressed(go->getComponentsOfType<MovementInputGamepadCP>().at(0)->getControllerNr(), static_cast<GamepadButton>(dashKey)))
+						doDash(ani, stats, transf, input);
+				}
+			}
 		}
-
+			
 		if (dashTimer > 0.3f && hasDashed)
 		{
 			//reset player animation & speed to normal & stop locking, toggleIFrames
@@ -119,7 +129,13 @@ void DashCP<T>::update(float deltaTime)
 			}
 
 			transf->setOriginalVelocity(originalMovementSpeed);
-			ani->setAnimationSpeed(originalAnimationSpeed);
+
+			if (!animationSpeedReset)
+			{
+				ani->setAnimationSpeed(originalAnimationSpeed);
+				animationSpeedReset = true;
+			}
+					
 
 			if (dashCooldown > 0.5f && hasDashed)
 			{

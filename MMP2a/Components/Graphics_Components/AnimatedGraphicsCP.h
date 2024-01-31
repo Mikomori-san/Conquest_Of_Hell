@@ -38,6 +38,7 @@ public:
     sf::Sprite& getSprite() override { return *sprite; }
     void toggleAnimationLock() { animationLock = animationLock ? false : true; }
     void resetAnimationTimeIndex() { animationTimeIndex = 0; }
+    bool isAnimationLock() { return this->animationLock; }
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
