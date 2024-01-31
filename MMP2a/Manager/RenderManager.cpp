@@ -13,7 +13,6 @@ void RenderManager::render()
 	for (auto& comp : layersToRender)
 	{
 		comp->draw();
-		std::cout << comp->getComponentId() << std::endl;
 	}
 }
 

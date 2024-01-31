@@ -48,19 +48,24 @@ private:
     const int TILING_Y;
     void doAnimation();
     bool animationLock = false;
+    bool textureRectOriginalSet = false;
+    sf::IntRect originalIntRect;
 };
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::init()
 {
-    sprite->setScale(sf::Vector2f(1, 1));
-    sprite->setPosition(sf::Vector2f(0, 0));
+    if (!textureRectOriginalSet)
+    {
+        originalIntRect = sprite->getTextureRect();
+        textureRectOriginalSet = true;
+    }
 
     sprite->setTextureRect(sf::IntRect(
         0,
         0,
-        sprite->getTextureRect().width / TILING_X,
-        sprite->getTextureRect().height / TILING_Y
+        originalIntRect.width / TILING_X,
+        originalIntRect.height / TILING_Y
     ));
 }
 
