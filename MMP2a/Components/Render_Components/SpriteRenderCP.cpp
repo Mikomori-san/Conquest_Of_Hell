@@ -13,7 +13,7 @@ void SpriteRenderCP::draw()
 		if (!gameObject.expired())
 		{
 			std::shared_ptr<GameObject> go = gameObject.lock();
-			if (go->getId().find("Player") != std::string::npos)
+			if (go->getId().find("Impostor") != std::string::npos)
 			{
 				DebugDraw::getInstance().drawRectOutline(
 					sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top),
@@ -31,7 +31,11 @@ void SpriteRenderCP::draw()
 
 void SpriteRenderCP::update(float deltaTime)
 {
-
+	if (!gameObject.expired())
+	{
+		std::shared_ptr<GameObject> go = gameObject.lock();
+		renderComponents = go->getComponentsOfType<GraphicsCP>();
+	}
 }
 
 void SpriteRenderCP::init()

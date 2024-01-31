@@ -5,7 +5,7 @@
 class SpawnerCP : public Component
 {
 public:
-	SpawnerCP(std::vector<std::shared_ptr<GameObject>>& gameObjects, std::shared_ptr<GameObject>& enemy, std::shared_ptr<GameObject>& enemy2, std::weak_ptr<GameObject> go, std::string id, std::string enemyName, int maxEnemies, float spawnTime)
+	SpawnerCP(std::vector<std::shared_ptr<GameObject>>& gameObjects, std::shared_ptr<GameObject> enemy, std::shared_ptr<GameObject> enemy2, std::weak_ptr<GameObject> go, std::string id, std::string enemyName, int maxEnemies, float spawnTime)
 		: Component(go, id), m_enemy(enemy), m_enemy2(enemy2), m_gameObjects(gameObjects), m_enemyName(enemyName), m_spawnTime(spawnTime), m_maxEnemies(maxEnemies)
 	{};
 
@@ -22,8 +22,6 @@ public:
 
 	//std::vector<std::weak_ptr<GameObject>> m_enemiesList;
 	std::vector<int> m_enemyIdList = {};
-	bool spawnFirstEnemy = false;
-	bool spawnSecondEnemy = false;
 
 private:
 	std::vector<std::shared_ptr<GameObject>>& m_gameObjects;
@@ -31,7 +29,7 @@ private:
 	float m_spawnTime = 10.f;
 	std::string m_enemyName = "";
 	float spawnTimer = 0.f;
-	std::shared_ptr<GameObject>& m_enemy;
-	std::shared_ptr<GameObject>& m_enemy2;
+	std::shared_ptr<GameObject> m_enemy;
+	std::shared_ptr<GameObject> m_enemy2;
 };
 
