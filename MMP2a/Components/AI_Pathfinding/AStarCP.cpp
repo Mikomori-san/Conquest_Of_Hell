@@ -55,7 +55,7 @@ std::vector<Point> aStar(const std::vector<std::vector<int>>& grid, const Point&
 
     if (start.x == goal.x && start.y == goal.y)
     {
-        std::cout << "Goal Reached" << std::endl;
+        //std::cout << "Goal Reached" << std::endl;
         return{};
     }
     Node startNode(start, 0, eucledianDistance(start, goal));

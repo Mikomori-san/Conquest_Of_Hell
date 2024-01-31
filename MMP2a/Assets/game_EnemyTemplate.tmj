@@ -65,6 +65,21 @@
                          "value":"E"
                         }, 
                         {
+                         "name":"AttackRange",
+                         "type":"int",
+                         "value":200
+                        }, 
+                        {
+                         "name":"Controller",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"ControllerNr",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
                          "name":"Damage",
                          "type":"int",
                          "value":25
@@ -102,7 +117,7 @@
                         {
                          "name":"Velocity",
                          "type":"int",
-                         "value":150
+                         "value":120
                         }, 
                         {
                          "name":"isAI",

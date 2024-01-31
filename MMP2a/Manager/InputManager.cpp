@@ -1,5 +1,12 @@
 #include "stdafx.h"
 #include "InputManager.h"
+#include "../Enums/GamepadButton.h"
+#include <SFML/System.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Joystick.hpp>
+#include <iostream>
+#include <map>
 
 void InputManager::init(sf::Window& window)
 {
@@ -23,6 +30,8 @@ void InputManager::init(sf::Window& window)
 	isKeyDown[sf::Keyboard::Enter] = false;
 	isKeyDown[sf::Keyboard::Q] = false;
 	isKeyDown[sf::Keyboard::E] = false;
+	isKeyDown[sf::Keyboard::LAlt] = false;
+	isKeyDown[sf::Keyboard::RControl] = false;
 
 	isKeyUp[sf::Keyboard::Key::W] = false;
 	isKeyUp[sf::Keyboard::Key::A] = false;
@@ -42,6 +51,8 @@ void InputManager::init(sf::Window& window)
 	isKeyUp[sf::Keyboard::Enter] = false;
 	isKeyUp[sf::Keyboard::Q] = false;
 	isKeyUp[sf::Keyboard::E] = false;
+	isKeyUp[sf::Keyboard::LAlt] = false;
+	isKeyUp[sf::Keyboard::RControl] = false;
 
 	isKeyPressed[sf::Keyboard::Key::W] = false;
 	isKeyPressed[sf::Keyboard::Key::A] = false;
@@ -61,7 +72,8 @@ void InputManager::init(sf::Window& window)
 	isKeyPressed[sf::Keyboard::Enter] = false;
 	isKeyPressed[sf::Keyboard::Q] = false;
 	isKeyPressed[sf::Keyboard::E] = false;
-
+	isKeyPressed[sf::Keyboard::LAlt] = false;
+	isKeyPressed[sf::Keyboard::RControl] = false;
 }
 
 void InputManager::update()
@@ -105,4 +117,18 @@ void InputManager::handleEvents(sf::Event& event)
 		isKeyUp[event.key.code] = true;
 		isKeyPressed[event.key.code] = false;
 	}
+}
+
+sf::Vector2f InputManager::getLeftStickPosition(int gamePadID)
+{
+	float x = sf::Joystick::getAxisPosition(gamePadID, sf::Joystick::X);
+	float y = sf::Joystick::getAxisPosition(gamePadID, sf::Joystick::Y);
+
+	// Normalize die Werte auf den Bereich [-1, 1]
+	return sf::Vector2f(x / 100.f, y / 100.f);
+}
+
+bool InputManager::checkGamepadInput(GamepadButton button, int controllerNr)
+{
+	return sf::Joystick::isButtonPressed(controllerNr, button);
 }

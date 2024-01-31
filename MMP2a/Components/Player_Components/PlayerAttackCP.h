@@ -1,11 +1,18 @@
 #pragma once
 #include "../Component.h"
-#include "../../Enums/Player_Animationtype.h"
+#include "../StatsCP.h"
+#include "../Graphics_Components/AnimatedGraphicsCP.h"
+#include "../../Manager/InputManager.h"
+#include "../Transformation_Components/TransformationCP.h"
+#include "../Input_Components/InputCP.h"
+#include "../Input_Components/MovementInputGamepadCP.h"
+#include "../../Enums/GamepadButton.h"
 
+template <typename T>
 class PlayerAttackCP : public Component
 {
 public:
-    PlayerAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, int incAR, std::vector<std::weak_ptr<GameObject>> incEnemies, sf::Keyboard::Key incKey) : Component(gameObject, id), enemies(incEnemies), attackKey(incKey), attackRange(incAR) {}
+    PlayerAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, int incAR, std::vector<std::weak_ptr<GameObject>> incEnemies, T incKey) : Component(gameObject, id), enemies(incEnemies), attackKey(incKey), attackRange(incAR) {}
 
     void update(float deltaTime) override;
     std::string getComponentId() override { return this->componentId; };
@@ -14,7 +21,7 @@ public:
     void addEnemy(std::weak_ptr<GameObject> enemy) { enemies.push_back(enemy); }
 private:
     std::vector<std::weak_ptr<GameObject>> enemies;
-    sf::Keyboard::Key attackKey;
+    T attackKey;
     int attackRange;
 
     bool hasAttacked;
@@ -28,4 +35,150 @@ private:
     Player_Animationtype lastAnimation;
 
     sf::Color lastColor;
+
+    void doAttack(std::shared_ptr<TransformationCP> trans, std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani,
+        std::shared_ptr<StatsCP> stats, std::shared_ptr<InputCP> input);
 };
+
+
+template<typename T>
+void PlayerAttackCP<T>::init()
+{
+	hasAttacked = false;
+}
+
+template<typename T>
+void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani,
+	std::shared_ptr<StatsCP> stats, std::shared_ptr<InputCP> input)
+{
+	float distance;
+	sf::Vector2f playerPos;
+	sf::Vector2f enemyPos;
+
+	if (!hasAttacked)
+	{
+		hasAttacked = true;
+		attackTimer = 0;
+		attackCooldown = 0;
+		inputLocked = true;
+		lastAnimation = ani->getAnimationType();
+		animationLocked = true;
+
+		if (lastAnimation == Left || lastAnimation == LeftIdle || lastAnimation == LeftAttack || lastAnimation == LeftDodge)
+		{
+			ani->setAnimationType(LeftAttack);
+		}
+		else
+			ani->setAnimationType(RightAttack);
+
+		ani->resetAnimationTimeIndex();
+		originalAnimationSpeed = ani->getAnimationSpeed();
+		ani->setAnimationSpeed(ani->getAnimationSpeed() * 8);
+
+		ani->toggleAnimationLock();
+		input->toggleInputLock();
+
+		transf->setVelocity(0);
+	}
+
+	playerPos = transf->getPosition();
+	std::vector<std::weak_ptr<GameObject>> newEnemies;
+
+	for (auto it = enemies.begin(); it != enemies.end();)
+	{
+		if (!it->expired())
+		{
+			newEnemies.push_back(*it);
+
+			auto enemy = it->lock();
+
+			enemyPos = enemy->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+
+			distance = (playerPos.x - enemyPos.x) * (playerPos.x - enemyPos.x) + (playerPos.y - enemyPos.y) * (playerPos.y - enemyPos.y);
+			distance /= 10;
+
+			if (distance <= attackRange)
+			{
+				if ((enemyPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (enemyPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
+				{
+					enemy->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+				}
+			}
+		}
+		++it;
+	}
+	enemies = newEnemies;
+}
+
+template<typename T>
+void PlayerAttackCP<T>::update(float deltaTime)
+{
+	if (!gameObject.expired())
+	{
+		auto transf = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0);
+		auto ani = gameObject.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
+		auto stats = gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
+		auto input = gameObject.lock()->getComponentsOfType<InputCP>().at(0);
+		if (!input->getInputLockState())
+		{
+			if (std::is_same_v<T, sf::Keyboard::Key>)
+			{
+				if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(attackKey)))
+				{
+					doAttack(transf, ani, stats, input);
+				}
+			}
+			else if (std::is_same_v<T, GamepadButton>)
+			{
+				auto movementCP = gameObject.lock()->getComponentsOfType<MovementInputGamepadCP>().at(0);
+
+				if (movementCP->isGamepadConnected())
+				{
+					if (sf::Joystick::isButtonPressed(movementCP->getControllerNr(), static_cast<GamepadButton>(attackKey)))
+					{
+						doAttack(transf, ani, stats, input);
+					}
+				}
+			}
+		}
+		
+		if (attackTimer > 0.2f && hasAttacked)
+		{
+			if (animationLocked)
+			{
+				ani->toggleAnimationLock();
+				animationLocked = false;
+
+				if (lastAnimation == LeftAttack || lastAnimation == LeftDodge)
+				{
+					ani->setAnimationType(LeftIdle);
+				}
+				else if (lastAnimation == RightAttack || lastAnimation == RightDodge)
+				{
+					ani->setAnimationType(RightIdle);
+				}
+
+				ani->setAnimationType(lastAnimation);
+			}
+			if (inputLocked)
+			{
+				input->toggleInputLock();
+				inputLocked = false;
+			}
+
+			ani->setAnimationSpeed(originalAnimationSpeed);
+
+			if (attackCooldown > 0.4f && hasAttacked)
+			{
+				hasAttacked = false;
+			}
+		}
+		else if (hasAttacked)
+		{
+			transf->setVelocity(0);
+		}
+
+		attackTimer += deltaTime;
+		attackCooldown += deltaTime;
+	}
+}

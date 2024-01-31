@@ -54,7 +54,6 @@ void ControllerCP::update(float deltaTime)
 			aps->updateNearestPlayer(nearestPlayer);
 		}
 
-		std::cout << nearestDistance << std::endl;
 	}
 
  	currentState->update(deltaTime);

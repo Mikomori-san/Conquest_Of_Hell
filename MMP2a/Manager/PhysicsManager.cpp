@@ -139,7 +139,6 @@ void PhysicsManager::collisionResolve()
 
             if (go1->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger() || go2->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger())
             {
-                std::cout << "Collision" << std::endl;
                 if (go1->getComponentsOfType<RigidBodyCP>().size() != 0)
                 {
                     // Send Notification to Rigid Body of go1

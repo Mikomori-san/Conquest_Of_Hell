@@ -1,4 +1,5 @@
 #pragma once
+#include "../Enums/GamepadButton.h"
 
 class InputManager
 {
@@ -16,7 +17,8 @@ public:
 	bool getKeyDown(sf::Keyboard::Key key);
 	bool getKeyUp(sf::Keyboard::Key key);
 	void handleEvents(sf::Event& event);
-
+	bool checkGamepadInput(GamepadButton button, int controllerNr);
+	sf::Vector2f getLeftStickPosition(int gamePadID);
 private:
 
 	InputManager() = default;

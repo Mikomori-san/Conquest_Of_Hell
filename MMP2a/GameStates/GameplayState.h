@@ -21,15 +21,12 @@ private:
 	std::map<std::string, std::vector<int>> spriteSheetCounts;
 
 	void loadMap(std::string name, const sf::Vector2f& offset);
-	void checkAreaBorders();
-	void checkPlayerLayer();
 	void createPlayers(tson::Object& object, tson::Layer group);
 	void createEnemies(tson::Object& object, tson::Layer group);
 	void createBoundary(tson::Object& object, tson::Layer group);
-	void createPatrolPoints(tson::Object& object, tson::Layer group);
 
-	int maxLayer = 0;
-	int currentLayer = 0;
+	template<typename T>
+	void doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize);
 
 	std::unordered_map<std::string, TexturePtr> m_tileSetTexture;
 	const std::filesystem::path m_resourcePath{ "Assets" };

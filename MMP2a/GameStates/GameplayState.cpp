@@ -24,6 +24,49 @@
 #include "../Enums/Enemy_Animationtype.h"
 #include "../Components/Enemy_Components/EnemyAttackCP.h"
 #include <iostream>
+#include "../Components/Input_Components/MovementInputGamepadCP.h"
+#include "../Enums/GamepadButton.h"
+
+template<typename T>
+void GameplayState::doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize)
+{
+	for (auto& go : gameObjects)
+	{
+
+		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
+		{
+			std::string objectType = stats.at(0)->getObjectType();
+			if (objectType == "Enemy")
+			{
+				playerAttackCP->addEnemy(go);
+
+				std::vector<std::weak_ptr<GameObject>> players;
+				for (auto& go1 : gameObjects)
+				{
+					if (go1->getId().find("Player") != std::string::npos)
+					{
+						players.push_back(go1);
+					}
+				}
+
+				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
+				go->addComponent(enemyAIController);
+
+				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
+				go->addComponent(enemyAStarCP);
+
+				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
+				go->addComponent(enemySteeringCP);
+
+				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
+				go->addComponent(enemyAISpriteUpdateCP);
+
+				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
+				go->addComponent(enemyAttackCP);
+			}
+		}
+	}
+}
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -37,9 +80,6 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
 
 	loadMap("game_EnemyTemplate.tmj", sf::Vector2f());
-	
-	currentLayer = 0;
-	std::cout << "Current Layer: " << currentLayer << std::endl;
 
 	for (auto& go : gameObjects)
 	{
@@ -68,7 +108,6 @@ void GameplayState::exit()
 	}
 
 	RenderManager::getInstance().getLayers().clear();
-	maxLayer = 0;
 	DebugDraw::getInstance().unload();
 }
 
@@ -89,8 +128,6 @@ void GameplayState::update(float deltaTime)
 	{
 		go->update(deltaTime);
 	}
-
-	checkPlayerLayer();
 
 	PhysicsManager::getInstance().update(gameObjects, deltaTime);
 }
@@ -127,7 +164,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 	else
 	{
-		std::cout << "Parse error: " << map->getStatusMessage() << std::endl;
+		//std::cout << "Parse error: " << map->getStatusMessage() << std::endl;
 	}
 
 	// go through all layers
@@ -204,7 +241,6 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 
 		}
 		mapGO->addComponent(layerCP);
-		maxLayer++;
 	}
 
 	this->gameObjects.push_back(mapGO);
@@ -220,9 +256,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			// example to get a texture rectangle for a sprite
 			sf::FloatRect bounds(position.x, position.y, object.getSize().x, object.getSize().y);
 			// TODO: check out game.tmj and there the content contained within <object group name="Object Layer 1">
-			// there you can see the properties that you can parse, that should help you set up the sprites
-			std::cout << object.getRotation() << std::endl;
-			std::cout << object.getType() << std::endl;
+			// there you can see the properties that you can parse, that should help you set up the sprites;
 			
 			if (object.getProp("ObjectGroup")->getValue<std::string>() == "Player")
 			{
@@ -238,106 +272,21 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			}
 		}
 	}
-																									// AB HIER NUR PROVISORISCH
-	std::shared_ptr<PlayerAttackCP> playerAttackCP;
 
 	for (auto& go : gameObjects)
 	{
 		if (go->getId().find("Player") != std::string::npos)
 		{
-			playerAttackCP = go->getComponentsOfType<PlayerAttackCP>().at(0);
-			break;
-		}
-	}
-
-	for (auto& go : gameObjects)
-	{
-
-		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
-		{
-			std::string objectType = stats.at(0)->getObjectType();
-			if (objectType == "Enemy")
+			if (go->getComponentsOfType<MovementInputGamepadCP>().size() != 0)
 			{
-				playerAttackCP->addEnemy(go);
-
-				std::vector<std::weak_ptr<GameObject>> players;
-				for (auto& go1 : gameObjects)
-				{
-					if (go1->getId().find("Player") != std::string::npos)
-					{
-						players.push_back(go1);
-					}
-				}
-
-				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
-				go->addComponent(enemyAIController);
-
-				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
-				go->addComponent(enemyAStarCP);
-
-				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
-				go->addComponent(enemySteeringCP);
-
-				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
-				go->addComponent(enemyAISpriteUpdateCP);
-
-				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
-				go->addComponent(enemyAttackCP);
+				std::shared_ptr<PlayerAttackCP<GamepadButton>> playerAttackCP = go->getComponentsOfType<PlayerAttackCP<GamepadButton>>().at(0);
+				doLeftoverComponents<std::shared_ptr<PlayerAttackCP<GamepadButton>>>(playerAttackCP, aStarGridSize, unMovablePositions, mapTileSize);
 			}
-		}
-	}
-
-}
-
-void GameplayState::checkPlayerLayer()
-{
-	if (InputManager::getInstance().getKeyDown(sf::Keyboard::Home) || InputManager::getInstance().getKeyDown(sf::Keyboard::End))
-	{
-		if (InputManager::getInstance().getKeyDown(sf::Keyboard::Home) && currentLayer < maxLayer)
-		{
-			currentLayer++;
-			std::cout << "Current Layer: " << currentLayer << std::endl;
-		}
-		else if(currentLayer > 0)
-		{
-			currentLayer--;
-			std::cout << "Current Layer: " << currentLayer << std::endl;
-		}
-	}
-
-	if (InputManager::getInstance().getKeyDown(sf::Keyboard::PageUp) || InputManager::getInstance().getKeyDown(sf::Keyboard::PageDown))
-	{
-		if (InputManager::getInstance().getKeyDown(sf::Keyboard::PageUp) && currentLayer < maxLayer)
-		{
-			for (auto& cp : RenderManager::getInstance().getLayers())
+			else
 			{
-				if (cp->getLayerNr() == currentLayer)
-				{
-					cp->setLayerNr(currentLayer + 1);
-				}
-				else if (cp->getLayerNr() == currentLayer + 1)
-				{
-					cp->setLayerNr(currentLayer);
-				}
+				std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = go->getComponentsOfType<PlayerAttackCP<sf::Keyboard::Key>>().at(0);
+				doLeftoverComponents<std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>>>(playerAttackCP, aStarGridSize, unMovablePositions, mapTileSize);
 			}
-			currentLayer++;
-			std::cout << "New current Layer: " << currentLayer << std::endl;
-		}
-		else if (InputManager::getInstance().getKeyDown(sf::Keyboard::PageDown) && currentLayer > 0)
-		{
-			for (auto& cp : RenderManager::getInstance().getLayers())
-			{
-				if (cp->getLayerNr() == currentLayer)
-				{
-					cp->setLayerNr(currentLayer - 1);
-				}
-				else if (cp->getLayerNr() == currentLayer - 1)
-				{
-					cp->setLayerNr(currentLayer);
-				}
-			}
-			currentLayer--;
-			std::cout << "New current Layer: " << currentLayer << std::endl;
 		}
 	}
 }
@@ -451,7 +400,8 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	playerTemp->addComponent(playerGraphicsCP);
 
 	bool useArrowKeys = object.getProp("ArrowKeys")->getValue<bool>();
-	
+	bool useController = object.getProp("Controller")->getValue<bool>();
+
 	std::shared_ptr<RectCollisionCP> playerCollisionCP = std::make_shared<RectCollisionCP>(playerTemp, "PlayerCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
 		object.getProp("isTrigger")->getValue<bool>()
@@ -466,23 +416,44 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<SpriteRenderCP> playerRenderCP = std::make_shared<SpriteRenderCP>(playerTemp, "PlayerRenderCP", window, group.getProp("LayerNr")->getValue<int>());
 	playerTemp->addComponent(playerRenderCP);
+	
+	std::vector<std::weak_ptr<GameObject>> weak;
+	int attackRange = object.getProp("AttackRange")->getValue<int>();
 
 	if (useArrowKeys) {
 		std::shared_ptr<MovementInputArrowsCP> movementInputCP = std::make_shared<MovementInputArrowsCP>(
 			playerTemp, "MovementInputCP"
 		);
 		playerTemp->addComponent(movementInputCP);
-		std::shared_ptr<DashCP> dashCP = std::make_shared<DashCP>(playerTemp, "SpaceDashCP", sf::Keyboard::Enter);
+		std::shared_ptr<DashCP<sf::Keyboard::Key>> dashCP = std::make_shared<DashCP<sf::Keyboard::Key>>(playerTemp, "EnterDashCP", sf::Keyboard::Enter, PLAYER_ANIMATION_SPEED);
 		playerTemp->addComponent(dashCP);
+
+		std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = std::make_shared<PlayerAttackCP<sf::Keyboard::Key>>(playerTemp, "PlayerAttackCP", attackRange, weak, sf::Keyboard::RControl);
+		playerTemp->addComponent(playerAttackCP);
 	}
-	else {
+	else if(!useController){
 		std::shared_ptr<MovementInputWASDCP> movementInputCP = std::make_shared<MovementInputWASDCP>(
 			playerTemp, "MovementInputCP"
 		);
 		playerTemp->addComponent(movementInputCP);
 
-		std::shared_ptr<DashCP> dashCP = std::make_shared<DashCP>(playerTemp, "SpaceDashCP", sf::Keyboard::Space);
+		std::shared_ptr<DashCP<sf::Keyboard::Key>> dashCP = std::make_shared<DashCP<sf::Keyboard::Key>>(playerTemp, "SpaceDashCP", sf::Keyboard::Space, PLAYER_ANIMATION_SPEED);
 		playerTemp->addComponent(dashCP);
+
+		std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = std::make_shared<PlayerAttackCP<sf::Keyboard::Key>>(playerTemp, "PlayerAttackCP", attackRange, weak, sf::Keyboard::LAlt);
+		playerTemp->addComponent(playerAttackCP);
+	}
+	else
+	{
+		int controllerNr = object.getProp("ControllerNr")->getValue<int>();
+		std::shared_ptr<MovementInputGamepadCP> movementInputCP = std::make_shared<MovementInputGamepadCP>(playerTemp, "MovementInputCP", controllerNr);
+		playerTemp->addComponent(movementInputCP);
+
+		std::shared_ptr<DashCP<GamepadButton>> dashCP = std::make_shared<DashCP<GamepadButton>>(playerTemp, "XDashCP", GamepadButton::A, PLAYER_ANIMATION_SPEED);
+		playerTemp->addComponent(dashCP);
+
+		std::shared_ptr<PlayerAttackCP<GamepadButton>> playerAttackCP = std::make_shared<PlayerAttackCP<GamepadButton>>(playerTemp, "PlayerAttackCP", attackRange, weak, GamepadButton::X);
+		playerTemp->addComponent(playerAttackCP);
 	}
 
 	std::shared_ptr<DecisionHandlerCP> decHandler = std::make_shared<DecisionHandlerCP>(playerTemp, "PlayerDecisionHandlerCP");
@@ -492,11 +463,6 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	int damage = object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, damage, "Player");
 	playerTemp->addComponent(playerStats);
-
-	std::vector<std::weak_ptr<GameObject>> weak = {};
-	sf::Keyboard::Key attackKey = sf::Keyboard::Q; //static_cast<sf::Keyboard::Key>(object.getProp("AttackButton")->getValue<std::string>()[0]);
-	std::shared_ptr<PlayerAttackCP> playerAttackCP = std::make_shared<PlayerAttackCP>(playerTemp, "PlayerAttackCP", 200, weak, attackKey);
-	playerTemp->addComponent(playerAttackCP);
 
 	gameObjects.push_back(playerTemp);
 }

@@ -18,6 +18,7 @@ public:
 	virtual void processInput() {};
 
 	virtual void toggleInputLock() { inputLock = inputLock ? false : true; }
+	virtual bool getInputLockState() { return inputLock; }
 
 protected:
 	bool inputLock = false;
