@@ -777,6 +777,33 @@
                  "width":0,
                  "x":65,
                  "y":223.333333333333
+                }, 
+                {
+                 "height":70.5906666666667,
+                 "id":43,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"Name",
+                         "type":"string",
+                         "value":"Top"
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boundary"
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":87,
+                 "x":437.166666666667,
+                 "y":293.038
                 }],
          "opacity":1,
          "properties":[
@@ -849,7 +876,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":43,
+ "nextobjectid":44,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
