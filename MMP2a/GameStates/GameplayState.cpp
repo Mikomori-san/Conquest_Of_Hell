@@ -29,46 +29,6 @@
 #include "../Components/Spawner_Components/SpawnerCP.h"
 #include "../Components/Boss/BossAttackCP.h"
 
-//template<typename T>
-//void GameplayState::doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize)
-//{
-//	for (auto& go : gameObjects)
-//	{
-//		if (auto stats = go->getComponentsOfType<StatsCP>(); stats.size() > 0)
-//		{
-//			std::string objectType = stats.at(0)->getObjectType();
-//			if (objectType == "Enemy")
-//			{
-//				playerAttackCP->addEnemy(go);
-//
-//				std::vector<std::weak_ptr<GameObject>> players;
-//				for (auto& go1 : gameObjects)
-//				{
-//					if (go1->getId().find("Player") != std::string::npos)
-//					{
-//						players.push_back(go1);
-//					}
-//				}
-//
-//				std::shared_ptr<ControllerCP> enemyAIController = std::make_shared<ControllerCP>(go, "EnemyControllerCP", players);
-//				go->addComponent(enemyAIController);
-//
-//				std::shared_ptr<AStarCP> enemyAStarCP = std::make_shared<AStarCP>(go, "EnemyAStarCP", std::vector<std::vector<int>>(aStarGridSize.x, std::vector<int>(aStarGridSize.y, 0)), unMovablePositions, sf::Vector2f(0, 0), mapTileSize);
-//				go->addComponent(enemyAStarCP);
-//
-//				std::shared_ptr<SteeringCP> enemySteeringCP = std::make_shared<SteeringCP>(go, "EnemySteeringCP");
-//				go->addComponent(enemySteeringCP);
-//
-//				std::shared_ptr<AISpriteUpdateCP> enemyAISpriteUpdateCP = std::make_shared<AISpriteUpdateCP>(go, "EnemyAISpriteUpdateCP");
-//				go->addComponent(enemyAISpriteUpdateCP);
-//
-//				std::shared_ptr<EnemyAttackCP> enemyAttackCP = std::make_shared<EnemyAttackCP>(go, "EnemyAttackCP", players.at(0), 200);
-//				go->addComponent(enemyAttackCP);
-//			}
-//		}
-//	}
-//}
-
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
@@ -127,15 +87,39 @@ void GameplayState::update(float deltaTime)
 	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GELÖSCHT
 
 	std::vector<std::shared_ptr<RenderCP>> renderCPs;
+
+	std::vector<sf::Vector2i> skelPos;
+	int i = 0;
 	for (auto& go : gameObjects)
 	{
-		go->update(deltaTime);
+		if (go->getId().find("Skeleton") != std::string::npos)
+		{
+			sf::Vector2f pos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+			skelPos.push_back(sf::Vector2i(pos.x / mapTileSize, pos.y / mapTileSize));
+			i++;
 
+			if (i == 4)
+			{
+				break;
+			}
+		}
+	}
+
+	for (auto& go : gameObjects)
+	{
+		if (auto astar = go->getComponentsOfType<AStarCP>(); astar.size() > 0)
+		{
+			astar.at(0)->updatePositions(skelPos);
+		}
+
+		go->update(deltaTime);
+		
 		for (auto& renderCP : go->getComponentsOfType<RenderCP>())
 		{
 			renderCPs.push_back(renderCP);
 		}
 	}
+
 	RenderManager::getInstance().resetLayers(renderCPs);
 
 	PhysicsManager::getInstance().update(gameObjects, deltaTime);
@@ -181,7 +165,6 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	std::shared_ptr<LayerCP> layerCP;
 	sf::Vector2i aStarGridSize;
 	std::vector<sf::Vector2i> unMovablePositions;
-	int mapTileSize;
 
 	for(auto& layer : map->getLayers())
 	{

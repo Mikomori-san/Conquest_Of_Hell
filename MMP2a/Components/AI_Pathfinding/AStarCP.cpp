@@ -90,10 +90,40 @@ std::vector<Point> aStar(const std::vector<std::vector<int>> grid, const Point s
     return {}; // Return an empty path if no valid path is found
 }
 
+void AStarCP::updatePositions(std::vector<sf::Vector2i> incSkelPos)
+{
+    if (!gameObject.expired())
+    {
+        auto myPos = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+        otherSkeletonPositions = {};
+        for (auto skelPos : incSkelPos)
+        {
+            if (skelPos != sf::Vector2i(myPos.x / tileSize, myPos.y / tileSize))
+                otherSkeletonPositions.push_back(skelPos);
+        }
+    }
+}
 
 void AStarCP::update(float deltaTime)
 {
-    timer = 0;
+    std::vector<sf::Vector2i> updatedUnmovables = unmovablePositions;
+    updatedUnmovables.insert(updatedUnmovables.end(), otherSkeletonPositions.begin(), otherSkeletonPositions.end());
+
+    for (int i = 0; i < grid.size(); i++)
+    {
+        for (int j = 0; j < grid[0].size(); j++)
+        {
+            for (auto& pos : updatedUnmovables)
+            {
+                if (i == pos.x && j == pos.y)
+                {
+                    grid[i][j] = std::numeric_limits<float>().max();
+                    break;
+                }
+            }
+        }
+    }
+
     if (!gameObject.expired())
     {
         auto go = gameObject.lock();
@@ -107,14 +137,18 @@ void AStarCP::update(float deltaTime)
         Point targetPoint = Point(targetPosGrid.x, targetPosGrid.y);
 
         Point nextPoint;
-            
+
         std::vector<Point> targetPoints = aStar(grid, myPoint, targetPoint);
 
         if (targetPoints.size() > 1)
         {
             nextPoint = targetPoints[1];
             go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(nextPoint.x * tileSize + tileSize / 2, nextPoint.y * tileSize + tileSize / 2));
-        }  
+        } 
+        else
+        {
+            go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(myPos.x + 0.1f, myPos.y + 0.1f));
+        }
     }
 }
 
@@ -130,20 +164,4 @@ void AStarCP::setComponentId(std::string id)
 
 void AStarCP::init()
 {
-    timer = 0;
-
-    for (int i = 0; i < grid.size(); i++)
-    {
-        for (int j = 0; j < grid[0].size(); j++)
-        {
-            for (auto& pos : unmovablePositions)
-            {
-                if (i == pos.x && j == pos.y)
-                {
-                    grid[i][j] = std::numeric_limits<float>().max();
-                    break;
-                }
-            }
-        }
-    }
 }

@@ -20,6 +20,5 @@ void AttackPlayerState::init()
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		go->getComponentsOfType<AStarCP>().at(0)->reset();
 	}
 }

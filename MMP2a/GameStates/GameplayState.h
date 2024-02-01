@@ -34,4 +34,5 @@ private:
 	const std::filesystem::path m_resourcePath{ "Assets" };
 
 	std::unordered_map<std::string, GameObjectPtr> m_objects;
+	int mapTileSize;
 };

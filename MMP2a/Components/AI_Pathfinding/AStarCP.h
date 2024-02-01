@@ -16,12 +16,13 @@ public:
 	void init() override;
 
 	void setTargetPos(sf::Vector2f targetPos) { this->targetPos = targetPos; }
-	
-	void reset() { timer = 0; }
+
+	void updatePositions(std::vector<sf::Vector2i> incSkelPos);
 private:
 	Grid grid;
 	sf::Vector2f targetPos;
 	std::vector<sf::Vector2i> unmovablePositions;
+	std::vector<sf::Vector2i> otherSkeletonPositions;
 	int tileSize;
 	float timer;
 };
