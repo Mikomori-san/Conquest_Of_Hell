@@ -14,10 +14,14 @@ public:
 
 private:
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
-
+	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor, sf::Color outlineColor);
+	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
 	std::shared_ptr<sf::RenderWindow> window;
 	sf::Sprite backgroundSprite;
 	sf::Sprite titleSprite;
 	sf::Texture bgTexture;
 	sf::Texture titleTexture;
+
+
+	std::map<std::string, sf::RectangleShape> buttonList;
 };

@@ -22,8 +22,7 @@ void MenuState::init(sf::RenderWindow& rWindow)
 
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
 
-	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackground.png");
-	AssetManager::getInstance().loadTexture("Title", "Assets\\Textures\\Title.png");
+	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackgroundTitle.png");
 	
 	if (!AssetManager::getInstance().Textures["BackgroundImage"])
 	{
@@ -34,9 +33,13 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	backgroundSprite.setTexture(bgTexture);
 	backgroundSprite.scale(0.5f, 0.5f);
 
-	titleTexture = *AssetManager::getInstance().Textures["Title"];
-	titleSprite.setTexture(titleTexture);
-	titleSprite.scale(0.5f, 0.5f);
+	sf::Vector2f viewCenterVec = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2));
+	sf::Vector2f exitButtonPos = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2) + 100);
+
+	sf::Color red = sf::Color( 255, 0, 0, 255 );
+
+	sf::RectangleShape startButton = createButton("Start", sf::Vector2f(250, 50), viewCenterVec, red);
+	sf::RectangleShape exitButton = createButton("Exit", sf::Vector2f(250, 50), exitButtonPos, red);
 
 }
 
@@ -56,5 +59,38 @@ void MenuState::render()
 
 	window->clear(sf::Color::Black);
 	window->draw(backgroundSprite);
-	window->draw(titleSprite);
+
+
+	//window->draw(buttonList["ExitButton"]);
+	for (auto& button : buttonList) {
+		window->draw(button.second);
+	}
+
 }
+
+sf::RectangleShape MenuState::createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor, sf::Color outlineColor)
+{
+	sf::RectangleShape button;
+	button.setSize(size);
+	button.setOrigin(sf::Vector2f(button.getSize().x / 2, button.getSize().y / 2));
+	button.setFillColor(fillColor);
+	button.setOutlineColor(outlineColor);
+	button.setPosition(pos);
+
+	buttonList[name] = button;
+
+	return button;
+}
+sf::RectangleShape MenuState::createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor)
+{
+	sf::RectangleShape button;
+	button.setSize(size);
+	button.setOrigin(sf::Vector2f(button.getSize().x / 2, button.getSize().y / 2));
+	button.setFillColor(fillColor);
+	button.setPosition(pos);
+
+	buttonList[name] = button;
+
+	return button;
+}
+
