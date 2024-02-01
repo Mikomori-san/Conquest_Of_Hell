@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CharmBA.h"
 #include "../../Manager/AssetManager.h"
+#include "../Input_Components/InputCP.h"
 int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);
@@ -29,7 +30,6 @@ void CharmBA::update(float deltaTime)
 	ttl -= deltaTime;
 	animationTimeIndex += deltaTime * animationSpeed;
 	position += direction * moveSpeed * deltaTime;
-
 	if (ttl <= 0)
 	{
 		setDead();
@@ -45,6 +45,15 @@ void CharmBA::update(float deltaTime)
 		));
 		sprite.setPosition(position);
 		sprite.setRotation(findRotation(direction));
+	}
+	if (charmed)
+	{
+		charmDuration -= deltaTime;
+		if (charmDuration <= 0)
+		{
+			charmDuration = 1;
+			uncharmPlayer();
+		}
 	}
 
 }
@@ -80,5 +89,29 @@ void CharmBA::setDead()
 void CharmBA::charmPlayer()
 {
 	std::cout << "Charm" << std::endl;
-	//->playerLogic
+	if (!playerPtr.expired())
+	{
+		std::shared_ptr<GameObject> go = playerPtr.lock();
+		std::shared_ptr<InputCP> input = std::dynamic_pointer_cast<InputCP>(go->getComponentsOfType<InputCP>().at(0));
+		if (input)
+		{
+			input->toggleInputLock();
+			charmed = true;
+		}
+	}
+}
+
+void CharmBA::uncharmPlayer()
+{
+	std::cout << "Uncharm" << std::endl;
+	if (!playerPtr.expired())
+	{
+		std::shared_ptr<GameObject> go = playerPtr.lock();
+		std::shared_ptr<InputCP> input = std::dynamic_pointer_cast<InputCP>(go->getComponentsOfType<InputCP>().at(0));
+		if (input)
+		{
+			input->toggleInputLock();
+			charmed = false;
+		}
+	}
 }

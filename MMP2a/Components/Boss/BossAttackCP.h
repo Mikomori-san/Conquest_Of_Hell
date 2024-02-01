@@ -22,9 +22,9 @@ private:
 
 	std::weak_ptr<GameObject> playerPtr;
 	//std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA(gameObject, "MeleeBA"));
-	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA"));
+	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
 
 	float swapThreshold = 100*100; //->squared distance
-	float attackCooldown = 10;
+	float attackCooldown = 3;
 	float timePassed = 0;
 };
