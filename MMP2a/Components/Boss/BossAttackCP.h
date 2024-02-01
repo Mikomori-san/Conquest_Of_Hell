@@ -1,6 +1,5 @@
 #pragma once
-#include "../stdafx.h"
-#include "../Components/Component.h"
+#include "../../Components/Component.h"
 #include "CharmBA.h"
 
 class BossAttackCP : public Component

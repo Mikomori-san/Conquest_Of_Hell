@@ -1,5 +1,5 @@
 #pragma once
-enum AnimationtypeBoss
+enum Boss_Animationtype
 {
 	Idle,
 	Walk,

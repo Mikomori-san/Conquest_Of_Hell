@@ -4,9 +4,9 @@
 #include "../Components/Collision_Components/RigidBodyCP.h"
 #include "../Components/StatsCP.h"
 #include <iostream>
-#include "../Boss/BossAttackCP.h"
+#include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Transformation_Components/TransformationCP.h"
-#include "../Boss/CharmBA.h"
+#include "../Components/Boss/CharmBA.h"
 void positionalCorrection(Manifold& man)
 {
     const float percent = 0.2f;

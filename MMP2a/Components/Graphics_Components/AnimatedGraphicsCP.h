@@ -2,6 +2,7 @@
 #include "GraphicsCP.h"
 #include "../../Enums/Player_Animationtype.h"
 #include "../../Enums/Enemy_Animationtype.h"
+#include "../../Enums/Boss_Animationtype.h"
 #include "../../DebugDraw.h"
 #include "../Transformation_Components/TransformationCP.h"
 #include "../Collision_Components/RectCollisionCP.h"
@@ -42,7 +43,6 @@ public:
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
-    AnimationtypeBoss m_bossAnimation = Idle;
     float animationTimeIndex = 0;
     float animationSpeed;
     const int TILING_X;

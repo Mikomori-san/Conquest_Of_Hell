@@ -160,10 +160,10 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Boss\BossAbility.h" />
-    <ClInclude Include="Boss\BossAttackCP.h" />
-    <ClInclude Include="Boss\CharmBA.h" />
-    <ClInclude Include="Boss\MeleeBA.h" />
+    <ClInclude Include="Components\Boss\BossAbility.h" />
+    <ClInclude Include="Components\Boss\BossAttackCP.h" />
+    <ClInclude Include="Components\Boss\CharmBA.h" />
+    <ClInclude Include="Components\Boss\MeleeBA.h" />
     <ClInclude Include="Components\AI_Pathfinding\AISpriteUpdateCP.h" />
     <ClInclude Include="Components\AI_Pathfinding\AStarCP.h" />
     <ClInclude Include="Components\AI_Pathfinding\ControllerCP.h" />
@@ -177,7 +177,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Player_Components\DashCP.h" />
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
-    <ClInclude Include="Enums\AnimationtypeBoss.h" />
+    <ClInclude Include="Enums\Boss_Animationtype.h" />
     <ClInclude Include="Enums\BossAbilites.h" />
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Enums\Enemy_Animationtype.h" />
@@ -200,8 +200,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Transformation_Components\BackgroundTransformationCP.h" />
     <ClInclude Include="Components\Transformation_Components\CameraTransformationCP.h" />
     <ClInclude Include="Components\Transformation_Components\TransformationCP.h" />
-    <ClCompile Include="Boss\BossAttackCP.cpp" />
-    <ClCompile Include="Boss\CharmBA.cpp" />
+    <ClCompile Include="Components\Boss\BossAttackCP.cpp" />
+    <ClCompile Include="Components\Boss\CharmBA.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\AISpriteUpdateCP.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\AStarCP.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\ControllerCP.cpp" />

@@ -1,7 +1,6 @@
 #pragma once
-#include "../stdafx.h"
-#include "../Enums/BossAbilites.h"
-#include "../GameObject.h"
+#include "../../Enums/BossAbilites.h"
+#include "../../GameObject.h"
 class BossAbility
 {
 public:

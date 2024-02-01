@@ -2,9 +2,10 @@
 #include "SpriteRenderCP.h"
 #include "../../DebugDraw.h"
 #include "../Collision_Components/RectCollisionCP.h"
-#include "../../Boss/BossAttackCP.h"
-#include "../../Boss/BossAbility.h"
+#include "../Boss/BossAttackCP.h"
+#include "../Boss/BossAbility.h"
 #include "../../Enums/BossAbilites.h"
+#include <iostream>
 
 void SpriteRenderCP::draw()
 {

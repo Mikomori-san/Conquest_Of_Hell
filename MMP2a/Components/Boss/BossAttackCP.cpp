@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BossAttackCP.h"
-#include "../Components/Transformation_Components/TransformationCP.h"
-#include "../VectorAlgebra2D.h"
+#include "../../Components/Transformation_Components/TransformationCP.h"
+#include "../../VectorAlgebra2D.h"
 
 void BossAttackCP::init()
 {

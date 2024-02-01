@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CharmBA.h"
-#include "../Manager/AssetManager.h"
+#include "../../Manager/AssetManager.h"
 int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);

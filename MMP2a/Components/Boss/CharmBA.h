@@ -1,6 +1,6 @@
 #pragma once
 #include "BossAbility.h"
-#include "../GameObject.h"
+#include "../../GameObject.h"
 
 class CharmBA : public BossAbility
 {

@@ -750,6 +750,63 @@
                  "width":0,
                  "x":461.333333333333,
                  "y":420.666666666667
+                }, 
+                {
+                 "height":0,
+                 "id":45,
+                 "name":"Boss",
+                 "properties":[
+                        {
+                         "name":"AnimationSpeed",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"BossName",
+                         "type":"string",
+                         "value":"Boss"
+                        }, 
+                        {
+                         "name":"BossNr",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"BossTexture",
+                         "type":"string",
+                         "value":"Assets\\Textures\\bossLust.png"
+                        }, 
+                        {
+                         "name":"Health",
+                         "type":"int",
+                         "value":100
+                        }, 
+                        {
+                         "name":"Mass",
+                         "type":"int",
+                         "value":100
+                        }, 
+                        {
+                         "name":"ObjectGroup",
+                         "type":"string",
+                         "value":"Boss"
+                        }, 
+                        {
+                         "name":"Velocity",
+                         "type":"int",
+                         "value":0
+                        }, 
+                        {
+                         "name":"isTrigger",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":481.333333333333,
+                 "y":96
                 }],
          "opacity":1,
          "properties":[
@@ -822,7 +879,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":45,
+ "nextobjectid":49,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",
