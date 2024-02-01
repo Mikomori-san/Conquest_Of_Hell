@@ -22,10 +22,13 @@ public:
     void init() override;
     void addEnemy(std::weak_ptr<GameObject> enemy) { enemies.push_back(enemy); }
 	void setAttackLock(bool al) { attackLock = al; }
+	void setBoss(std::weak_ptr<GameObject> incBoss) { boss = incBoss; }
 private:
     std::vector<std::weak_ptr<GameObject>> enemies;
     T attackKey;
     int attackRange;
+
+	std::weak_ptr<GameObject> boss;
 
     bool hasAttacked;
     bool inputLocked;
@@ -89,6 +92,23 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 
 	playerPos = transf->getPosition();
 	std::vector<std::weak_ptr<GameObject>> newEnemies;
+
+	if (!boss.expired())
+	{
+		auto daBoss = boss.lock();
+		auto bossPos = daBoss->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+
+		float dist = (playerPos.x - bossPos.x) * (playerPos.x - bossPos.x) + (playerPos.y - bossPos.y) * (playerPos.y - bossPos.y);
+		dist /= 10;
+
+		if (dist <= attackRange)
+		{
+			if ((bossPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (bossPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
+			{
+				daBoss->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+			}
+		}
+	}
 
 	for (auto it = enemies.begin(); it != enemies.end();)
 	{

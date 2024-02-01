@@ -14,7 +14,7 @@
 
 void MenuState::init(sf::RenderWindow& rWindow)
 {
-	
+	close = false;
 }
 
 void MenuState::exit()
@@ -24,7 +24,10 @@ void MenuState::exit()
 
 void MenuState::update(float deltaTime)
 {
-	
+	if (InputManager::getInstance().getKeyDown(sf::Keyboard::End))
+	{
+		close = true;
+	}
 }
 
 void MenuState::checkBackgroundPos()

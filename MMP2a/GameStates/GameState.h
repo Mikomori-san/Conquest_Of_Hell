@@ -8,4 +8,7 @@ public:
 	virtual void exit() = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void render() = 0;
+	virtual bool hasClosed() { return close; }
+protected:
+	bool close;
 };

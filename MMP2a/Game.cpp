@@ -21,7 +21,7 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Gameplay", std::make_shared<GameplayState>());
 	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
 
-	GameStateManager::getInstance().setState("Gameplay", window);
+	GameStateManager::getInstance().setState("Menu", window);
 }
 
 void Game::run()
@@ -62,10 +62,22 @@ void Game::draw()
 
 void Game::update(float deltaTime)
 {
-	if (InputManager::getInstance().getKeyDown(sf::Keyboard::Num1))
-		GameStateManager::getInstance().setState("Menu", window);
-	else if (InputManager::getInstance().getKeyDown(sf::Keyboard::Num2))
-		GameStateManager::getInstance().setState("Gameplay", window);
+	if (GameStateManager::getInstance().getState()->hasClosed())
+		state++;
+
+	switch (state)
+	{
+	case 1:
+		if(!std::dynamic_pointer_cast<GameplayState>(GameStateManager::getInstance().getState()))
+			GameStateManager::getInstance().setState("Gameplay", window);
+		break;
+	case 2:
+		if (!std::dynamic_pointer_cast<ExitState>(GameStateManager::getInstance().getState()))
+			GameStateManager::getInstance().setState("Exit", window);
+		break;
+	default:
+		break;
+	}
 
 	GameStateManager::getInstance().update(deltaTime);
 

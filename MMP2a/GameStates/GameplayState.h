@@ -20,6 +20,9 @@ private:
 	std::vector<std::shared_ptr<GameObject>> gameObjects;
 	std::map<std::string, std::vector<int>> spriteSheetCounts;
 
+	bool slainBoss;
+	bool slainPlayer;
+
 	void loadMap(std::string name, const sf::Vector2f& offset);
 	void createPlayers(tson::Object& object, tson::Layer group);
 	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, std::string id);

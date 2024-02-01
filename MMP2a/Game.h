@@ -31,4 +31,5 @@ private:
 
 	void draw();
 	void update(float deltaTime);
+	int state = 0;
 };

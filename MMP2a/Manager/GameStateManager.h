@@ -17,6 +17,7 @@ public:
     void setState(std::string name, sf::RenderWindow& window);
     void update(float deltaTime);
     void render();
+    std::shared_ptr<GameState> getState() { return currentState; };
 
 private:
     GameStateManager() {}

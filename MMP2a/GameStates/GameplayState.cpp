@@ -31,6 +31,8 @@
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
+	close = false;
+
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
 
 	this->window->setSize(sf::Vector2u(975, 650));
@@ -54,6 +56,8 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	}
 	
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
+	slainBoss = false;
+	slainPlayer = false;
 }
 
 void GameplayState::exit()
@@ -75,7 +79,26 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
-	auto removeCondition = [](const std::shared_ptr<GameObject>& go) {
+	if (slainBoss || slainPlayer)
+	{
+		close = true;
+	}
+
+	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {
+		if (go->getId().find("Player") != std::string::npos)
+		{
+			if (go->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
+			{
+				slainPlayer = true;
+			}
+		}
+		if (go->getId().find("Boss") != std::string::npos)
+		{
+			if (go->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
+			{
+				slainBoss = true;
+			}
+		}
 		auto stats = go->getComponentsOfType<StatsCP>();
 		if (stats.size() > 0)
 		{
@@ -258,10 +281,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
-			//else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
-			//{
-			//	createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
-			//}
+			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			{
+				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
 				createBoss(object, group);
@@ -279,6 +302,15 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 				{
 					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go, "BossAttackCP", go1));
 					go->addComponent(attack);
+					
+					if (go1->getComponentsOfType<MovementInputGamepadCP>().size() > 0)
+					{
+						go1->getComponentsOfType<PlayerAttackCP<GamepadButton>>().at(0)->setBoss(go);
+					}
+					else
+					{
+						go1->getComponentsOfType < PlayerAttackCP < sf::Keyboard::Key>> ().at(0)->setBoss(go);
+					}
 				}
 			}
 			break;
