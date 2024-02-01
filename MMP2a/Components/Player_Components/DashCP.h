@@ -5,6 +5,7 @@
 #include "../Transformation_Components/TransformationCP.h"
 #include "../Input_Components/InputCP.h"
 #include "../Input_Components/MovementInputGamepadCP.h"
+#include "../StatsCP.h"
 
 template <typename T>
 class DashCP : public Component
@@ -17,6 +18,7 @@ public:
 	std::string getComponentId() override { return this->componentId; };
 	void setComponentId(std::string id) override { this->componentId = id; };
 	void setDodgeLock(bool dl) { dodgeLock = dl; }
+	bool getHasIFrames() { return hasCurrentlyIFrames; };
 private:
 	T dashKey;
 
@@ -143,7 +145,7 @@ void DashCP<T>::update(float deltaTime)
 			}
 		}
 
-		if (iFramesTimer > 0.15f && hasCurrentlyIFrames)
+		if (iFramesTimer > 0.25f && hasCurrentlyIFrames)
 		{
 			hasCurrentlyIFrames = false;
 			stats->toggleIFrames();

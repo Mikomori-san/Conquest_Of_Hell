@@ -5,7 +5,7 @@
 class CharmBA : public BossAbility
 {
 public:
-	CharmBA(std::string id) : BossAbility(id) {};
+	CharmBA(std::string id, std::weak_ptr<GameObject> player) : BossAbility(id), playerPtr(player) {};
 	void init() override;
 	void update(float deltaTime) override;
 	void execute() override;
@@ -22,6 +22,8 @@ public:
 	void setDead();
 private:
 	void charmPlayer();
+	void uncharmPlayer();
+	std::weak_ptr<GameObject> playerPtr;
 	sf::Sprite sprite;
 	sf::FloatRect hitbox;
 	float ttl = 3;
@@ -31,4 +33,6 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f direction;
 	bool alive = false;
+	bool charmed = false;
+	float charmDuration = 1;
 };

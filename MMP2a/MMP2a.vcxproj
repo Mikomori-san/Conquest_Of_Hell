@@ -207,6 +207,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\AI_Pathfinding\ControllerCP.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\States\AttackPlayerState.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\SteeringCP.cpp" />
+    <ClCompile Include="Components\Boss\MeleeBA.cpp" />
     <ClCompile Include="Components\CameraCP.cpp" />
     <ClCompile Include="Components\Collision_Components\RectCollisionCP.cpp" />
     <ClCompile Include="Components\Collision_Components\RigidBodyCP.cpp" />

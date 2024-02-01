@@ -35,6 +35,7 @@ public:
     void setAnimationType(Animationtype type);
     void setAnimationSpeed(float speed) { this->animationSpeed = speed; }
     float getAnimationSpeed() { return this->animationSpeed; }
+    int getAnimationFrame() { return this->animationFrame; }
     Animationtype getAnimationType() { return m_animationType; }
     sf::Sprite& getSprite() override { return *sprite; }
     void toggleAnimationLock() { animationLock = animationLock ? false : true; }
@@ -45,6 +46,7 @@ private:
     Animationtype m_animationType;
     float animationTimeIndex = 0;
     float animationSpeed;
+    int animationFrame;
     const int TILING_X;
     const int TILING_Y;
     void doAnimation();
@@ -108,7 +110,7 @@ inline void AnimatedGraphicsCP<Animationtype>::setAnimationType(Animationtype ty
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::doAnimation()
 {
-    auto animationFrame = (int)animationTimeIndex % animationTypeFramesCount[m_animationType];
+    animationFrame = (int)animationTimeIndex % animationTypeFramesCount[m_animationType];
 
     sf::IntRect textureRect;
     textureRect.left = animationFrame * sprite->getTextureRect().width;
