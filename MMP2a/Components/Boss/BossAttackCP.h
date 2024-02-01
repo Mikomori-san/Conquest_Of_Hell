@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Components/Component.h"
 #include "CharmBA.h"
+#include  "MeleeBA.h"
 
 class BossAttackCP : public Component
 {
@@ -21,10 +22,11 @@ private:
 	void executeCharm(const sf::Vector2f& bossPos, const sf::Vector2f& playerPos);
 
 	std::weak_ptr<GameObject> playerPtr;
-	//std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA(gameObject, "MeleeBA"));
+	std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA("MeleeBA", gameObject, playerPtr));
 	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
 
 	float swapThreshold = 100*100; //->squared distance
-	float attackCooldown = 3;
+	float attackCooldown = 10;
 	float timePassed = 0;
+	
 };
