@@ -55,6 +55,7 @@ void SpawnerCP::late_init_if_enemy_spawned(std::shared_ptr<GameObject> player)
 
 void SpawnerCP::init()
 {
+
     std::shared_ptr<GameObject> player;
     
     for (auto& go : m_gameObjects)

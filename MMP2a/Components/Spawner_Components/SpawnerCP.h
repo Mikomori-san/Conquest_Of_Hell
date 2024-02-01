@@ -6,7 +6,7 @@ class SpawnerCP : public Component
 {
 public:
 	SpawnerCP(std::vector<std::shared_ptr<GameObject>>& gameObjects, std::shared_ptr<GameObject> enemy, std::shared_ptr<GameObject> enemy2, std::weak_ptr<GameObject> go, std::string id, std::string enemyName, int maxEnemies, float spawnTime,
-		sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize)
+		sf::Vector2i aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize)
 		: Component(go, id), availableEnemies(std::vector<std::shared_ptr<GameObject>>{enemy, enemy2}), m_gameObjects(gameObjects), m_enemyName(enemyName), m_spawnTime(spawnTime), m_maxEnemies(maxEnemies), aStarGridSize(aStarGridSize),
 		unMovablePositions(unMovablePositions), mapTileSize(mapTileSize)
 	{};

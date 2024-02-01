@@ -211,7 +211,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 				continue;
 			}
 
-			if (layerNr == 3 && gid != 0)
+			if (layerNr == 2 && gid != 0)
 			{
 				unMovablePositions.push_back(sf::Vector2i(i / layer.getSize().x, i % layer.getSize().x));
 			}
@@ -298,6 +298,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 					go->addComponent(attack);
 				}
 			}
+			break;
 		}
 	}
 }
@@ -308,11 +309,9 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 	GameObjectPtr enemy1 = createEnemies(object, group, object.getProp("EnemyNr")->getValue<std::string>());
 	GameObjectPtr enemy2 = createEnemies(object, group, object.getProp("EnemyNr")->getValue<std::string>() + object.getProp("EnemyNr")->getValue<std::string>());
 
-	//--------------------------------------------------------------------------------------------------------------------------------
-
 	std::string id = "Spawner " + object.getProp("SpawnerNr")->getValue<std::string>();
 	std::shared_ptr<GameObject> spawnerTemp = std::make_shared<GameObject>(id);
-
+	          
 	std::string enemyName = object.getProp("EnemyName")->getValue<std::string>();
 	int maxEnemy = object.getProp("MaxEnemies")->getValue<int>();
 	float spawnTime = object.getProp("SpawnTime")->getValue<float>();
@@ -320,10 +319,8 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
 
 	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime, aStarGridSize, unMovablePositions, mapTileSize);
-	
 
 	spawnerTemp->addComponent(spawnerCP);
-
 
 	gameObjects.push_back(spawnerTemp);
 
@@ -401,7 +398,6 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	int dmg = object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, dmg, "Enemy");
 	enemyTemp->addComponent(enemyStats);
-	std::shared_ptr<GameObject>& enemyREF = enemyTemp;
 	return enemyTemp;
 	/*gameObjects.push_back(enemyTemp);*/
 }

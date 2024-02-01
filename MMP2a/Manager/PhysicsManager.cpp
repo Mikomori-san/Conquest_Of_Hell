@@ -211,7 +211,7 @@ void PhysicsManager::collisionResolve()
 
 void PhysicsManager::update(std::vector<std::shared_ptr<GameObject>> gameObjects, float deltaTime)
 {
-    const float step = 1.f / 100.f;
+    const float step = 0.02f;
     accumulator += deltaTime;
 
     while (accumulator > step)

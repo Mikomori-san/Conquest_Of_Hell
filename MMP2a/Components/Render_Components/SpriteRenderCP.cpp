@@ -24,7 +24,6 @@ void SpriteRenderCP::draw()
 					static_cast<int>(sprite.getGlobalBounds().height),
 					sf::Color::Red
 				);
-				std::cout << static_cast<int>(sprite.getGlobalBounds().width) << " & " << static_cast<int>(sprite.getGlobalBounds().height) << std::endl;
 				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
 				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);
 			}

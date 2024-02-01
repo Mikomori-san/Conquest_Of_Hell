@@ -36,45 +36,27 @@ int eucledianDistance(const Point& a, const Point& b) {
     //return std::sqrt(std::abs(a.x - b.x) * std::abs(a.x - b.x) + std::abs(a.y - b.y) * std::abs(a.y - b.y)); ==> schlechter, ist aber die eig. euklidische
 }
 
-std::vector<Point> aStar(const std::vector<std::vector<int>>& grid, const Point& start, const Point& goal) {
-
+std::vector<Point> aStar(const std::vector<std::vector<int>> grid, const Point start, const Point goal) {
     const int costs[3] = { 1, 1, 1 };
 
-    if (start.x < 0 || start.x >= grid[0].size() || start.y < 0 || start.y >= grid.size() ||
-        goal.x < 0 || goal.x >= grid[0].size() || goal.y < 0 || goal.y >= grid.size())
-    {
-        //std::cerr << "Ungültige Start- oder Zielposition!" << std::endl;
-        return {};
-    }
-
     std::priority_queue<Node, std::vector<Node>, std::greater<Node>> openList;
-
     std::vector<std::vector<Point>> cameFrom(grid.size(), std::vector<Point>(grid[0].size(), { -1, -1 }));
-
     std::vector<std::vector<int>> gValues(grid.size(), std::vector<int>(grid[0].size(), INT_MAX));
 
-    if (start.x == goal.x && start.y == goal.y)
-    {
-        //std::cout << "Goal Reached" << std::endl;
-        return{};
-    }
-    Node startNode(start, 0, eucledianDistance(start, goal));
-    openList.push(startNode);
-    gValues[start.x][start.y] = 0;
+    openList.push(Node(start, 0, eucledianDistance(start, goal)));
+    gValues[start.y][start.x] = 0;
 
     while (!openList.empty()) {
-
         Node current = openList.top();
         openList.pop();
 
         if (current.point.x == goal.x && current.point.y == goal.y) {
-
             std::vector<Point> path;
             Point currentPoint = goal;
 
             while (!(currentPoint.x == -1 && currentPoint.y == -1)) {
                 path.push_back(currentPoint);
-                currentPoint = cameFrom[currentPoint.x][currentPoint.y];
+                currentPoint = cameFrom[currentPoint.y][currentPoint.x];
             }
 
             std::reverse(path.begin(), path.end());
@@ -83,36 +65,35 @@ std::vector<Point> aStar(const std::vector<std::vector<int>>& grid, const Point&
 
         for (int i = -1; i <= 1; ++i) {
             for (int j = -1; j <= 1; ++j) {
-
-                if ((i == 0 && j == 0) || (i != 0 && j != 0)) {
+                if (i == 0 && j == 0) {
                     continue;
                 }
 
-                int newX = current.point.x + i;
-                int newY = current.point.y + j;
+                int newX = current.point.x + j;
+                int newY = current.point.y + i;
 
-                if (newX >= 0 && newX < grid.size() && newY >= 0 && newY < grid[0].size() && grid[newX][newY] == 0) {
-                    int newG = current.g + costs[(i != 0) ? 0 : 1]; 
+                if (newX >= 0 && newX < grid[0].size() && newY >= 0 && newY < grid.size() && grid[newY][newX] == 0) {
+                    int newG = current.g + costs[(i != 0) ? 0 : 1];
 
-                    if (newG < gValues[newX][newY]) {
-                        gValues[newX][newY] = newG;
+                    if (newG < gValues[newY][newX]) {
+                        gValues[newY][newX] = newG;
 
                         Node neighbor({ newX, newY }, newG, eucledianDistance({ newX, newY }, goal));
                         openList.push(neighbor);
-                        cameFrom[newX][newY] = current.point;
+                        cameFrom[newY][newX] = current.point;
                     }
                 }
             }
         }
     }
 
-    //std::cerr << "Kein Pfad gefunden!" << std::endl;
-    return {};
+    return {}; // Return an empty path if no valid path is found
 }
 
 
 void AStarCP::update(float deltaTime)
 {
+    timer = 0;
     if (!gameObject.expired())
     {
         auto go = gameObject.lock();
