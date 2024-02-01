@@ -7,6 +7,7 @@
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Transformation_Components/TransformationCP.h"
 #include "../Components/Boss/CharmBA.h"
+#include "../Components/Player_Components/DashCP.h"
 void positionalCorrection(Manifold& man)
 {
     const float percent = 0.2f;
@@ -95,8 +96,7 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 continue;
             }
 
-            auto& body2 = *itB;  
-
+            auto& body2 = *itB;
             sf::Vector2f normal;
             float penetration = NAN;
 
@@ -104,7 +104,11 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
             {
                 continue;
             }
-
+            //no collision between player & enemy
+            if (body1->getId().find("Player") != std::string::npos && body2->getId().find("Skeleton") != std::string::npos)
+            {
+                continue;
+            }
             std::shared_ptr<RectCollisionCP> c1 = body1->getComponentsOfType<RectCollisionCP>().at(0);
             std::shared_ptr<RectCollisionCP> c2 = body2->getComponentsOfType<RectCollisionCP>().at(0);
 
@@ -129,10 +133,14 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(body2->getComponentsOfType<BossAttackCP>().at(0)->getAbility2());
                 if (charm)
                 {
-                    if (body1->getId().find("Player") != std::string::npos && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                    if (body1->getId().find("Player") != std::string::npos)
                     {
-                        charm->execute();
-                        charm->setDead();
+                        std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = std::dynamic_pointer_cast<DashCP<sf::Keyboard::Key>>(body1->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0));
+                        if (dash && !dash->getHasIFrames() && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                        {
+                            charm->execute();
+                            charm->setDead();
+                        }
                     }
                     if (body1->getId().find("Boundary") != std::string::npos)
                     {

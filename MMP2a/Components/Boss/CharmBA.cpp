@@ -2,7 +2,6 @@
 #include "CharmBA.h"
 #include "../../Manager/AssetManager.h"
 #include "../Input_Components/InputCP.h"
-#include "../Player_Components/DashCP.h"
 int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);
@@ -93,16 +92,11 @@ void CharmBA::charmPlayer()
 	{
 		std::shared_ptr<GameObject> go = playerPtr.lock();
 		std::shared_ptr<InputCP> input = std::dynamic_pointer_cast<InputCP>(go->getComponentsOfType<InputCP>().at(0));
-		std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = std::dynamic_pointer_cast<DashCP<sf::Keyboard::Key>>(go->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0));
-		
-		if (input && dash)
+		if (input)
 		{
-			if (!dash->getHasIFrames())
-			{
 				std::cout << "Charm" << std::endl;
 				input->toggleInputLock();
 				charmed = true;
-			}
 		}
 	}
 }

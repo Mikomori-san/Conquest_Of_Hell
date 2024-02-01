@@ -145,7 +145,7 @@ void DashCP<T>::update(float deltaTime)
 			}
 		}
 
-		if (iFramesTimer > 0.15f && hasCurrentlyIFrames)
+		if (iFramesTimer > 0.25f && hasCurrentlyIFrames)
 		{
 			hasCurrentlyIFrames = false;
 			stats->toggleIFrames();

@@ -275,10 +275,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
-			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
-			{
-				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
-			}
+			//else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			//{
+			//	createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+			//}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
 				createBoss(object, group);
@@ -300,6 +300,23 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			}
 		}
 	}
+	//sort gameObjects
+	int playerIndex = 0;
+	for (int i = 0; i < gameObjects.size(); i++)
+	{
+		if (gameObjects[i]->getId().find("Player") != std::string::npos)
+		{
+			playerIndex = i;
+			break;
+		}
+	}
+	for (int i = playerIndex; i > 0; i--)
+	{
+		std::shared_ptr<GameObject> temp = gameObjects[i];
+		gameObjects[i] = gameObjects[i - 1];
+		gameObjects[i - 1] = temp;
+	}
+
 }
 
 void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::Vector2i& aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize)
@@ -344,7 +361,9 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(boundaryTemp, "EnemyTransformationCP", pos, object.getRotation(), object.getSize().x);
 	transCP->setVelocity(0);
 	boundaryTemp->addComponent(transCP);
-
+	//std::weak_ptr<GameObject> go, std::string id, const float newMass, const float newInvMass, sf::Vector2f vel
+	std::shared_ptr<RigidBodyCP> rigid = std::make_shared<RigidBodyCP>(boundaryTemp, id, 1,1,sf::Vector2f(1,1));
+	boundaryTemp->addComponent(rigid);
 	gameObjects.push_back(boundaryTemp);
 }
 
