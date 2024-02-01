@@ -25,6 +25,7 @@ private:
 	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, std::string id);
 	void createBoundary(tson::Object& object, tson::Layer group);
 	void createSpawner(tson::Object& object, tson::Layer group, sf::Vector2i& aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize);
+	void createBoss(tson::Object& object, tson::Layer group);
 
 	//template<typename T>
 	//void doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize);

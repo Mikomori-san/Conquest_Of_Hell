@@ -12,11 +12,11 @@ void TransformationCP::update(float deltaTime)
 		oldPos = position;
 		posResetTimer = 0;
 	}
-	
+
 	// for AI
 	if (backupVel != 0)
 	{
-		curVelocity = backupVel;	
+		curVelocity = backupVel;
 	}
 
 	position = position + direction * curVelocity * deltaTime;
@@ -36,7 +36,7 @@ void TransformationCP::init()
 		if (go->getComponentsOfType<GraphicsCP>().size() != 0)
 		{
 			std::shared_ptr<GraphicsCP> ani = go->getComponentsOfType<GraphicsCP>().at(0);
-			sf::Vector2f origin(ani->getSprite().getTextureRect().width / 2, ani->getSprite().getTextureRect().height / 2);
+			origin = sf::Vector2f(ani->getSprite().getTextureRect().width / 2, ani->getSprite().getTextureRect().height / 2);
 			setOrigin(origin);
 		}
 		

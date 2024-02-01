@@ -2,8 +2,11 @@
 #include "PhysicsManager.h"
 #include "../Components/Collision_Components/RectCollisionCP.h"
 #include "../Components/Collision_Components/RigidBodyCP.h"
+#include "../Components/StatsCP.h"
 #include <iostream>
-
+#include "../Boss/BossAttackCP.h"
+#include "../Components/Transformation_Components/TransformationCP.h"
+#include "../Boss/CharmBA.h"
 void positionalCorrection(Manifold& man)
 {
     const float percent = 0.2f;
@@ -119,6 +122,26 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 manifold->penetration = penetration;
 
                 manifolds.push_back(manifold);
+            }
+
+            if (body2->getId().find("Boss") != std::string::npos)
+            {
+                std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(body2->getComponentsOfType<BossAttackCP>().at(0)->getAbility2());
+                if (charm)
+                {
+                    if (body1->getId().find("Player") != std::string::npos && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                    {
+                        charm->execute();
+                        charm->setDead();
+                    }
+                    if (body1->getId().find("Boundary") != std::string::npos)
+                    {
+                        if (aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                        {
+                            charm->setDead();
+                        }
+                    }
+                }
             }
         }
     }

@@ -43,7 +43,7 @@ std::vector<Point> aStar(const std::vector<std::vector<int>>& grid, const Point&
     if (start.x < 0 || start.x >= grid[0].size() || start.y < 0 || start.y >= grid.size() ||
         goal.x < 0 || goal.x >= grid[0].size() || goal.y < 0 || goal.y >= grid.size())
     {
-        std::cerr << "Ungültige Start- oder Zielposition!" << std::endl;
+        //std::cerr << "Ungültige Start- oder Zielposition!" << std::endl;
         return {};
     }
 
@@ -106,7 +106,7 @@ std::vector<Point> aStar(const std::vector<std::vector<int>>& grid, const Point&
         }
     }
 
-    std::cerr << "Kein Pfad gefunden!" << std::endl;
+    //std::cerr << "Kein Pfad gefunden!" << std::endl;
     return {};
 }
 

@@ -160,6 +160,10 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Boss\BossAbility.h" />
+    <ClInclude Include="Boss\BossAttackCP.h" />
+    <ClInclude Include="Boss\CharmBA.h" />
+    <ClInclude Include="Boss\MeleeBA.h" />
     <ClInclude Include="Components\AI_Pathfinding\AISpriteUpdateCP.h" />
     <ClInclude Include="Components\AI_Pathfinding\AStarCP.h" />
     <ClInclude Include="Components\AI_Pathfinding\ControllerCP.h" />
@@ -173,6 +177,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Player_Components\DashCP.h" />
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
+    <ClInclude Include="Enums\AnimationtypeBoss.h" />
+    <ClInclude Include="Enums\BossAbilites.h" />
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Enums\Enemy_Animationtype.h" />
     <ClInclude Include="Enums\GamepadButton.h" />
@@ -194,6 +200,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Transformation_Components\BackgroundTransformationCP.h" />
     <ClInclude Include="Components\Transformation_Components\CameraTransformationCP.h" />
     <ClInclude Include="Components\Transformation_Components\TransformationCP.h" />
+    <ClCompile Include="Boss\BossAttackCP.cpp" />
+    <ClCompile Include="Boss\CharmBA.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\AISpriteUpdateCP.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\AStarCP.cpp" />
     <ClCompile Include="Components\AI_Pathfinding\ControllerCP.cpp" />
@@ -266,6 +274,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
   <ItemGroup>
     <Image Include="Assets\Textures\background.png" />
     <Image Include="Assets\Textures\crystal.png" />
+    <Image Include="Assets\Textures\heartSpriteSheet.png" />
     <Image Include="Assets\Textures\LavaTile.png" />
     <Image Include="Assets\Textures\playerSpriteSheet.png" />
     <Image Include="Assets\Textures\projectile.png" />

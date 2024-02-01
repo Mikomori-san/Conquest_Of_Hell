@@ -42,6 +42,7 @@ public:
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
+    AnimationtypeBoss m_bossAnimation = Idle;
     float animationTimeIndex = 0;
     float animationSpeed;
     const int TILING_X;
