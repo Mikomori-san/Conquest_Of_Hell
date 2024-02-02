@@ -23,7 +23,7 @@ private:
 	sf::Texture bgTexture;
 	sf::Texture startTexture;
 	sf::Texture exitTexture;
-	
+	std::shared_ptr<sf::Music> cw;
 	sf::Text start;
 	sf::Text exitText;
 

@@ -4,7 +4,7 @@ class StatsCP : public Component
 {
 public:
 
-    StatsCP(std::weak_ptr<GameObject> gameObject, std::string id, int hp, int dmg, std::string incObjType) : Component(gameObject, id), health(hp), gameObjectType(incObjType), damage(dmg), maxHealth(hp) {};
+    StatsCP(std::weak_ptr<GameObject> gameObject, std::string id, int hp, int dmg, std::string incObjType) : Component(gameObject, id), maxHealth(hp), gameObjectType(incObjType), originalDamage(dmg) {};
 
     void update(float deltaTime) override;
 
@@ -36,6 +36,7 @@ public:
 private:
     int maxHealth;
     int health;
+    int originalDamage;
     int damage;
     std::string gameObjectType;
     bool hasIFrames = false;

@@ -17,6 +17,6 @@ private:
 	std::weak_ptr<GameObject> bossPtr;
 	bool attacking = false;
 	int lastAnimationFrame = 0;
-	int damage = 10;
+	int damage = 30;
 	float defaultAnimationSpeed;
 };

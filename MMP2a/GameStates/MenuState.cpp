@@ -26,7 +26,12 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	//this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
-
+	
+	AssetManager::getInstance().loadMusic("Celestial_Wanderer", "Assets\\Music\\Celestial_Wanderer.mp3");
+	cw = AssetManager::getInstance().Music["Celestial_Wanderer"];
+	cw->setVolume(10);
+	cw->play();
+	
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
 
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackgroundTitle.png");
@@ -85,6 +90,7 @@ void MenuState::init(sf::RenderWindow& rWindow)
 
 void MenuState::exit()
 {
+	cw->stop();
 	AssetManager::getInstance().unloadAssets();
 	DebugDraw::getInstance().unload();
 }

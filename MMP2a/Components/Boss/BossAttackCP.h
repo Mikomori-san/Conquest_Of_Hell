@@ -26,7 +26,7 @@ private:
 	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
 
 	float swapThreshold = 100*100; //->squared distance
-	float attackCooldown = 10;
+	float attackCooldown = 2;
 	float timePassed = 0;
 	
 };

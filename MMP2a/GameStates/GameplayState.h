@@ -22,7 +22,7 @@ private:
 
 	bool slainBoss;
 	bool slainPlayer;
-
+	std::shared_ptr<sf::Music> cot;
 	void loadMap(std::string name, const sf::Vector2f& offset);
 	void createPlayers(tson::Object& object, tson::Layer group);
 	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, std::string id);

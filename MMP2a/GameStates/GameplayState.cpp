@@ -44,6 +44,11 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
 	spriteSheetCounts["Boss"] = { 4,6,5,9,6,7,2,7 };
 
+	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
+	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
+	cot->setVolume(10);
+	cot->play();
+
 	loadMap("game.tmj", sf::Vector2f());
 
 	for (auto& go : gameObjects)
@@ -63,6 +68,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 }
 void GameplayState::exit()
 {
+	cot->stop();
 	for (auto& go : gameObjects)
 	{
 		go.reset();
@@ -430,7 +436,7 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	enemyTemp->addComponent(enemyRenderCP);
 
 	int hp = object.getProp("Health")->getValue<int>();
-	int dmg = object.getProp("Damage")->getValue<int>();
+	int dmg = 25; //object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, dmg, "Enemy");
 	enemyTemp->addComponent(enemyStats);
 	return enemyTemp;

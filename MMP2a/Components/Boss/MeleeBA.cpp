@@ -62,15 +62,32 @@ void MeleeBA::attackPlayer()
 	if (!playerPtr.expired())
 	{
 		std::shared_ptr<GameObject> go = playerPtr.lock();
-		std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = std::dynamic_pointer_cast<DashCP<sf::Keyboard::Key>>(go->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0));
-		std::shared_ptr<StatsCP> stats = std::dynamic_pointer_cast<StatsCP>(go->getComponentsOfType<StatsCP>().at(0));
-		if (dash && stats)
+		if (go->getComponentsOfType<MovementInputGamepadCP>().size() > 0)
 		{
-			if (!dash->getHasIFrames())
+			std::shared_ptr<DashCP<GamepadButton>> dash = go->getComponentsOfType<DashCP<GamepadButton>>().at(0);
+			std::shared_ptr<StatsCP> stats = go->getComponentsOfType<StatsCP>().at(0);
+			if (dash && stats)
 			{
-				std::cout << "Attack" << std::endl;
-				stats->subtracktHealth(damage);
+				if (!dash->getHasIFrames())
+				{
+					std::cout << "Attack" << std::endl;
+					stats->subtracktHealth(damage);
+				}
 			}
 		}
+		else
+		{
+			std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = go->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0);
+			std::shared_ptr<StatsCP> stats = go->getComponentsOfType<StatsCP>().at(0);
+			if (dash && stats)
+			{
+				if (!dash->getHasIFrames())
+				{
+					std::cout << "Attack" << std::endl;
+					stats->subtracktHealth(damage);
+				}
+			}
+		}
+		
 	}
 }
