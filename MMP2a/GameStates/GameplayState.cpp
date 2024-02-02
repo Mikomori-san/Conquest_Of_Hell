@@ -49,7 +49,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	cot->setVolume(10);
 	cot->play();
 
-	loadMap("game.tmj", sf::Vector2f());
+	loadMap("game1.tmj", sf::Vector2f());
 
 	for (auto& go : gameObjects)
 	{
