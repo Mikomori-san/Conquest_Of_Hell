@@ -117,7 +117,7 @@ void AStarCP::update(float deltaTime)
             {
                 if (i == pos.x && j == pos.y)
                 {
-                    grid[i][j] = std::numeric_limits<float>().max();
+                    grid[i][j] = 100;
                     break;
                 }
             }

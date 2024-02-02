@@ -104,11 +104,11 @@
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 5.5,
+            "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 482.6363636363636,
-                "y": 271.9090909090909
+                "x": 500,
+                "y": 271.5
             }
         },
         "MapTiled.tmx#Tiles": {
@@ -116,11 +116,14 @@
             "scaleInEditor": 1
         },
         "game.tmj": {
-            "scale": 0.75,
-            "selectedLayer": 2,
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 1,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 575.3333333333333,
-                "y": 194.66666666666669
+                "x": 42,
+                "y": 7
             }
         },
         "game.tmj#Background": {
@@ -133,7 +136,27 @@
             "scaleInDock": 1
         },
         "game.tmj#Tiles": {
-            "scaleInDock": 0.75
+            "scaleInDock": 1.5
+        },
+        "game_old.tmj": {
+            "scale": 1.2488217213114754,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 479.2517537022604,
+                "y": 102.4966156623046
+            }
+        },
+        "game_old.tmj#Background": {
+            "scaleInDock": 1
+        },
+        "game_old.tmj#Sci-Fi-Tiles": {
+            "scaleInDock": 1
+        },
+        "game_old.tmj#Sci-Fi-Tiles2": {
+            "scaleInDock": 1
+        },
+        "game_old.tmj#Tiles": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/mmp2a/MMP2a/Assets",

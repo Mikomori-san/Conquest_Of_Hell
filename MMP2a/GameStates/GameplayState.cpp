@@ -31,6 +31,9 @@
 #include "../Components/Graphics_Components/HealthbarCP.h"
 #include "../Components/UI/ControlsUI.h"
 
+#include "../Manager/GameStateManager.h"
+
+
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	close = false;
@@ -48,9 +51,10 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
 	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
 	cot->setVolume(10);
+	cot->setLoop(true);
 	cot->play();
 
-	loadMap("game.tmj", sf::Vector2f());
+	loadMap("game1.tmj", sf::Vector2f());
 
 	for (auto& go : gameObjects)
 	{
@@ -87,9 +91,17 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
-	if (slainBoss || slainPlayer)
+	if (slainBoss)
 	{
-		close = true;
+		hasWon = true;
+		GameStateManager::getInstance().setState("Win", *window);
+
+	}
+	if (slainPlayer)
+	{
+		hasLost = true;
+		GameStateManager::getInstance().setState("Loose", *window);
+
 	}
 
 	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {
@@ -357,6 +369,8 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 	float spawnTime = object.getProp("SpawnTime")->getValue<float>();
 
 	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
+
+	//AssetManager::getInstance().loadTexture("start")
 
 	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime, aStarGridSize, unMovablePositions, mapTileSize);
 

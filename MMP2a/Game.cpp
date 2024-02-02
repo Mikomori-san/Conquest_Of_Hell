@@ -24,6 +24,8 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Menu", std::make_shared<MenuState>());
 	GameStateManager::getInstance().reg("Gameplay", std::make_shared<GameplayState>());
 	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
+	GameStateManager::getInstance().reg("Win", std::make_shared<WinState>());
+	GameStateManager::getInstance().reg("Loose", std::make_shared<LooseState>());
 
 	GameStateManager::getInstance().setState("Menu", window);
 
@@ -70,6 +72,12 @@ void Game::update(float deltaTime)
 {
 	if (GameStateManager::getInstance().getState()->hasClosed())
 		state++;
+
+	//if (GameStateManager::getInstance().getState()->hasWon())
+	//	GameStateManager::getInstance().setState("Win", window);
+
+	//if (GameStateManager::getInstance().getState()->hasLost())
+	//	GameStateManager::getInstance().setState("Loose", window);
 
 	switch (state)
 	{
