@@ -173,6 +173,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\CameraCP.h" />
     <ClInclude Include="Components\DecisionHandlerCP.h" />
     <ClInclude Include="Components\Enemy_Components\EnemyAttackCP.h" />
+    <ClInclude Include="Components\Graphics_Components\HealthbarCP.h" />
     <ClInclude Include="Components\Input_Components\MovementInputGamepadCP.h" />
     <ClInclude Include="Components\Player_Components\DashCP.h" />
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
@@ -213,6 +214,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\Collision_Components\RigidBodyCP.cpp" />
     <ClCompile Include="Components\DecisionHandlerCP.cpp" />
     <ClCompile Include="Components\Enemy_Components\EnemyAttackCP.cpp" />
+    <ClCompile Include="Components\Graphics_Components\HealthbarCP.cpp" />
     <ClCompile Include="Components\Input_Components\MovementInputGamepadCP.cpp" />
     <ClCompile Include="Components\Render_Components\LayerCP.cpp" />
     <ClCompile Include="Components\Render_Components\SpriteRenderCP.cpp" />

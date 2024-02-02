@@ -28,6 +28,7 @@
 #include "../Enums/GamepadButton.h"
 #include "../Components/Spawner_Components/SpawnerCP.h"
 #include "../Components/Boss/BossAttackCP.h"
+#include "../Components/Graphics_Components/HealthbarCP.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -529,6 +530,13 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	std::shared_ptr<StatsCP> playerStats = std::make_shared<StatsCP>(playerTemp, "PlayerStatsCP", hp, damage, "Player");
 	playerTemp->addComponent(playerStats);
 
+	if (!AssetManager::getInstance().Textures["healthbar"])
+	{
+		AssetManager::getInstance().loadTexture("healthbar", "Assets\\Textures\\health_bar.png");
+	}
+
+	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(playerTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
+	playerTemp->addComponent(health);
 	gameObjects.push_back(playerTemp);
 }
 
@@ -589,5 +597,13 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	int hp = object.getProp("Health")->getValue<int>();
 	std::shared_ptr<StatsCP> bossStats = std::make_shared<StatsCP>(bossTemp, "BossStatsCP", hp, 25, "Boss");
 	bossTemp->addComponent(bossStats);
+
+	if (!AssetManager::getInstance().Textures["healthbar"])
+	{
+		AssetManager::getInstance().loadTexture("healthbar", "Assets\\Textures\\health_bar.png");
+	}
+
+	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(bossTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
+	bossTemp->addComponent(health);
 	gameObjects.push_back(bossTemp);
 }
