@@ -228,7 +228,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameStates\ManuState.cpp" />
+    <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\ExitState.cpp" />
     <ClCompile Include="GameStates\GameplayState.cpp" />
     <ClCompile Include="Manager\AssetManager.cpp" />
@@ -274,14 +274,10 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\background.png" />
-    <Image Include="Assets\Textures\Boss.png" />
     <Image Include="Assets\Textures\Crawler.png" />
     <Image Include="Assets\Textures\crystal.png" />
-<<<<<<< HEAD
     <Image Include="Assets\Textures\heartSpriteSheet.png" />
-=======
     <Image Include="Assets\Textures\enemy.png" />
->>>>>>> TitleScreen
     <Image Include="Assets\Textures\LavaTile.png" />
     <Image Include="Assets\Textures\overScreen.png" />
     <Image Include="Assets\Textures\player.png" />

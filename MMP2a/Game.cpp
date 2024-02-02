@@ -16,6 +16,9 @@ void Game::closeGame(const sf::Event& event)
 
 void Game::initialize()
 {
+	sf::VideoMode fullscreenMode(1920, 1080);
+	window.create(fullscreenMode, "Fullscreen Window", sf::Style::Fullscreen);
+	
 	InputManager::getInstance().init(window);
 
 	GameStateManager::getInstance().reg("Menu", std::make_shared<MenuState>());
