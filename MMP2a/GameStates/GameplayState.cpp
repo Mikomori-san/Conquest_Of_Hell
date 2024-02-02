@@ -29,6 +29,7 @@
 #include "../Components/Spawner_Components/SpawnerCP.h"
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
+#include "../Components/UI/ControlsUI.h"
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -502,6 +503,12 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 		std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = std::make_shared<PlayerAttackCP<sf::Keyboard::Key>>(playerTemp, "PlayerAttackCP", attackRange, weak, sf::Keyboard::RControl);
 		playerTemp->addComponent(playerAttackCP);
+		if (!AssetManager::getInstance().Textures["arrowsControls"])
+		{
+			AssetManager::getInstance().loadTexture("arrowsControls", "Assets\\UI\\Arrow.png");
+		}
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("arrowsControls"));
+		playerTemp->addComponent(ui);
 	}
 	else if(!useController){
 		std::shared_ptr<MovementInputWASDCP> movementInputCP = std::make_shared<MovementInputWASDCP>(
@@ -514,6 +521,12 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 		std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = std::make_shared<PlayerAttackCP<sf::Keyboard::Key>>(playerTemp, "PlayerAttackCP", attackRange, weak, sf::Keyboard::LAlt);
 		playerTemp->addComponent(playerAttackCP);
+		if (!AssetManager::getInstance().Textures["keyboardControls"])
+		{
+			AssetManager::getInstance().loadTexture("keyboardControls", "Assets\\UI\\Keyboard.png");
+		}
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("keyboardControls"));
+		playerTemp->addComponent(ui);
 	}
 	else
 	{
@@ -526,6 +539,12 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 		std::shared_ptr<PlayerAttackCP<GamepadButton>> playerAttackCP = std::make_shared<PlayerAttackCP<GamepadButton>>(playerTemp, "PlayerAttackCP", attackRange, weak, GamepadButton::X);
 		playerTemp->addComponent(playerAttackCP);
+		if (!AssetManager::getInstance().Textures["gamepadControls"])
+		{
+			AssetManager::getInstance().loadTexture("gamepadControls", "Assets\\UI\\Gamepad.png");
+		}
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("gamepadControls"));
+		playerTemp->addComponent(ui);
 	}
 
 	std::shared_ptr<DecisionHandlerCP> decHandler = std::make_shared<DecisionHandlerCP>(playerTemp, "PlayerDecisionHandlerCP");
@@ -543,6 +562,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(playerTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
 	playerTemp->addComponent(health);
+
 	gameObjects.push_back(playerTemp);
 }
 

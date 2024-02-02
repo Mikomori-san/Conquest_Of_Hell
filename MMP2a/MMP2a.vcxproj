@@ -178,6 +178,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Player_Components\DashCP.h" />
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
+    <ClInclude Include="Components\UI\ControlsUI.h" />
     <ClInclude Include="Enums\Boss_Animationtype.h" />
     <ClInclude Include="Enums\BossAbilites.h" />
     <ClInclude Include="Enums\Direction.h" />
@@ -227,6 +228,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\Transformation_Components\BackgroundTransformationCP.cpp" />
     <ClCompile Include="Components\Transformation_Components\CameraTransformationCP.cpp" />
     <ClCompile Include="Components\Transformation_Components\TransformationCP.cpp" />
+    <ClCompile Include="Components\UI\ControlsUI.cpp" />
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
