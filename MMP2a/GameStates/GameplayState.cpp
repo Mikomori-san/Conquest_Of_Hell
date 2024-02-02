@@ -30,6 +30,9 @@
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
 
+#include "../Manager/GameStateManager.h"
+
+
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	close = false;
@@ -86,9 +89,17 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
-	if (slainBoss || slainPlayer)
+	if (slainBoss)
 	{
-		close = true;
+		hasWon = true;
+		GameStateManager::getInstance().setState("Win", *window);
+
+	}
+	if (slainPlayer)
+	{
+		hasLost = true;
+		GameStateManager::getInstance().setState("Loose", *window);
+
 	}
 
 	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {

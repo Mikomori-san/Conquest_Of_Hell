@@ -160,6 +160,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameStates\WinState.cpp" />
     <ClInclude Include="Components\Boss\BossAbility.h" />
     <ClInclude Include="Components\Boss\BossAttackCP.h" />
     <ClInclude Include="Components\Boss\CharmBA.h" />
@@ -183,6 +184,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Enums\Enemy_Animationtype.h" />
     <ClInclude Include="Enums\GamepadButton.h" />
+    <ClInclude Include="GameStates\LooseState.h" />
     <ClInclude Include="Manager\PhysicsManager.h" />
     <ClInclude Include="Manifold.h" />
     <ClInclude Include="Components\Collision_Components\RectCollisionCP.h" />
@@ -233,6 +235,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\ExitState.cpp" />
     <ClCompile Include="GameStates\GameplayState.cpp" />
+    <ClCompile Include="GameStates\LooseState.cpp" />
     <ClCompile Include="Manager\AssetManager.cpp" />
     <ClCompile Include="Manager\GameStateManager.cpp" />
     <ClCompile Include="Manager\InputManager.cpp" />
@@ -253,6 +256,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="tileson.hpp" />
     <ClInclude Include="Trigonometry.h" />
     <ClInclude Include="VectorAlgebra2D.h" />
+    <ClInclude Include="GameStates\WinState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\ColliderComponent.h" />
