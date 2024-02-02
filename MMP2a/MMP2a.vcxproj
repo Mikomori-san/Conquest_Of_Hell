@@ -269,7 +269,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <Image Include="Assets\Textures\Crawler.png" />
     <Image Include="Assets\Textures\crystal.png" />
     <Image Include="Assets\Textures\enemy.png" />
-    <Image Include="Assets\Textures\exit.png" />
     <Image Include="Assets\Textures\LavaTile.png" />
     <Image Include="Assets\Textures\overScreen.png" />
     <Image Include="Assets\Textures\player.png" />
@@ -281,10 +280,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <Image Include="Assets\Textures\skull.png" />
     <Image Include="Assets\Textures\space.png" />
     <Image Include="Assets\Textures\SpaceShip.png" />
-    <Image Include="Assets\Textures\start.png" />
     <Image Include="Assets\Textures\Tiles.png" />
     <Image Include="Assets\Textures\TitleScreenBackground.png" />
-    <Image Include="Assets\Textures\TitleScreenBackgroundTitle.png" />
     <Image Include="Assets\Textures\TitleSprite.png" />
   </ItemGroup>
   <ItemGroup>
