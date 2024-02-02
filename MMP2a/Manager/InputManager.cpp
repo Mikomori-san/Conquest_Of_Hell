@@ -5,6 +5,7 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Joystick.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <map>
 
@@ -74,6 +75,14 @@ void InputManager::init(sf::Window& window)
 	isKeyPressed[sf::Keyboard::E] = false;
 	isKeyPressed[sf::Keyboard::LAlt] = false;
 	isKeyPressed[sf::Keyboard::RControl] = false;
+
+	for (sf::Mouse::Button button = sf::Mouse::Left; button <= sf::Mouse::XButton2; button = static_cast<sf::Mouse::Button>(static_cast<int>(button) + 1)) {
+		isMouseDown[button] = false;
+		isMouseUp[button] = false;
+		isMousePressed[button] = false;
+	}
+
+	mousePosition = sf::Vector2i(0, 0);
 }
 
 void InputManager::update()
@@ -87,6 +96,13 @@ void InputManager::update()
 	for (auto iteration = isKeyUp.begin(); iteration != isKeyUp.end(); ++iteration)
 	{
 		isKeyUp[iteration->first] = false;
+	}
+
+	for (auto& pair : isMouseDown) {
+		pair.second = false;
+	}
+	for (auto& pair : isMouseUp) {
+		pair.second = false;
 	}
 }
 
@@ -117,6 +133,24 @@ void InputManager::handleEvents(sf::Event& event)
 		isKeyUp[event.key.code] = true;
 		isKeyPressed[event.key.code] = false;
 	}
+	else if (event.type == sf::Event::MouseButtonPressed)
+	{
+		isMouseDown[event.mouseButton.button] = true;
+		isMousePressed[event.mouseButton.button] = true;
+	}
+	else if (event.type == sf::Event::MouseButtonReleased)
+	{
+		isMouseUp[event.mouseButton.button] = true;
+		isMousePressed[event.mouseButton.button] = false;
+	}
+	else if (event.type == sf::Event::Resized)
+	{
+		mousePosition = sf::Mouse::getPosition(*m_window);
+	}
+	else if (event.type == sf::Event::MouseMoved)
+	{
+		mousePosition = sf::Mouse::getPosition(*m_window);
+	}
 }
 
 sf::Vector2f InputManager::getLeftStickPosition(int gamePadID)
@@ -125,6 +159,26 @@ sf::Vector2f InputManager::getLeftStickPosition(int gamePadID)
 	float y = sf::Joystick::getAxisPosition(gamePadID, sf::Joystick::Y);
 	// Normalize die Werte auf den Bereich [-1, 1]
 	return sf::Vector2f(x / 100.f, y / 100.f);
+}
+
+bool InputManager::getMousePressed(sf::Mouse::Button button)
+{
+	return isMousePressed[button];
+}
+
+bool InputManager::getMouseDown(sf::Mouse::Button button)
+{
+	return isMouseDown[button];
+}
+
+bool InputManager::getMouseUp(sf::Mouse::Button button)
+{
+	return isMouseUp[button];
+}
+
+sf::Vector2i InputManager::getMousePosition()
+{
+	return mousePosition;
 }
 
 bool InputManager::checkGamepadInput(GamepadButton button, int controllerNr)

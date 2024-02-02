@@ -745,7 +745,7 @@
                         {
                          "name":"Controller",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }, 
                         {
                          "name":"ControllerNr",

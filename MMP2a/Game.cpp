@@ -5,6 +5,7 @@ Game::Game() : window(sf::VideoMode(WIDTH, HEIGHT), TITLE)
 {
 	window.setVerticalSyncEnabled(true);
 	window.setKeyRepeatEnabled(false);
+
 }
 
 void Game::closeGame(const sf::Event& event)
@@ -22,6 +23,8 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
 
 	GameStateManager::getInstance().setState("Menu", window);
+
+	InputManager::getInstance().setRenderWindow(window);
 }
 
 void Game::run()
