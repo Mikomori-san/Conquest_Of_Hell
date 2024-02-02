@@ -357,6 +357,8 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 
 	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
 
+	//AssetManager::getInstance().loadTexture("start")
+
 	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime, aStarGridSize, unMovablePositions, mapTileSize);
 
 	spawnerTemp->addComponent(spawnerCP);
