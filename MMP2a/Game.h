@@ -22,8 +22,16 @@ private:
 	sf::Color BG_COLOR = sf::Color(50, 50, 50);
 	sf::Clock clock;
 	sf::VideoMode mode;
-	sf::RenderWindow window;
+	//sf::RenderWindow window;
 	Fps m_fps;
+
+
+	sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+
+	// Use initialization list to construct the window
+	sf::RenderWindow window = sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], "Fullscreen Window", sf::Style::Fullscreen);
+
+
 
 	void closeGame(const sf::Event& event);
 	void initialize();

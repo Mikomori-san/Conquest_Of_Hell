@@ -72,7 +72,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
 
-	this->window->setSize(sf::Vector2u(960, 540));
+	//this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
 
@@ -91,9 +91,9 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 		}
 	}
 	
-	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
-}
+	window->setView(sf::View(sf::Vector2f(window->getSize().x / 4, window->getSize().y / 4), sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2)));
 
+}
 void GameplayState::exit()
 {
 	for (auto& go : gameObjects)
