@@ -64,31 +64,31 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 	sf::Vector2f playerPos;
 	sf::Vector2f enemyPos;
 
-		hasAttacked = true;
-		attackTimer = 0;
-		attackCooldown = 0;
-		inputLocked = true;
-		lastAnimation = ani->getAnimationType();
-		animationLocked = true;
+	hasAttacked = true;
+	attackTimer = 0;
+	attackCooldown = 0;
+	inputLocked = true;
+	lastAnimation = ani->getAnimationType();
+	animationLocked = true;
 		
-		if (!ani->isAnimationLock())
+	if (!ani->isAnimationLock())
+	{
+		if (lastAnimation == Left || lastAnimation == LeftIdle || lastAnimation == LeftAttack || lastAnimation == LeftDodge)
 		{
-			if (lastAnimation == Left || lastAnimation == LeftIdle || lastAnimation == LeftAttack || lastAnimation == LeftDodge)
-			{
-				ani->setAnimationType(LeftAttack);
-			}
-			else
-				ani->setAnimationType(RightAttack);
-
-			ani->resetAnimationTimeIndex();
-			originalAnimationSpeed = ani->getAnimationSpeed();
-			ani->setAnimationSpeed(ani->getAnimationSpeed() * 8);
-
-			ani->toggleAnimationLock();
+			ani->setAnimationType(LeftAttack);
 		}
-		input->toggleInputLock();
+		else
+			ani->setAnimationType(RightAttack);
 
-		transf->setVelocity(0);
+		ani->resetAnimationTimeIndex();
+		originalAnimationSpeed = ani->getAnimationSpeed();
+		ani->setAnimationSpeed(ani->getAnimationSpeed() * 8);
+
+		ani->toggleAnimationLock();
+	}
+	input->toggleInputLock();
+
+	transf->setVelocity(0);
 
 	playerPos = transf->getPosition();
 	std::vector<std::weak_ptr<GameObject>> newEnemies;

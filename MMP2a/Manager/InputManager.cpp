@@ -123,7 +123,6 @@ sf::Vector2f InputManager::getLeftStickPosition(int gamePadID)
 {
 	float x = sf::Joystick::getAxisPosition(gamePadID, sf::Joystick::X);
 	float y = sf::Joystick::getAxisPosition(gamePadID, sf::Joystick::Y);
-
 	// Normalize die Werte auf den Bereich [-1, 1]
 	return sf::Vector2f(x / 100.f, y / 100.f);
 }
