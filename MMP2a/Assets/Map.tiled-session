@@ -13,6 +13,26 @@
         "#Tiles": {
             "scaleInDock": 1
         },
+        "C:/Users/jenny/Downloads/game(1).tmj": {
+            "scale": 1,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 473.5,
+                "y": 372
+            }
+        },
+        "C:/Users/jenny/Downloads/game(1).tmj#Background": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/Downloads/game(1).tmj#Sci-Fi-Tiles": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/Downloads/game(1).tmj#Sci-Fi-Tiles2": {
+            "scaleInDock": 1
+        },
+        "C:/Users/jenny/Downloads/game(1).tmj#Tiles": {
+            "scaleInDock": 1
+        },
         "C:/Users/jenny/Downloads/game.tmj": {
             "expandedObjectLayers": [
                 4
@@ -122,8 +142,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 42,
-                "y": 7
+                "x": 475.5,
+                "y": 291
             }
         },
         "game.tmj#Background": {
@@ -139,11 +159,14 @@
             "scaleInDock": 1.5
         },
         "game_old.tmj": {
+            "expandedObjectLayers": [
+                4
+            ],
             "scale": 1.2488217213114754,
             "selectedLayer": 3,
             "viewCenter": {
                 "x": 479.2517537022604,
-                "y": 102.4966156623046
+                "y": 101.6958608524429
             }
         },
         "game_old.tmj#Background": {
@@ -174,8 +197,9 @@
     "project": "Map.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "MapTiled.tmx",
+        "game_old.tmj",
         "game.tmj",
+        "MapTiled.tmx",
         "C:/Users/jenny/Downloads/game.tmj",
         "MapTiled.tmj",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tsj",

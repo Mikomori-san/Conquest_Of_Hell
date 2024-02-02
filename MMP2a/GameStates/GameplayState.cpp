@@ -54,7 +54,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	cot->setLoop(true);
 	cot->play();
 
-	loadMap("game1.tmj", sf::Vector2f());
+	loadMap("game.tmj", sf::Vector2f());
 
 	for (auto& go : gameObjects)
 	{
