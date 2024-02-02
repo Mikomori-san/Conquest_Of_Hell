@@ -47,6 +47,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
 	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
 	cot->setVolume(10);
+	cot->setLoop(true);
 	cot->play();
 
 	loadMap("game1.tmj", sf::Vector2f());
