@@ -5,6 +5,7 @@ Game::Game() : window(sf::VideoMode(WIDTH, HEIGHT), TITLE)
 {
 	window.setVerticalSyncEnabled(true);
 	window.setKeyRepeatEnabled(false);
+
 }
 
 void Game::closeGame(const sf::Event& event)
@@ -15,6 +16,9 @@ void Game::closeGame(const sf::Event& event)
 
 void Game::initialize()
 {
+	sf::VideoMode fullscreenMode(1920, 1080);
+	window.create(fullscreenMode, "Fullscreen Window", sf::Style::Fullscreen);
+	
 	InputManager::getInstance().init(window);
 
 	GameStateManager::getInstance().reg("Menu", std::make_shared<MenuState>());
@@ -22,6 +26,8 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
 
 	GameStateManager::getInstance().setState("Menu", window);
+
+	InputManager::getInstance().setRenderWindow(window);
 }
 
 void Game::run()

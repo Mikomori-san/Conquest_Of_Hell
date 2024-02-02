@@ -116,11 +116,11 @@
             "scaleInEditor": 1
         },
         "game.tmj": {
-            "scale": 1,
+            "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 502.5,
-                "y": 346
+                "x": 575.3333333333333,
+                "y": 194.66666666666669
             }
         },
         "game.tmj#Background": {

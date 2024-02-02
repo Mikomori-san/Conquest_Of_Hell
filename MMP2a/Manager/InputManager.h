@@ -19,6 +19,19 @@ public:
 	void handleEvents(sf::Event& event);
 	bool checkGamepadInput(GamepadButton button, int controllerNr);
 	sf::Vector2f getLeftStickPosition(int gamePadID);
+
+
+	bool getMousePressed(sf::Mouse::Button button);
+	bool getMouseDown(sf::Mouse::Button button);
+	bool getMouseUp(sf::Mouse::Button button);
+
+	sf::Vector2i getMousePosition();
+
+	void setRenderWindow(sf::RenderWindow& window)
+	{
+		m_window = &window;
+	};
+
 private:
 
 	InputManager() = default;
@@ -29,4 +42,14 @@ private:
 	std::map<sf::Keyboard::Key, bool> isKeyDown;
 	std::map<sf::Keyboard::Key, bool> isKeyPressed;
 	std::map<sf::Keyboard::Key, bool> isKeyUp;
+
+	std::map<sf::Mouse::Button, bool> isMouseDown;
+	std::map<sf::Mouse::Button, bool> isMouseUp;
+	std::map<sf::Mouse::Button, bool> isMousePressed;
+
+	sf::Vector2i mousePosition;
+
+	sf::RenderWindow* m_window;
+
+
 };

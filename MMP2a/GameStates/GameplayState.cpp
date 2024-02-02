@@ -36,7 +36,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
 
-	this->window->setSize(sf::Vector2u(975, 650));
+	//this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
 
@@ -56,11 +56,11 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 		}
 	}
 	
-	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
 	slainBoss = false;
 	slainPlayer = false;
-}
+	window->setView(sf::View(sf::Vector2f(window->getSize().x / 4, window->getSize().y / 4), sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2)));
 
+}
 void GameplayState::exit()
 {
 	for (auto& go : gameObjects)
@@ -108,7 +108,7 @@ void GameplayState::update(float deltaTime)
 		return false;
 	};
 
-	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GELÖSCHT
+	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GELï¿½SCHT
 
 	std::vector<std::shared_ptr<RenderCP>> renderCPs;
 

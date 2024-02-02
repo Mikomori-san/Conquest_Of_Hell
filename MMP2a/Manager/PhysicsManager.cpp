@@ -8,6 +8,8 @@
 #include "../Components/Transformation_Components/TransformationCP.h"
 #include "../Components/Boss/CharmBA.h"
 #include "../Components/Player_Components/DashCP.h"
+#include "../Enums/GamepadButton.h"
+
 void positionalCorrection(Manifold& man)
 {
     const float percent = 0.2f;
@@ -135,11 +137,23 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 {
                     if (body1->getId().find("Player") != std::string::npos)
                     {
-                        std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = std::dynamic_pointer_cast<DashCP<sf::Keyboard::Key>>(body1->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0));
-                        if (dash && !dash->getHasIFrames() && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                        if (auto dashes = body1->getComponentsOfType<DashCP<sf::Keyboard::Key>>(); dashes.size() != 0)
                         {
-                            charm->execute();
-                            charm->setDead();
+                            std::shared_ptr<DashCP<sf::Keyboard::Key>> dash = dashes.at(0);
+                            if (dash && !dash->getHasIFrames() && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                            {
+                                charm->execute();
+                                charm->setDead();
+                            }
+                        }
+                        else
+                        {
+                            std::shared_ptr<DashCP<GamepadButton>> dash1 = std::dynamic_pointer_cast<DashCP<GamepadButton>>(body1->getComponentsOfType<DashCP<GamepadButton>>().at(0));
+                            if (dash1 && !dash1->getHasIFrames() && aabbVsAabb(c1->getCollisionRect(), charm->getHitbox(), normal, penetration))
+                            {
+                                charm->execute();
+                                charm->setDead();
+                            }
                         }
                     }
                     if (body1->getId().find("Boundary") != std::string::npos)

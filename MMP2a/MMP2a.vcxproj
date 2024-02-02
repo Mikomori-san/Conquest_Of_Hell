@@ -230,7 +230,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="DebugDraw.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameStates\ManuState.cpp" />
+    <ClCompile Include="GameStates\MenuState.cpp" />
     <ClCompile Include="GameStates\ExitState.cpp" />
     <ClCompile Include="GameStates\GameplayState.cpp" />
     <ClCompile Include="Manager\AssetManager.cpp" />
@@ -276,19 +276,38 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\background.png" />
+    <Image Include="Assets\Textures\Crawler.png" />
     <Image Include="Assets\Textures\crystal.png" />
     <Image Include="Assets\Textures\heartSpriteSheet.png" />
+    <Image Include="Assets\Textures\enemy.png" />
     <Image Include="Assets\Textures\LavaTile.png" />
+    <Image Include="Assets\Textures\overScreen.png" />
+    <Image Include="Assets\Textures\player.png" />
     <Image Include="Assets\Textures\playerSpriteSheet.png" />
     <Image Include="Assets\Textures\projectile.png" />
+    <Image Include="Assets\Textures\Sci-Fi-Tiles_A1.png" />
+    <Image Include="Assets\Textures\Sci-Fi-Tiles_A2.png" />
+    <Image Include="Assets\Textures\Sci-Fi-Tiles_B.png" />
     <Image Include="Assets\Textures\skull.png" />
+    <Image Include="Assets\Textures\space.png" />
     <Image Include="Assets\Textures\SpaceShip.png" />
+    <Image Include="Assets\Textures\Tiles.png" />
+    <Image Include="Assets\Textures\TitleScreenBackground.png" />
+    <Image Include="Assets\Textures\TitleSprite.png" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\Sounds\completeSound.wav" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\game.tmj" />
+    <None Include="Assets\game_EnemyTemplate.tmj" />
+    <None Include="Assets\game_PlayerTemplate.tmj" />
+    <None Include="Assets\Map.tiled-project" />
+    <None Include="Assets\Map.tiled-session" />
+    <None Include="Assets\MapTiled.tmj" />
+    <None Include="Assets\MapTiled.tmx" />
     <None Include="Assets\Music\musicTrack.ogg" />
+    <None Include="Assets\Textures\Tiles.png~" />
     <None Include="VectorAlgebra2D.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
