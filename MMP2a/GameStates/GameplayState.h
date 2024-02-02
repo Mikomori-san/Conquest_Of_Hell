@@ -15,6 +15,9 @@ public:
 	void exit() override;
 	void update(float deltaTime) override;
 	void render() override;
+
+	bool hasWon = false;
+	bool hasLost = false;
 private:
 	std::shared_ptr<sf::RenderWindow> window;
 	std::vector<std::shared_ptr<GameObject>> gameObjects;

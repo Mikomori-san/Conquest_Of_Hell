@@ -30,6 +30,9 @@
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
 
+#include "../Manager/GameStateManager.h"
+
+
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	close = false;
@@ -87,9 +90,17 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
-	if (slainBoss || slainPlayer)
+	if (slainBoss)
 	{
-		close = true;
+		hasWon = true;
+		GameStateManager::getInstance().setState("Win", *window);
+
+	}
+	if (slainPlayer)
+	{
+		hasLost = true;
+		GameStateManager::getInstance().setState("Loose", *window);
+
 	}
 
 	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {
@@ -357,6 +368,8 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 	float spawnTime = object.getProp("SpawnTime")->getValue<float>();
 
 	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
+
+	//AssetManager::getInstance().loadTexture("start")
 
 	std::shared_ptr<SpawnerCP> spawnerCP = std::make_shared<SpawnerCP>(gameObjectsRef, enemy1, enemy2, spawnerTemp, "SpawnerCP", enemyName, maxEnemy, spawnTime, aStarGridSize, unMovablePositions, mapTileSize);
 
