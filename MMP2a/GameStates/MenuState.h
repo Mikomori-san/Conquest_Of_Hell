@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "../GameObject.h"
 #include "../Manager/AssetManager.h"
+#include "../Manager/InputManager.h"
 #include "../DebugDraw.h"
 
 class MenuState : public GameState
@@ -35,4 +36,8 @@ private:
 
 	std::vector<std::pair<sf::Text, sf::RectangleShape>> buttonList;
 	std::map<std::string, sf::RectangleShape> buttonMap;
+
+	bool isControllerConnected = false;
+	bool isPlaySelected = true;
+	bool isExitSelected = false;
 };
