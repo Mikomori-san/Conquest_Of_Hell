@@ -89,8 +89,8 @@ void LooseState::update(float deltaTime)
 		sf::Vector2i mousePos = InputManager::getInstance().getMousePosition();
 
 		button.second.setFillColor(sf::Color::Black);
-		button.second.setOutlineThickness(1.f);
 		button.second.setOutlineColor(sf::Color::Red);
+		button.second.setOutlineThickness(1.f);
 
 		if (buttonBounds.contains(static_cast<sf::Vector2f>(mousePos)))
 		{
@@ -98,17 +98,12 @@ void LooseState::update(float deltaTime)
 
 			if (button.first == "Start" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "start pressed" << std::endl;
 				GameStateManager::getInstance().setState("Gameplay", *window);
-
 			}
 			if (button.first == "Exit" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "Exit pressed" << std::endl;
-				GameStateManager::getInstance().setState("Exit", *window);
-
+				window->close();
 			}
-
 		}
 		else if (isControllerConnected = sf::Joystick::isConnected(0))
 		{
@@ -120,7 +115,6 @@ void LooseState::update(float deltaTime)
 					button.second.setOutlineColor(sf::Color::White);
 					if (sf::Joystick::isButtonPressed(0, GamepadButton::A))
 					{
-						std::cout << "start pressed" << std::endl;
 						GameStateManager::getInstance().setState("Gameplay", *window);
 					}
 				}
@@ -139,9 +133,6 @@ void LooseState::update(float deltaTime)
 			}
 			if (isExitSelected)
 			{
-
-				std::cout << "down" << std::endl;
-
 				if (button.first == "Start")
 				{
 					button.second.setOutlineColor(sf::Color::Red);
@@ -152,8 +143,7 @@ void LooseState::update(float deltaTime)
 				}
 				if (sf::Joystick::isButtonPressed(0, static_cast<GamepadButton>(A)))
 				{
-					std::cout << "Exit pressed" << std::endl;
-					GameStateManager::getInstance().setState("Exit", *window);
+					window->close();
 
 				}
 			}

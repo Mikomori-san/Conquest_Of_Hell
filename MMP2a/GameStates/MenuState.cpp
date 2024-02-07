@@ -109,17 +109,12 @@ void MenuState::update(float deltaTime)
 
 			if (button.first == "Start" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "start pressed" << std::endl;
 				GameStateManager::getInstance().setState("Gameplay", *window);
-
 			}
 			if (button.first == "Exit" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "Exit pressed" << std::endl;
-				GameStateManager::getInstance().setState("Exit", *window);
-
+				window->close();
 			}
-	
 		}
 		else if (isControllerConnected = sf::Joystick::isConnected(0))
 		{
@@ -131,7 +126,6 @@ void MenuState::update(float deltaTime)
 					button.second.setOutlineColor(sf::Color::White);
 					if (sf::Joystick::isButtonPressed(0, GamepadButton::A))
 					{
-						std::cout << "start pressed" << std::endl;
 						GameStateManager::getInstance().setState("Gameplay", *window);
 					}
 				}
@@ -150,9 +144,6 @@ void MenuState::update(float deltaTime)
 			}
 				if (isExitSelected)
 				{
-
-					std::cout << "down" << std::endl;
-
 					if (button.first == "Start")
 					{
 						button.second.setOutlineColor(sf::Color::Red);
@@ -163,8 +154,7 @@ void MenuState::update(float deltaTime)
 					}
 					if (sf::Joystick::isButtonPressed(0, static_cast<GamepadButton>(A)))
 					{
-						std::cout << "Exit pressed" << std::endl;
-						GameStateManager::getInstance().setState("Exit", *window);
+						window->close();
 
 					}
 				}
