@@ -2,6 +2,8 @@
 #include "CharmBA.h"
 #include "../../Manager/AssetManager.h"
 #include "../Input_Components/InputCP.h"
+#include "../UI/StatusEffectCP.h"
+
 int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);
@@ -97,7 +99,9 @@ void CharmBA::charmPlayer()
 				std::cout << "Charm" << std::endl;
 				input->toggleInputLock();
 				charmed = true;
+				go->getComponentsOfType<StatusEffectCP>().at(0)->toggleDisplayStatus();
 		}
+		
 	}
 }
 
@@ -112,6 +116,7 @@ void CharmBA::uncharmPlayer()
 		{
 			input->toggleInputLock();
 			charmed = false;
+			go->getComponentsOfType<StatusEffectCP>().at(0)->toggleDisplayStatus();
 		}
 	}
 }

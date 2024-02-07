@@ -160,6 +160,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\UI\StatusEffectCP.cpp" />
     <ClCompile Include="GameStates\WinState.cpp" />
     <ClInclude Include="Components\Boss\BossAbility.h" />
     <ClInclude Include="Components\Boss\BossAttackCP.h" />
@@ -180,6 +181,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Player_Components\PlayerAttackCP.h" />
     <ClInclude Include="Components\StatsCP.h" />
     <ClInclude Include="Components\UI\ControlsUI.h" />
+    <ClInclude Include="Components\UI\StatusEffectCP.h" />
     <ClInclude Include="Enums\Boss_Animationtype.h" />
     <ClInclude Include="Enums\BossAbilites.h" />
     <ClInclude Include="Enums\Direction.h" />

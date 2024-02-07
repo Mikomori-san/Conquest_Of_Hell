@@ -30,7 +30,7 @@
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
 #include "../Components/UI/ControlsUI.h"
-
+#include "../Components/UI/StatusEffectCP.h"
 #include "../Manager/GameStateManager.h"
 
 
@@ -576,6 +576,13 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(playerTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
 	playerTemp->addComponent(health);
+
+	if (!AssetManager::getInstance().Textures["stun"])
+	{
+		AssetManager::getInstance().loadTexture("stun", "Assets\\UI\\stun.png");
+	}
+	std::shared_ptr<StatusEffectCP> statusCP = std::make_shared<StatusEffectCP>(playerTemp, "StatusEffectCP", *AssetManager::getInstance().Textures.at("stun"));
+	playerTemp->addComponent(statusCP);
 
 	gameObjects.push_back(playerTemp);
 }
