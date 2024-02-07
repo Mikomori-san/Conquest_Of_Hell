@@ -33,14 +33,17 @@ public:
     void update(float deltaTime) override;
     void setSprite(std::shared_ptr<sf::Texture> texture) override;
     void setAnimationType(Animationtype type);
-    void setAnimationSpeed(float speed) { this->animationSpeed = speed; }
+    void setAnimationSpeed(float speed) { if(toggleAllowance) this->animationSpeed = speed; }
     float getAnimationSpeed() { return this->animationSpeed; }
     int getAnimationFrame() { return this->animationFrame; }
     Animationtype getAnimationType() { return m_animationType; }
     sf::Sprite& getSprite() override { return *sprite; }
-    void toggleAnimationLock() { animationLock = animationLock ? false : true; }
+    void toggleAnimationLock() { if(toggleAllowance) animationLock = animationLock ? false : true; }
     void resetAnimationTimeIndex() { animationTimeIndex = 0; }
     bool isAnimationLock() { return this->animationLock; }
+    void setHit() { isHit = true; }
+    void setDying() { isDying = true; }
+
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
@@ -50,9 +53,18 @@ private:
     const int TILING_X;
     const int TILING_Y;
     void doAnimation();
+    void doHitStuff();
+    void doDeathStuff();
     bool animationLock = false;
     bool textureRectOriginalSet = false;
+    bool isDying;
+    bool isHit;
+    bool setLastAnimation;
+    bool animationFrameZero;
     sf::IntRect originalIntRect;
+    Animationtype lastAnimationType;
+    float oldAnimationSpeed;
+    bool toggleAllowance;
 };
 
 template <typename Animationtype>
@@ -70,13 +82,23 @@ inline void AnimatedGraphicsCP<Animationtype>::init()
         originalIntRect.width / TILING_X,
         originalIntRect.height / TILING_Y
     ));
+
+    isHit = false;
+    isDying = false;
+    setLastAnimation = false;
+    animationFrameZero = false;
+    toggleAllowance = true;
 }
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 {
     animationTimeIndex += deltaTime * animationSpeed;
+
+    doHitStuff();
+    doDeathStuff();
     doAnimation();
+
     if (!gameObject.expired())
     {
         std::shared_ptr<TransformationCP> transform;
@@ -103,7 +125,7 @@ inline void AnimatedGraphicsCP<Animationtype>::setSprite(std::shared_ptr<sf::Tex
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::setAnimationType(Animationtype type)
 {
-    if (!animationLock)
+    if (!animationLock && !isDying && !isHit)
         this->m_animationType = type;
 }
 
@@ -112,6 +134,9 @@ inline void AnimatedGraphicsCP<Animationtype>::doAnimation()
 {
     animationFrame = (int)animationTimeIndex % animationTypeFramesCount[m_animationType];
 
+    if (animationFrame != 0)
+        animationFrameZero = true;
+
     sf::IntRect textureRect;
     textureRect.left = animationFrame * sprite->getTextureRect().width;
     textureRect.top = static_cast<int>(m_animationType) * sprite->getTextureRect().height;
@@ -119,4 +144,108 @@ inline void AnimatedGraphicsCP<Animationtype>::doAnimation()
     textureRect.height = sprite->getTextureRect().height;
 
     sprite->setTextureRect(textureRect);
+}
+
+template <typename Animationtype>
+inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
+{
+    if (isHit && (std::is_same_v<Animationtype, Enemy_Animationtype> || std::is_same_v<Animationtype, Boss_Animationtype>))
+    {
+        if (!setLastAnimation)
+        {
+            toggleAllowance = false;
+
+            resetAnimationTimeIndex();
+            setLastAnimation = true;
+            animationFrameZero = false;
+            lastAnimationType = m_animationType;
+            animationLock = true;
+            std::cout << "Reset AnimationFrame to 1" << std::endl;
+            animationFrame = 1;
+            oldAnimationSpeed = animationSpeed;
+            animationSpeed *= 3;
+
+            if (!gameObject.expired())
+            {
+                auto go = gameObject.lock();
+                auto trans = go->getComponentsOfType<TransformationCP>().at(0);
+                trans->setVelocity(0);
+                trans->toggleVelLock();
+                std::cout << "Toggling VelLock to true!" << std::endl;
+            }
+        }
+
+        if (std::is_same_v<Animationtype, Enemy_Animationtype>)
+        {
+            if (m_animationType == Enemy_Animationtype::AttackLeft || m_animationType == Enemy_Animationtype::HitLeft || m_animationType == Enemy_Animationtype::IdleLeft || m_animationType == Enemy_Animationtype::ReactLeft || m_animationType == Enemy_Animationtype::WalkLeft)
+            {
+                m_animationType = (Animationtype)Enemy_Animationtype::HitLeft;
+            }
+            else
+            {
+                m_animationType = (Animationtype)Enemy_Animationtype::HitRight;
+            }
+        }
+        else if (std::is_same_v<Animationtype, Boss_Animationtype>)
+        {
+            m_animationType = (Animationtype)Boss_Animationtype::Scream;
+        }
+
+        if (animationFrame == 0)
+        {
+            if (animationFrameZero)
+            {
+                m_animationType = lastAnimationType;
+                isHit = false;
+                animationLock = false;
+                setLastAnimation = false;
+                animationSpeed = oldAnimationSpeed;
+
+                toggleAllowance = true;
+
+                if (!gameObject.expired())
+                {
+                    auto go = gameObject.lock();
+                    auto trans = go->getComponentsOfType<TransformationCP>().at(0);
+                    trans->setVelocity(trans->getOriginalVelocity());
+                    trans->toggleVelLock();
+                    std::cout << "Toggling Vel Lock to false!" << std::endl;
+                }
+            }
+        }
+    }
+}
+
+template <typename Animationtype>
+inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
+{
+    if (isDying)
+    {
+        if (std::is_same_v<Animationtype, Enemy_Animationtype>)
+        {
+            if (m_animationType == Enemy_Animationtype::AttackLeft || m_animationType == Enemy_Animationtype::HitLeft || m_animationType == Enemy_Animationtype::IdleLeft || m_animationType == Enemy_Animationtype::ReactLeft || m_animationType == Enemy_Animationtype::WalkLeft)
+            {
+                m_animationType = (Animationtype)Enemy_Animationtype::DieLeft;
+            }
+            else
+            {
+                m_animationType = (Animationtype)Enemy_Animationtype::DieRight;
+            }
+        }
+        else if (std::is_same_v<Animationtype, Player_Animationtype>)
+        {
+            if (m_animationType == Player_Animationtype::LeftAttack || m_animationType == Player_Animationtype::Left || m_animationType == Player_Animationtype::LeftDodge || m_animationType == Player_Animationtype::LeftIdle)
+            {
+                m_animationType = (Animationtype)Player_Animationtype::LeftDeath;
+            }
+            else
+            {
+                m_animationType = (Animationtype)Player_Animationtype::RightDeath;
+            }
+        }
+        else
+        {
+            m_animationType = (Animationtype)Boss_Animationtype::Death;
+        }
+    }
 }

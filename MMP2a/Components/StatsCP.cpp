@@ -10,4 +10,5 @@ void StatsCP::init()
 {
 	health = maxHealth;
 	damage = originalDamage;
+	isDead = false;
 }

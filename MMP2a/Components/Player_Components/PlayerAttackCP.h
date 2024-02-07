@@ -106,6 +106,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			if ((bossPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (bossPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 			{
 				daBoss->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+				daBoss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0)->setHit();
 			}
 		}
 	}
@@ -128,6 +129,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 				if ((enemyPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (enemyPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 				{
 					enemy->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+					enemy->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0)->setHit();
 				}
 			}
 		}

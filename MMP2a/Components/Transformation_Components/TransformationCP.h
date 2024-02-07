@@ -19,7 +19,7 @@ public:
 	virtual std::string getComponentId() override { return this->componentId; }
 	virtual void setComponentId(std::string id) override { this->componentId = id; }
 
-	virtual void setVelocity(float vel) { this->curVelocity = vel; }
+	virtual void setVelocity(float vel) { if (!velLock) { this->curVelocity = vel; } }
 	virtual float getVelocity() { return curVelocity; }
 	
 	virtual float getOriginalVelocity() { return this->originalVel; }
@@ -46,6 +46,8 @@ public:
 
 	void setPosResetTimer() { this->posResetTimer = 0; }
 
+	void toggleVelLock() { velLock = velLock ? false : true; }
+
 protected:
 	sf::Vector2f position;
 	sf::Vector2f origin;
@@ -60,4 +62,5 @@ protected:
 	float backupVel = 0;
 	int posResetTimer = 0;
 	sf::Vector2f originalPos;
+	bool velLock;
 };
