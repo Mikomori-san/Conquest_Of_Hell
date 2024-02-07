@@ -39,7 +39,6 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackgroundTitle.png");
 	AssetManager::getInstance().loadTexture("startImage", "Assets\\Textures\\start.png");
 	AssetManager::getInstance().loadTexture("exitImage", "Assets\\Textures\\exit.png");
-	AssetManager::getInstance().loadFont("standardFont", "Assets\\Fonts\\Perfect.ttf");
 	
 	if (!AssetManager::getInstance().Textures["BackgroundImage"])
 	{
@@ -79,7 +78,6 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	sf::Color black = sf::Color(0, 0, 0);
 	sf::Color white = sf::Color(255, 255, 255, 255 );
 
-	sf::Font font = *AssetManager::getInstance().Fonts["standardFont"];
 
 	createButton("Start", sf::Vector2f(750, 50), startButtonPos, black);
 	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, black);

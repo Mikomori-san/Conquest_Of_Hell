@@ -14,7 +14,7 @@ public:
 	void render() override;
 
 private:
-	std::vector<std::shared_ptr<GameObject>> gameObjects;
+	//std::vector<std::shared_ptr<GameObject>> gameObjects;
 	sf::Text createText(std::string text, sf::Font font,int charSize, sf::Vector2f pos, sf::Color fillColor);
 	//sf::RectangleShape createButton(sf::Text name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
 	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);

@@ -18,6 +18,7 @@ void SpriteRenderCP::draw()
 			std::shared_ptr<GameObject> go = gameObject.lock();
 			if (go->getId().find("Skeleton") != std::string::npos)
 			{
+				/*
 				DebugDraw::getInstance().drawRectOutline(
 					sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top),
 					static_cast<int>(sprite.getGlobalBounds().width),
@@ -26,6 +27,8 @@ void SpriteRenderCP::draw()
 				);
 				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
 				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);
+				*/
+				
 			}
 			if (go->getId().find("Boss") != std::string::npos)
 			{

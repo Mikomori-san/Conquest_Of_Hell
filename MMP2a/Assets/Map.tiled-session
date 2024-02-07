@@ -142,8 +142,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 475.5,
-                "y": 291
+                "x": 1080.5,
+                "y": 354
             }
         },
         "game.tmj#Background": {
@@ -197,9 +197,9 @@
     "project": "Map.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "game_old.tmj",
-        "game.tmj",
         "MapTiled.tmx",
+        "game.tmj",
+        "game_old.tmj",
         "C:/Users/jenny/Downloads/game.tmj",
         "MapTiled.tmj",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tsj",
