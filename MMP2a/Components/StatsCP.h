@@ -20,7 +20,7 @@ public:
 
     void init() override;
 
-    void subtracktHealth(int dmg) { health -= dmg; std::cout << health << std::endl; if (health <= 0) { isDead = true; } }
+    void subtracktHealth(int dmg) { health -= dmg; std::cout << health << std::endl; }
     void addHealth(int healing) { health += healing; }
     int getHealth() { return health; }
     void setHealth(int newHealth) { health = newHealth; }
@@ -31,9 +31,12 @@ public:
 
     void toggleIFrames() { hasIFrames = hasIFrames ? false : true; }
     bool getIFrameState() { return hasIFrames; }
-    bool hasDied() { return isDead; }
 
     std::string getObjectType() { return this->gameObjectType; }
+
+    void setDeath() { isDead = true; }
+    bool hasDied() { return isDead; }
+
 private:
     int maxHealth;
     int health;

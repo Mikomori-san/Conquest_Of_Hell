@@ -6,6 +6,7 @@
 #include "../../DebugDraw.h"
 #include "../Transformation_Components/TransformationCP.h"
 #include "../Collision_Components/RectCollisionCP.h"
+#include "../StatsCP.h"
 
 template <typename Animationtype>
 class AnimatedGraphicsCP : public GraphicsCP {
@@ -42,7 +43,7 @@ public:
     void resetAnimationTimeIndex() { animationTimeIndex = 0; }
     bool isAnimationLock() { return this->animationLock; }
     void setHit() { isHit = true; }
-    void setDying() { isDying = true; }
+    void setDying() { isDying = true; std::cout << "Dying" << std::endl; }
 
 private:
     std::vector<int> animationTypeFramesCount;
@@ -94,9 +95,15 @@ template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 {
     animationTimeIndex += deltaTime * animationSpeed;
-
-    doHitStuff();
-    doDeathStuff();
+    if (isDying)
+    {
+        doDeathStuff();
+    }
+    else
+    {
+        doHitStuff();
+    }
+    
     doAnimation();
 
     if (!gameObject.expired())
@@ -161,7 +168,7 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
             lastAnimationType = m_animationType;
             animationLock = true;
             std::cout << "Reset AnimationFrame to 1" << std::endl;
-            animationFrame = 1;
+            animationFrame = 0;
             oldAnimationSpeed = animationSpeed;
             animationSpeed *= 3;
 
@@ -191,26 +198,23 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
             m_animationType = (Animationtype)Boss_Animationtype::Scream;
         }
 
-        if (animationFrame == 0)
+        if (animationFrame == animationTypeFramesCount[m_animationType] - 1)
         {
-            if (animationFrameZero)
+            m_animationType = lastAnimationType;
+            isHit = false;
+            animationLock = false;
+            setLastAnimation = false;
+            animationSpeed = oldAnimationSpeed;
+
+            toggleAllowance = true;
+
+            if (!gameObject.expired())
             {
-                m_animationType = lastAnimationType;
-                isHit = false;
-                animationLock = false;
-                setLastAnimation = false;
-                animationSpeed = oldAnimationSpeed;
-
-                toggleAllowance = true;
-
-                if (!gameObject.expired())
-                {
-                    auto go = gameObject.lock();
-                    auto trans = go->getComponentsOfType<TransformationCP>().at(0);
-                    trans->setVelocity(trans->getOriginalVelocity());
-                    trans->toggleVelLock();
-                    std::cout << "Toggling Vel Lock to false!" << std::endl;
-                }
+                auto go = gameObject.lock();
+                auto trans = go->getComponentsOfType<TransformationCP>().at(0);
+                trans->setVelocity(trans->getOriginalVelocity());
+                trans->toggleVelLock();
+                std::cout << "Toggling Vel Lock to false!" << std::endl;
             }
         }
     }
@@ -221,6 +225,28 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
 {
     if (isDying)
     {
+        if (!setLastAnimation)
+        {
+            toggleAllowance = false;
+
+            resetAnimationTimeIndex();
+            setLastAnimation = true;
+            animationFrameZero = false;
+            lastAnimationType = m_animationType;
+            animationLock = true;
+            animationFrame = 0;
+            animationSpeed *= 2;
+
+            if (!gameObject.expired())
+            {
+                auto go = gameObject.lock();
+                auto trans = go->getComponentsOfType<TransformationCP>().at(0);
+                trans->setVelocity(0);
+                trans->toggleVelLock();
+                std::cout << "Toggling VelLock to true!" << std::endl;
+            }
+        }
+
         if (std::is_same_v<Animationtype, Enemy_Animationtype>)
         {
             if (m_animationType == Enemy_Animationtype::AttackLeft || m_animationType == Enemy_Animationtype::HitLeft || m_animationType == Enemy_Animationtype::IdleLeft || m_animationType == Enemy_Animationtype::ReactLeft || m_animationType == Enemy_Animationtype::WalkLeft)
@@ -246,6 +272,11 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
         else
         {
             m_animationType = (Animationtype)Boss_Animationtype::Death;
+        }
+
+        if (animationFrame == animationTypeFramesCount[m_animationType] - 1)
+        {
+            gameObject.lock()->getComponentsOfType<StatsCP>().at(0)->setDeath();
         }
     }
 }
