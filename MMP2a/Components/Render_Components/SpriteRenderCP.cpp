@@ -46,7 +46,9 @@ void SpriteRenderCP::draw()
 					if (charm->getAlive())
 					{
 						window->draw(charm->getSprite());
+						window->draw(attack->getCharmInd()->getSprite());
 						DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);
+						//DebugDraw::getInstance().drawRectOutline(attack->getCharmInd()->getHitbox(), sf::Color::Red);
 
 					}
 					break;

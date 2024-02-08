@@ -26,7 +26,7 @@ void Game::initialize()
 	GameStateManager::getInstance().reg("Win", std::make_shared<WinState>());
 	GameStateManager::getInstance().reg("Loose", std::make_shared<LooseState>());
 
-	GameStateManager::getInstance().setState("Menu", window);
+	GameStateManager::getInstance().setState("Gameplay", window);
 
 	InputManager::getInstance().setRenderWindow(window);
 }

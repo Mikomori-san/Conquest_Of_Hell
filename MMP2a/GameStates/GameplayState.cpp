@@ -607,7 +607,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	);
 
 	bossTemp->addComponent(bossGraphicsCP);
-
+	
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
 	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
 
@@ -615,7 +615,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	transCP->setOriginalVelocity(VELOCITY);
 	transCP->setBackupVel();
 	transCP->setScale(2.f);
-
+	
 	bossTemp->addComponent(transCP);
 
 	std::shared_ptr<RectCollisionCP> bossCollisionCP = std::make_shared<RectCollisionCP>(bossTemp, "BossCollisionCP",

@@ -139,11 +139,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 5.5,
+            "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 488.0909090909091,
-                "y": 125.27272727272727
+                "x": 641.3333333333333,
+                "y": 181.83333333333334
             }
         },
         "game.tmj#Background": {

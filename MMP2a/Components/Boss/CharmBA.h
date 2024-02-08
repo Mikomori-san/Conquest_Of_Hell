@@ -26,7 +26,7 @@ private:
 	std::weak_ptr<GameObject> playerPtr;
 	sf::Sprite sprite;
 	sf::FloatRect hitbox;
-	float ttl = 3;
+	float ttl = 10;
 	float moveSpeed = 1;
 	float animationTimeIndex = 0;
 	float animationSpeed = 10;

@@ -160,7 +160,9 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Boss\CharmIndicator.cpp" />
     <ClCompile Include="GameStates\WinState.cpp" />
+    <ClInclude Include="Components\Boss\CharmIndicator.h" />
     <ClInclude Include="Components\Boss\BossAbility.h" />
     <ClInclude Include="Components\Boss\BossAttackCP.h" />
     <ClInclude Include="Components\Boss\CharmBA.h" />
