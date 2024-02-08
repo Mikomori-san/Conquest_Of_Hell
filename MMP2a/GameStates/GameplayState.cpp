@@ -614,6 +614,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(bossTemp, "BossTransformationCP", pos, object.getRotation(), object.getSize().x);
 	transCP->setOriginalVelocity(VELOCITY);
 	transCP->setBackupVel();
+	transCP->setScale(2.f);
 
 	bossTemp->addComponent(transCP);
 
