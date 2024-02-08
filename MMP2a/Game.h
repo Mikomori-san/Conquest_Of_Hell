@@ -6,7 +6,6 @@
 #include "Manager/GameStateManager.h"
 #include "GameStates/GameplayState.h"
 #include "GameStates/MenuState.h"
-#include "GameStates/ExitState.h"
 #include "GameStates/WinState.h"
 #include "GameStates/LooseState.h"
 #include "FPS.h"

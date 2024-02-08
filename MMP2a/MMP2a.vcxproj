@@ -235,7 +235,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
-    <ClCompile Include="GameStates\ExitState.cpp" />
     <ClCompile Include="GameStates\GameplayState.cpp" />
     <ClCompile Include="GameStates\LooseState.cpp" />
     <ClCompile Include="Manager\AssetManager.cpp" />
@@ -271,7 +270,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="GameStates\ExitState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\GameState.h" />
     <ClInclude Include="GameStates\GameplayState.h" />
