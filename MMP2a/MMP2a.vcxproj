@@ -244,6 +244,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="Manager\PhysicsManager.cpp" />
     <ClCompile Include="Manager\RenderManager.cpp" />
+    <ClCompile Include="Components\Boss\ScreenShakeCP.cpp" />
     <ClCompile Include="Slloth-Soft_Main.cpp" />
     <ClCompile Include="Components\Spawner_Components\SpawnerCP.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -256,6 +257,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Manager\RenderManager.h" />
     <ClInclude Include="Components\Spawner_Components\SpawnerCP.h" />
+    <ClInclude Include="Components\Boss\ScreenShakeCP.h" />
     <ClInclude Include="tileson.hpp" />
     <ClInclude Include="Trigonometry.h" />
     <ClInclude Include="VectorAlgebra2D.h" />
