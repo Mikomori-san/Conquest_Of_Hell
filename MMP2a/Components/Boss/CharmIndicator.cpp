@@ -27,7 +27,7 @@ void CharmIndicator::update(float deltaTime)
 	ttl -= deltaTime;
 	animationTimeIndex += deltaTime * animationSpeed;
 
-	auto animationFrame = (int)animationTimeIndex % 4; //4->animationFrames for fireCharmIndicator.png
+	auto animationFrame = (int)animationTimeIndex % 4; //4->animationFrames for heartSpriteSheetIndicator.png
 	std::cout << animationFrame << std::endl;
 
 	sprite.setTextureRect(sf::IntRect(

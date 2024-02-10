@@ -26,11 +26,15 @@ void BossAttackCP::update(float deltaTime)
 		bossPos += transBoss->getOrigin(); //spawns ability at boss origin
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
 		
-		if (timePassed >= (attackCooldown - 0.5f) && timePassed < attackCooldown)
+		if (timePassed >= (attackCooldown - 1.f) )
 		{
 			charmInd->setAlive();
-		}
 
+		}
+		/*if (timePassed <= (attackCooldown - 0.1f) && timePassed > attackCooldown)
+		{
+			charmInd->update(deltaTime);
+		}*/
 		if (attackCooldown < timePassed)
 		{
 			timePassed = 0;
@@ -40,14 +44,11 @@ void BossAttackCP::update(float deltaTime)
 			}
 			else
 			{//doesnt function right with the time
-				if (!charmIndActivated) {
+				/*if (!charmIndActivated) {
 					charmInd->setAlive();
 					charmIndActivated = true;
-				}
-				if (timePassed <= (attackCooldown - 0.1f) && timePassed > attackCooldown)
-				{
-					charmInd->update(deltaTime); 
-				}
+				}*/
+				
 				if (timePassed <= attackCooldown)
 				{
 					charmInd->setDead();

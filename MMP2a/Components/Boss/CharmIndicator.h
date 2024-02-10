@@ -22,7 +22,7 @@ private:
 	sf::FloatRect hitbox;
 	float ttl = 2;
 	float animationTimeIndex = 0;
-	float animationSpeed = 5;
+	float animationSpeed = 10;
 	sf::Vector2f position;
 	bool alive = false;
 

@@ -34,7 +34,10 @@ void SpriteRenderCP::draw()
 			{
 				//draw abilities
 				std::shared_ptr<BossAttackCP> attack = go->getComponentsOfType<BossAttackCP>().at(0);
-				
+				if (attack->getCharmInd()->getAlive())
+				{
+					window->draw(attack->getCharmInd()->getSprite());
+				}
 				switch (attack->getAbility2()->getAbilityType())
 				{
 				case BossAbilites::Default:
@@ -46,9 +49,7 @@ void SpriteRenderCP::draw()
 					if (charm->getAlive())
 					{
 						window->draw(charm->getSprite());
-						window->draw(attack->getCharmInd()->getSprite());
 						DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);
-						//DebugDraw::getInstance().drawRectOutline(attack->getCharmInd()->getHitbox(), sf::Color::Red);
 
 					}
 					break;
