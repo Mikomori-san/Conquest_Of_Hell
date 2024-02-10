@@ -44,6 +44,7 @@ public:
     bool isAnimationLock() { return this->animationLock; }
     void setHit() { isHit = true; }
     void setDying() { isDying = true; std::cout << "Dying" << std::endl; }
+    void setColor(sf::Color col) { sprite->setColor(col); colorTimer = 0; }
 
 private:
     std::vector<int> animationTypeFramesCount;
@@ -66,11 +67,14 @@ private:
     Animationtype lastAnimationType;
     float oldAnimationSpeed;
     bool toggleAllowance;
+    float colorTimer;
+    const float COLOR_THRESHOLD = 0.5f;
 };
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::init()
 {
+    colorTimer = 0;
     if (!textureRectOriginalSet)
     {
         originalIntRect = sprite->getTextureRect();
@@ -94,6 +98,13 @@ inline void AnimatedGraphicsCP<Animationtype>::init()
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 {
+    colorTimer += deltaTime;
+
+    if (colorTimer >= COLOR_THRESHOLD)
+    {
+        sprite->setColor(sf::Color::White);
+    }
+
     animationTimeIndex += deltaTime * animationSpeed;
     if (isDying)
     {

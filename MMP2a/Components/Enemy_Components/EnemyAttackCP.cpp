@@ -67,7 +67,7 @@ void EnemyAttackCP::update(float deltaTime)
 					}
 					else
 					{
-						cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->getSprite().setColor(sf::Color::Red);
+						cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setColor(sf::Color::Red);
 					}
 					
 					lastPlayerAttacked = closestPlayer;
@@ -76,11 +76,6 @@ void EnemyAttackCP::update(float deltaTime)
 		}
 		if (attackTimer > 0.2f && hasAttacked)
 		{
-			if (!lastPlayerAttacked.expired())
-			{
-				lastPlayerAttacked.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->getSprite().setColor(sf::Color::White);
-			}
-
 			if (animationLocked)
 			{
 				ani->toggleAnimationLock();

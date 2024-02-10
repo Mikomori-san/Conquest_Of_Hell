@@ -72,6 +72,15 @@ void MeleeBA::attackPlayer()
 				{
 					std::cout << "Attack" << std::endl;
 					stats->subtracktHealth(damage);
+
+					if (stats->getHealth() <= 0)
+					{
+						go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setDying();
+					}
+					else
+					{
+						go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setColor(sf::Color::Red);
+					}
 				}
 			}
 		}
@@ -85,6 +94,15 @@ void MeleeBA::attackPlayer()
 				{
 					std::cout << "Attack" << std::endl;
 					stats->subtracktHealth(damage);
+
+					if (stats->getHealth() <= 0)
+					{
+						go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setDying();
+					}
+					else
+					{
+						go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setColor(sf::Color::Red);
+					}
 				}
 			}
 		}
