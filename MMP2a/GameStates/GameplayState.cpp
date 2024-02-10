@@ -611,7 +611,8 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	
 	bossTemp->addComponent(bossGraphicsCP);
 
-	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, window->getView(), 20.f, 2.f, 5.f);
+
+	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 2.f, 1.5f, 100.f);
 
 	bossTemp->addComponent(screenShakeCP);
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
