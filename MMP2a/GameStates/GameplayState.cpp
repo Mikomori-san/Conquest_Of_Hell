@@ -461,6 +461,9 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 		AssetManager::getInstance().loadTexture("healthbar", "Assets\\Textures\\health_bar.png");
 	}
 
+	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(enemyTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
+	enemyTemp->addComponent(health);
+
 	return enemyTemp;
 	/*gameObjects.push_back(enemyTemp);*/
 }
