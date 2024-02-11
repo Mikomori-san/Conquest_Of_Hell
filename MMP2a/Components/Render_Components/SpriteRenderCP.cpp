@@ -34,6 +34,7 @@ void SpriteRenderCP::draw()
 			{
 				//draw abilities
 				std::shared_ptr<BossAttackCP> attack = go->getComponentsOfType<BossAttackCP>().at(0);
+
 				if (attack->getCharmInd()->getAlive())
 				{
 					window->draw(attack->getCharmInd()->getSprite());

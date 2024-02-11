@@ -20,9 +20,9 @@ private:
 	sf::Sprite sprite;
 	sf::Texture texture;
 	sf::FloatRect hitbox;
-	float ttl = 2;
+	float ttl = 2.f;
 	float animationTimeIndex = 0;
-	float animationSpeed = 10;
+	float animationSpeed = 6.f;
 	sf::Vector2f position;
 	bool alive = false;
 

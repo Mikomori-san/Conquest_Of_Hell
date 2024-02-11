@@ -15,7 +15,7 @@ void MeeleeIndicator::init()
 	sprite.setTexture(texture);
 
 	sprite.setScale(2, 2);
-	sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTextureRect().width / 4, sprite.getTextureRect().height));
+	sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTextureRect().width / 8, sprite.getTextureRect().height));
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
 	sprite.setPosition(sf::Vector2f(469.f  , 100.f ));
 	
@@ -24,12 +24,10 @@ void MeeleeIndicator::init()
 
 void MeeleeIndicator::update(float deltaTime)
 {
-	ttl -= deltaTime;
+	//ttl -= deltaTime;
 	animationTimeIndex += deltaTime * animationSpeed;
 
-	auto animationFrame = (int)animationTimeIndex % 4; //4->animationFrames for heartSpriteSheetIndicator.png
-	std::cout << animationFrame << std::endl;
-
+	auto animationFrame = (int)animationTimeIndex % 8; //4->animationFrames for meeleeIndicator.png
 	sprite.setTextureRect(sf::IntRect(
 		animationFrame * sprite.getTextureRect().width,
 		0,
@@ -37,14 +35,13 @@ void MeeleeIndicator::update(float deltaTime)
 		sprite.getTextureRect().height
 	));
 
-
 }
 
 void MeeleeIndicator::setAlive()
 {
 	alive = true;
-	ttl = 3;
-	animationTimeIndex = 0;
+	//ttl = 3;
+	//animationTimeIndex = 0;
 }
 
 void MeeleeIndicator::setDead()

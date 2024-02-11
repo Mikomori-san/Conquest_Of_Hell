@@ -31,8 +31,8 @@ private:
 	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator());
 	std::shared_ptr<MeeleeIndicator> meeleeInd = std::make_shared<MeeleeIndicator>(MeeleeIndicator());
 
-	float swapThreshold = 100*100; //->squared distance
-	float attackCooldown = 2;
-	float timePassed = 0;
+	float swapThreshold = 100.f * 100.f; //->squared distance
+	float attackCooldown = 2.f;
+	float timePassed = 0.f;
 
 };

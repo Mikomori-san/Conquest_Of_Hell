@@ -24,7 +24,7 @@ void CharmIndicator::init()
 
 void CharmIndicator::update(float deltaTime)
 {
-	ttl -= deltaTime;
+	//ttl -= deltaTime;
 	animationTimeIndex += deltaTime * animationSpeed;
 
 	auto animationFrame = (int)animationTimeIndex % 4; //4->animationFrames for heartSpriteSheetIndicator.png
@@ -43,8 +43,8 @@ void CharmIndicator::update(float deltaTime)
 void CharmIndicator::setAlive()
 {
 	alive = true;
-	ttl = 3;
-	animationTimeIndex = 0;
+	//ttl = 3;
+	//animationTimeIndex = 0;
 }
 
 void CharmIndicator::setDead()
