@@ -27,15 +27,6 @@ void BossAttackCP::update(float deltaTime)
 		bossPos += transBoss->getOrigin(); //spawns ability at boss origin
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
 		
-		if ((attackCooldown - 1.f) < timePassed)
-		{
-			if (squaredDistance > swapThreshold )
-			charmInd->setAlive();
-
-			if (squaredDistance <= swapThreshold && m_bossGraphicsCP->)
-			meeleeInd->setAlive();
-		}
-		
 
 		if (attackCooldown < timePassed)
 		{
@@ -44,7 +35,6 @@ void BossAttackCP::update(float deltaTime)
 			timePassed = 0;
 			if (squaredDistance < swapThreshold)
 			{
-				
 				executeMeele();
 			}
 			else
@@ -52,6 +42,7 @@ void BossAttackCP::update(float deltaTime)
 				if (timePassed <= attackCooldown)
 				{
 					executeCharm(bossPos, playerPos);
+					charmInd->setAlive();
 				}
 			}
 		}
@@ -71,6 +62,7 @@ void BossAttackCP::executeMeele()
 		std::shared_ptr<MeleeBA> meele = std::dynamic_pointer_cast<MeleeBA>(ability1);
 		if (meele)
 		{
+			meeleeInd->setAlive();
 			meele->execute();
 		}
 	}

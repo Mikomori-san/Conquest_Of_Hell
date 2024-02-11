@@ -3,6 +3,7 @@
 #include "../../Enums/Player_Animationtype.h"
 #include "../../Enums/Enemy_Animationtype.h"
 #include "../../Enums/Boss_Animationtype.h"
+#include "../../Enums/MeeleIndicator_Animationtype.h"
 #include "../../DebugDraw.h"
 #include "../Transformation_Components/TransformationCP.h"
 #include "../Collision_Components/RectCollisionCP.h"
@@ -40,6 +41,7 @@ public:
     sf::Sprite& getSprite() override { return *sprite; }
     void toggleAnimationLock() { animationLock = animationLock ? false : true; }
     void resetAnimationTimeIndex() { animationTimeIndex = 0; }
+    void resetAnimationFrame() { animationFrame = 0; }
     bool isAnimationLock() { return this->animationLock; }
 private:
     std::vector<int> animationTypeFramesCount;

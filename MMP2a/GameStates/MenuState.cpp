@@ -14,7 +14,7 @@
 
 #include "../Manager/GameStateManager.h"
 
-#include "../../Enums/GamepadButton.h"
+#include "../Enums/GamepadButton.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -30,7 +30,7 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	
 	AssetManager::getInstance().loadMusic("Celestial_Wanderer", "Assets\\Music\\Celestial_Wanderer.mp3");
 	cw = AssetManager::getInstance().Music["Celestial_Wanderer"];
-	cw->setVolume(10);
+	cw->setVolume(3);
 	cw->setLoop(true);
 	cw->play();
 	

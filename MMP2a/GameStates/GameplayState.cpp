@@ -23,6 +23,7 @@
 #include "../Components//Player_Components/PlayerAttackCP.h"
 #include "../Enums/Enemy_Animationtype.h"
 #include "../Enums/Boss_Animationtype.h"
+#include "../Enums/MeeleIndicator_Animationtype.h"
 #include "../Components/Enemy_Components/EnemyAttackCP.h"
 #include <iostream>
 #include "../Components/Input_Components/MovementInputGamepadCP.h"
@@ -51,11 +52,11 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
 	spriteSheetCounts["Boss"] = { 4,6,5,9,6,7,2,7 };
 
-	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
-	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
-	cot->setVolume(10);
-	cot->setLoop(true);
-	cot->play();
+	//AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
+	//cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
+	//cot->setVolume(3);
+	//cot->setLoop(true);
+	//cot->play();
 
 	loadMap("game.tmj", sf::Vector2f());
 
@@ -76,7 +77,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 }
 void GameplayState::exit()
 {
-	cot->stop();
+	//cot->stop();
 	for (auto& go : gameObjects)
 	{
 		go.reset();
@@ -304,10 +305,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
-			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
-			{
-				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
-			}
+			//else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			//{
+			//	createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+			//}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
 				createBoss(object, group);
@@ -323,7 +324,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				if (go1->getId().find("Player") != std::string::npos)
 				{
-					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go->, go, "BossAttackCP", go1));
+					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go, "BossAttackCP", go1));
 					go->addComponent(attack);
 					
 					if (go1->getComponentsOfType<MovementInputGamepadCP>().size() > 0)
@@ -610,11 +611,10 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	);
 	
 	bossTemp->addComponent(bossGraphicsCP);
+	
+	//std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 10.f, 1.5f, 500.f);
 
-
-	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 10.f, 1.5f, 500.f);
-
-	bossTemp->addComponent(screenShakeCP);
+	//bossTemp->addComponent(screenShakeCP);
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
 	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
 

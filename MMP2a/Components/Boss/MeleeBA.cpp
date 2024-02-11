@@ -3,6 +3,8 @@
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Player_Components/DashCP.h"
 #include "../StatsCP.h"
+#include "../../Enums/MeeleIndicator_Animationtype.h"
+#include "BossAttackCP.h"
 void MeleeBA::init()
 {
 	abilityType = Melee;
@@ -14,21 +16,20 @@ void MeleeBA::update(float deltaTime)
 	{
 		std::shared_ptr<GameObject> boss = bossPtr.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> animation =
-			std::dynamic_pointer_cast<AnimatedGraphicsCP<Boss_Animationtype>>(boss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0));
+			std::dynamic_pointer_cast<AnimatedGraphicsCP<Boss_Animationtype>>
+			(boss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0));
+
 		if (animation)
 		{
 			int currFrame = animation->getAnimationFrame();
-			//if (currFrame == 8)
-			//{
-			//	attackPlayer();
-			//}
+			boss->getComponentsOfType<BossAttackCP>().at(0)->getMeeleeInd()->setAnimationFrame(currFrame);
 			//resets animation to idle when attack animation is over
 			if (currFrame < lastAnimationFrame)
 			{
 				animation->setAnimationType(Boss_Animationtype::Idle);
 				animation->setAnimationSpeed(defaultAnimationSpeed);
-				lastAnimationFrame = 0;
 				attackPlayer();
+				lastAnimationFrame = 0;
 			}
 			else
 			{
@@ -46,10 +47,12 @@ void MeleeBA::execute()
 		std::shared_ptr<GameObject> boss = bossPtr.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> animation = 
 			std::dynamic_pointer_cast<AnimatedGraphicsCP<Boss_Animationtype>>(boss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0));
+
 		if (animation)
 		{
 			animation->setAnimationType(Boss_Animationtype::Attack);
 			animation->resetAnimationTimeIndex();
+			animation->resetAnimationFrame();
 			defaultAnimationSpeed = animation->getAnimationSpeed();
 			animation->setAnimationSpeed(8);
 		}
