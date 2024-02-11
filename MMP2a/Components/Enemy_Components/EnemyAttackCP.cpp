@@ -57,23 +57,25 @@ void EnemyAttackCP::update(float deltaTime)
 				&& attackCD > 2)
 			{	
 				doAttackAnimation(ani, trans);
-						
+
 				if (!statsPlayer->getIFrameState())
 				{
 					statsPlayer->subtracktHealth(stats->getDamage());
-					cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->getSprite().setColor(sf::Color::Red);
-
+					if (statsPlayer->getHealth() <= 0)
+					{
+						cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setDying();
+					}
+					else
+					{
+						cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setColor(sf::Color::Red);
+					}
+					
 					lastPlayerAttacked = closestPlayer;
 				}
 			}
 		}
 		if (attackTimer > 0.2f && hasAttacked)
 		{
-			if (!lastPlayerAttacked.expired())
-			{
-				lastPlayerAttacked.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->getSprite().setColor(sf::Color::White);
-			}
-
 			if (animationLocked)
 			{
 				ani->toggleAnimationLock();

@@ -33,6 +33,10 @@ public:
     bool getIFrameState() { return hasIFrames; }
 
     std::string getObjectType() { return this->gameObjectType; }
+
+    void setDeath() { isDead = true; }
+    bool hasDied() { return isDead; }
+
 private:
     int maxHealth;
     int health;
@@ -40,4 +44,5 @@ private:
     int damage;
     std::string gameObjectType;
     bool hasIFrames = false;
+    bool isDead;
 };

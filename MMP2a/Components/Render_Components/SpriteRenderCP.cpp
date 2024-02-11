@@ -18,17 +18,14 @@ void SpriteRenderCP::draw()
 			std::shared_ptr<GameObject> go = gameObject.lock();
 			if (go->getId().find("Skeleton") != std::string::npos)
 			{
-				/*
-				DebugDraw::getInstance().drawRectOutline(
+				/*DebugDraw::getInstance().drawRectOutline(
 					sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top),
 					static_cast<int>(sprite.getGlobalBounds().width),
 					static_cast<int>(sprite.getGlobalBounds().height),
 					sf::Color::Red
 				);
 				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);
-				*/
-				
+				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 			if (go->getId().find("Boss") != std::string::npos)
 			{
@@ -54,13 +51,13 @@ void SpriteRenderCP::draw()
 					if (charm->getAlive())
 					{
 						window->draw(charm->getSprite());
-						DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);
+						/*DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);*/
 
 					}
 					break;
 				}
 				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);
+				/*DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 		}
 	}

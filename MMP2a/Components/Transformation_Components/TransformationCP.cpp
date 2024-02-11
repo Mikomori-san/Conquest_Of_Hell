@@ -14,10 +14,12 @@ void TransformationCP::update(float deltaTime)
 	}
 
 	// for AI
-	if (backupVel != 0)
+	if (backupVel != 0 && !velLock)
 	{
 		curVelocity = backupVel;
 	}
+	if (velLock)
+		std::cout << "Vel Lock active!" << std::endl;
 
 	position = position + direction * curVelocity * deltaTime;
 	
@@ -29,6 +31,7 @@ void TransformationCP::update(float deltaTime)
 
 void TransformationCP::init()
 {
+	velLock = false;
 	position = originalPos;
 	if (!gameObject.expired())
 	{

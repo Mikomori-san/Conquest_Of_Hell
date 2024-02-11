@@ -32,10 +32,7 @@
 #include "../Components/Boss/ScreenShakeCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
 #include "../Components/UI/ControlsUI.h"
-
-
 #include "../Manager/GameStateManager.h"
-
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -94,6 +91,34 @@ void GameplayState::exit()
 
 void GameplayState::update(float deltaTime)
 {
+	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {
+		if (go->getId().find("Player") != std::string::npos)
+		{
+			if (go->getComponentsOfType<StatsCP>().at(0)->hasDied())
+			{
+				slainPlayer = true;
+			}
+		}
+		else if (go->getId().find("Boss") != std::string::npos)
+		{
+			if (go->getComponentsOfType<StatsCP>().at(0)->hasDied())
+			{
+				slainBoss = true;
+			}
+		}
+		else
+		{
+			auto stats = go->getComponentsOfType<StatsCP>();
+			if (stats.size() > 0)
+			{
+				return stats.at(0)->hasDied();
+			}
+			return false;
+		}
+	};
+
+	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GEL�SCHT
+
 	if (slainBoss)
 	{
 		hasWon = true;
@@ -106,31 +131,6 @@ void GameplayState::update(float deltaTime)
 		GameStateManager::getInstance().setState("Loose", *window);
 
 	}
-
-	auto removeCondition = [this](const std::shared_ptr<GameObject>& go) {
-		if (go->getId().find("Player") != std::string::npos)
-		{
-			if (go->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
-			{
-				slainPlayer = true;
-			}
-		}
-		if (go->getId().find("Boss") != std::string::npos)
-		{
-			if (go->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
-			{
-				slainBoss = true;
-			}
-		}
-		auto stats = go->getComponentsOfType<StatsCP>();
-		if (stats.size() > 0)
-		{
-			return stats.at(0)->getHealth() <= 0;
-		}
-		return false;
-	};
-
-	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GEL�SCHT
 
 	std::vector<std::shared_ptr<RenderCP>> renderCPs;
 
@@ -457,6 +457,15 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	int dmg = 25; //object.getProp("Damage")->getValue<int>();
 	std::shared_ptr<StatsCP> enemyStats = std::make_shared<StatsCP>(enemyTemp, "EnemyStatsCP", hp, dmg, "Enemy");
 	enemyTemp->addComponent(enemyStats);
+
+	if (!AssetManager::getInstance().Textures["healthbar"])
+	{
+		AssetManager::getInstance().loadTexture("healthbar", "Assets\\Textures\\health_bar.png");
+	}
+
+	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(enemyTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
+	enemyTemp->addComponent(health);
+
 	return enemyTemp;
 	/*gameObjects.push_back(enemyTemp);*/
 }

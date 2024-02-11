@@ -719,7 +719,7 @@
                         {
                          "name":"AttackRange",
                          "type":"int",
-                         "value":400
+                         "value":500
                         }, 
                         {
                          "name":"Controller",

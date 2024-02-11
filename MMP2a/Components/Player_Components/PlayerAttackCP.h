@@ -105,7 +105,16 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 		{
 			if ((bossPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (bossPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 			{
-				daBoss->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+				auto bossStats = daBoss->getComponentsOfType<StatsCP>().at(0);
+				bossStats->subtracktHealth(stats->getDamage());
+				if (bossStats->getHealth() <= 0)
+				{
+					daBoss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0)->setDying();
+				}
+				else
+				{
+					daBoss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0)->setHit();
+				}
 			}
 		}
 	}
@@ -117,7 +126,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			newEnemies.push_back(*it);
 
 			auto enemy = it->lock();
-
+			auto enemyStats = enemy->getComponentsOfType<StatsCP>().at(0);
 			enemyPos = enemy->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 
 			distance = (playerPos.x - enemyPos.x) * (playerPos.x - enemyPos.x) + (playerPos.y - enemyPos.y) * (playerPos.y - enemyPos.y);
@@ -127,7 +136,16 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			{
 				if ((enemyPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (enemyPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 				{
-					enemy->getComponentsOfType<StatsCP>().at(0)->subtracktHealth(stats->getDamage());
+					enemyStats->subtracktHealth(stats->getDamage());
+
+					if (enemyStats->getHealth() <= 0)
+					{
+						enemy->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0)->setDying();
+					}
+					else
+					{
+						enemy->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0)->setHit();
+					}
 				}
 			}
 		}
