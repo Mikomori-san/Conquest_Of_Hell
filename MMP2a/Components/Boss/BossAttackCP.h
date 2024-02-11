@@ -5,10 +5,13 @@
 #include  "CharmIndicator.h"
 #include  "MeeleeIndicator.h"
 
+#include "../../Enums/Boss_Animationtype.h"
+#include "../Graphics_Components/AnimatedGraphicsCP.h"
+
 class BossAttackCP : public Component
 {
 public:
-BossAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> player) : Component(gameObject, id), playerPtr(player) {}
+BossAttackCP(std::shared_ptr<Component> bossGraphicsCP, std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> player) : Component(gameObject, id), m_bossGraphicsCP(bossGraphicsCP), playerPtr(player) {}
 void init() override;
 void update(float deltaTime) override;
 std::string getComponentId() override { return this->componentId; }
@@ -30,6 +33,8 @@ private:
 	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
 	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator());
 	std::shared_ptr<MeeleeIndicator> meeleeInd = std::make_shared<MeeleeIndicator>(MeeleeIndicator());
+	std::shared_ptr<Component> m_bossGraphicsCP;
+
 
 	float swapThreshold = 100.f * 100.f; //->squared distance
 	float attackCooldown = 2.f;

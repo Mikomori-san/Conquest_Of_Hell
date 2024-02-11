@@ -127,8 +127,8 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 494.5,
-                "y": 271.5
+                "x": 493.5,
+                "y": 271
             }
         },
         "MapTiled.tmx#Tiles": {
@@ -139,11 +139,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 3,
+            "scale": 0.75,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 641.3333333333333,
-                "y": 181.83333333333334
+                "x": 491.3333333333333,
+                "y": 310.6666666666667
             }
         },
         "game.tmj#Background": {

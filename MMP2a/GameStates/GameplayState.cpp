@@ -323,7 +323,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				if (go1->getId().find("Player") != std::string::npos)
 				{
-					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go, "BossAttackCP", go1));
+					std::shared_ptr<Component> attack = std::make_shared<BossAttackCP>(BossAttackCP(go->, go, "BossAttackCP", go1));
 					go->addComponent(attack);
 					
 					if (go1->getComponentsOfType<MovementInputGamepadCP>().size() > 0)
@@ -612,7 +612,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	bossTemp->addComponent(bossGraphicsCP);
 
 
-	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 2.f, 1.5f, 100.f);
+	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 10.f, 1.5f, 500.f);
 
 	bossTemp->addComponent(screenShakeCP);
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();

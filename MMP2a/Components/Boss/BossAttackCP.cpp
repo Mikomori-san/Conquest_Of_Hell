@@ -32,7 +32,7 @@ void BossAttackCP::update(float deltaTime)
 			if (squaredDistance > swapThreshold )
 			charmInd->setAlive();
 
-			if (squaredDistance <= swapThreshold)
+			if (squaredDistance <= swapThreshold && m_bossGraphicsCP->)
 			meeleeInd->setAlive();
 		}
 		
