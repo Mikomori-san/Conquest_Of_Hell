@@ -4,7 +4,7 @@ class RectCollisionCP : public Component
 {
 public:
 
-    RectCollisionCP(std::weak_ptr<GameObject> gameObject, std::string id, sf::Vector2f size, bool triggerBool) : Component(gameObject, id), colliderSize(size), trigger(triggerBool), scale(1){}
+    RectCollisionCP(std::weak_ptr<GameObject> gameObject, std::string id, sf::Vector2f size, bool triggerBool, float scale) : Component(gameObject, id), colliderSize(size), trigger(triggerBool), scale(scale){}
 
     void update(float deltaTime) override;
     std::string getComponentId() override { return this->componentId; };

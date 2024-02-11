@@ -113,7 +113,7 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
             }
             std::shared_ptr<RectCollisionCP> c1 = body1->getComponentsOfType<RectCollisionCP>().at(0);
             std::shared_ptr<RectCollisionCP> c2 = body2->getComponentsOfType<RectCollisionCP>().at(0);
-
+            
             if (aabbVsAabb(
                 c1->getCollisionRect(),
                 c2->getCollisionRect(),
@@ -175,7 +175,7 @@ void PhysicsManager::collisionResolve()
     {
             std::shared_ptr<GameObject> go1 = man->body1;
             std::shared_ptr<GameObject> go2 = man->body2;
-            
+            sf::Vector2f separationVector = man->normal * man->penetration;
             // Collisions against Players are not being detected
             if (go1->getId().find("Player") != std::string::npos && go2->getId().find("Player") != std::string::npos)
             {
@@ -184,49 +184,36 @@ void PhysicsManager::collisionResolve()
 
             if (go1->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger() || go2->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger())
             {
-                if (go1->getComponentsOfType<RigidBodyCP>().size() != 0)
+                if (go1->getComponentsOfType<RigidBodyCP>().size() != 0  && go1->getId().find("Boundary") == std::string::npos)
                 {
-                    // Send Notification to Rigid Body of go1
-                    go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
+                    if (go2->getId().find("Skeleton") != std::string::npos)
+                    {
+                        // Send Notification to Rigid Body of go1
+                        //go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
+                    }
+                    else
+                    {
+                        sf::Vector2f newPos = go1->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
+                        go1->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
+                        go1->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
+                        go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
+                    }
                 }
-                else if(go2->getComponentsOfType<RigidBodyCP>().size() != 0)
+                else if(go2->getComponentsOfType<RigidBodyCP>().size() != 0 && go2->getId().find("Boundary") == std::string::npos)
                 {
-                    // Send Notification to Rigid Body of go2
-                    go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
+                    if (go2->getId().find("Skeleton") != std::string::npos)
+                    {
+                        // Send Notification to Rigid Body of go2
+                        //go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
+                    }
+                    else
+                    {
+                        sf::Vector2f newPos = go2->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
+                        go2->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
+                        go2->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
+                        go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
+                    }
                 }
-            }
-            else
-            {
-
-                // Rigid Body Logic
-
-                /*
-                std::shared_ptr<RigidBodyCP> r1 = go1->getComponentsOfType<RigidBodyCP>().at(0);
-                std::shared_ptr<RigidBodyCP> r2 = go2->getComponentsOfType<RigidBodyCP>().at(0);
-
-                const sf::Vector2f rv = r1->getVel() - r2->getVel();
-
-                const float velAlongNormal = rv.x * man->normal.x + rv.y * man->normal.y;
-
-                if (velAlongNormal >= 0) // > 0
-                {
-                    return;
-                }
-
-                if (bool restitutionOn = true)
-                {
-                    sf::Vector2f impulse = velAlongNormal * man->normal;
-
-                    r1->setVelNotifyTransf(r1->getVel() - 0.5f * impulse);
-                    r2->setVelNotifyTransf(r2->getVel() + 0.5f * impulse);
-                }
-
-                if (bool posCorrection = false)
-                {
-                    positionalCorrection(*man);
-                }
-                */
-                
             }
     }
 }

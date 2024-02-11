@@ -16,18 +16,6 @@ void RectCollisionCP::update(float deltaTime)
 
         if (go->getComponentsOfType<GraphicsCP>().size() != 0)
         {
-            if (!Component::componentId.find("BossAttackRange"))
-            {
-                ani = go->getComponentsOfType<GraphicsCP>().at(0);
-                collisionRect = sf::FloatRect(
-                    transf->getPosition().x - ani->getSprite().getGlobalBounds().width * 2,
-                    transf->getPosition().y - ani->getSprite().getGlobalBounds().height * 2,
-                    ani->getSprite().getGlobalBounds().width * 6,
-                    ani->getSprite().getGlobalBounds().height * 6
-                );
-            }
-            else
-            {
                 ani = go->getComponentsOfType<GraphicsCP>().at(0);
                 collisionRect = sf::FloatRect(
                     transf->getPosition().x,
@@ -35,7 +23,6 @@ void RectCollisionCP::update(float deltaTime)
                     ani->getSprite().getGlobalBounds().width * scale,
                     ani->getSprite().getGlobalBounds().height * scale
                 );
-            }
         }
         else
         {
