@@ -50,7 +50,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 
 	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
 	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
-	cot->setVolume(10);
+	cot->setVolume(2);
 	cot->setLoop(true);
 	cot->play();
 
@@ -408,7 +408,7 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<RectCollisionCP> boundaryCollisionCP = std::make_shared<RectCollisionCP>(boundaryTemp, "BoundaryCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 1
 	);
 	boundaryTemp->addComponent(boundaryCollisionCP);
 	
@@ -458,7 +458,7 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 		sf::Vector2f(enemyGraphicsCP->getSprite().getTextureRect().getSize().x,
 			enemyGraphicsCP->getSprite().getTextureRect().getSize().y
 		),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 0.8f
 	);
 	enemyTemp->addComponent(enemyCollisionCP);
 
@@ -521,7 +521,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<RectCollisionCP> playerCollisionCP = std::make_shared<RectCollisionCP>(playerTemp, "PlayerCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 1
 	);
 	playerTemp->addComponent(playerCollisionCP);
 	
@@ -654,7 +654,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 		sf::Vector2f(bossGraphicsCP->getSprite().getTextureRect().getSize().x,
 			bossGraphicsCP->getSprite().getTextureRect().getSize().y
 		),
-		object.getProp("isTrigger")->getValue<bool>()
+		object.getProp("isTrigger")->getValue<bool>(), 1
 	);
 	bossTemp->addComponent(bossCollisionCP);
 
