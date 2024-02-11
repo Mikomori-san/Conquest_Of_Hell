@@ -5,6 +5,7 @@
 #include "../Boss/BossAttackCP.h"
 #include "../Boss/BossAbility.h"
 #include "../../Enums/BossAbilites.h"
+#include "../UI/StatusEffectCP.h"
 #include <iostream>
 
 void SpriteRenderCP::draw()
@@ -16,6 +17,13 @@ void SpriteRenderCP::draw()
 		if (!gameObject.expired())
 		{
 			std::shared_ptr<GameObject> go = gameObject.lock();
+			if (go->getId().find("Player") != std::string::npos)
+			{
+				if (go->getComponentsOfType<StatusEffectCP>().at(0)->getDisplay())
+				{
+					window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
+				}
+			}
 			if (go->getId().find("Skeleton") != std::string::npos)
 			{
 				/*DebugDraw::getInstance().drawRectOutline(
