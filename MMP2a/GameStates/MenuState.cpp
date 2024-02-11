@@ -14,7 +14,7 @@
 
 #include "../Manager/GameStateManager.h"
 
-#include "../../Enums/GamepadButton.h"
+#include "../Enums/GamepadButton.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>

@@ -625,7 +625,7 @@
                         {
                          "name":"Health",
                          "type":"int",
-                         "value":25
+                         "value":100
                         }, 
                         {
                          "name":"Mass",
@@ -821,7 +821,7 @@
                         {
                          "name":"Health",
                          "type":"int",
-                         "value":25
+                         "value":100
                         }, 
                         {
                          "name":"Mass",
@@ -862,8 +862,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":876.84549,
-                 "y":512.4261835
+                 "x":889.512156666667,
+                 "y":456.4261835
                 }, 
                 {
                  "height":22.2207792207792,
