@@ -9,6 +9,7 @@ void BossAttackCP::init()
 {
 	ability2->init();
 	charmInd->init();
+	meeleeInd->init();
 }
 
 void BossAttackCP::update(float deltaTime)
@@ -26,33 +27,30 @@ void BossAttackCP::update(float deltaTime)
 		bossPos += transBoss->getOrigin(); //spawns ability at boss origin
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
 		
-		if (timePassed >= (attackCooldown - 1.f) )
+		if ((attackCooldown - 1.f) < timePassed && squaredDistance > swapThreshold )
 		{
 			charmInd->setAlive();
 
 		}
-		/*if (timePassed <= (attackCooldown - 0.1f) && timePassed > attackCooldown)
+		else if ((attackCooldown - 1.f) < timePassed && squaredDistance <= swapThreshold)
 		{
-			charmInd->update(deltaTime);
-		}*/
+			std::cout << "meelee ind activated-------------" << std::endl;
+			meeleeInd->setAlive();
+		}
 		if (attackCooldown < timePassed)
 		{
+			charmInd->setDead();
+			meeleeInd->setDead();
 			timePassed = 0;
 			if (squaredDistance < swapThreshold)
 			{
+				
 				executeMeele();
 			}
 			else
-			{//doesnt function right with the time
-				/*if (!charmIndActivated) {
-					charmInd->setAlive();
-					charmIndActivated = true;
-				}*/
-				
+			{				
 				if (timePassed <= attackCooldown)
 				{
-					charmInd->setDead();
-					charmIndActivated = false;
 					executeCharm(bossPos, playerPos);
 				}
 			}
@@ -61,6 +59,7 @@ void BossAttackCP::update(float deltaTime)
 	ability1->update(deltaTime);
 	ability2->update(deltaTime);
 	charmInd->update(deltaTime);
+	meeleeInd->update(deltaTime);
 
 }
 

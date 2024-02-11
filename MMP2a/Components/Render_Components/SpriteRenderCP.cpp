@@ -38,6 +38,10 @@ void SpriteRenderCP::draw()
 				{
 					window->draw(attack->getCharmInd()->getSprite());
 				}
+				else if (attack->getMeeleeInd()->getAlive())
+				{
+					window->draw(attack->getMeeleeInd()->getSprite());
+				}
 				switch (attack->getAbility2()->getAbilityType())
 				{
 				case BossAbilites::Default:
