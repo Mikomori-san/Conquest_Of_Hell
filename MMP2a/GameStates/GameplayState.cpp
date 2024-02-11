@@ -37,10 +37,10 @@
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
 	close = false;
+	
+	originalView = rWindow.getView();
 
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
-
-	//this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
 
@@ -55,10 +55,17 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	cot->play();
 
 	loadMap("game.tmj", sf::Vector2f());
-
+	
+	sf::Vector2f playerPos;
+	
 	for (auto& go : gameObjects)
 	{
 		go->init();
+
+		if (go->getId().find("Player") != std::string::npos)
+		{
+			playerPos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+		}
 
 		for (auto& renderCPs : go->getComponentsOfType<RenderCP>()) 
 		{
@@ -68,8 +75,9 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	
 	slainBoss = false;
 	slainPlayer = false;
-	window->setView(sf::View(sf::Vector2f(window->getSize().x / 4, window->getSize().y / 4), sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2)));
-
+	
+	view = sf::View(playerPos, sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));			// FOR PLAYER VIEW SETTING
+	window->setView(view);
 }
 void GameplayState::exit()
 {
@@ -98,6 +106,7 @@ void GameplayState::update(float deltaTime)
 			{
 				slainPlayer = true;
 			}
+			view = sf::View(go->getComponentsOfType<TransformationCP>().at(0)->getPosition(), sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));
 		}
 		else if (go->getId().find("Boss") != std::string::npos)
 		{
@@ -122,15 +131,19 @@ void GameplayState::update(float deltaTime)
 	if (slainBoss)
 	{
 		hasWon = true;
+		view = originalView;
+		window->setView(view);
 		GameStateManager::getInstance().setState("Win", *window);
-
 	}
 	if (slainPlayer)
 	{
 		hasLost = true;
+		view = originalView;
+		window->setView(view);
 		GameStateManager::getInstance().setState("Loose", *window);
-
 	}
+
+	window->setView(view);												// FOR PLAYER VIEW SETTING
 
 	std::vector<std::shared_ptr<RenderCP>> renderCPs;
 
@@ -148,6 +161,11 @@ void GameplayState::update(float deltaTime)
 			{
 				break;
 			}
+		}
+
+		if (go->getId().find("Boss") != std::string::npos)
+		{
+			go->getComponentsOfType<ScreenShakeCP>().at(0)->updateScreen(view);
 		}
 	}
 
@@ -617,13 +635,11 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> bossGraphicsCP = std::make_shared<AnimatedGraphicsCP<Boss_Animationtype>>(
 		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, Boss_Animationtype::Idle
 	);
-	
 	bossTemp->addComponent(bossGraphicsCP);
 
-
-	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 2.f, 1.5f, 100.f);
-
+	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window);
 	bossTemp->addComponent(screenShakeCP);
+
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
 	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
 

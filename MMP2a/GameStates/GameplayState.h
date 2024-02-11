@@ -41,4 +41,6 @@ private:
 
 	std::unordered_map<std::string, GameObjectPtr> m_objects;
 	int mapTileSize;
+	sf::View view;
+	sf::View originalView;
 };

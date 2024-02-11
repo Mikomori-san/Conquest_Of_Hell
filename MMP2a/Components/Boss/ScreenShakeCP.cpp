@@ -1,37 +1,38 @@
 #include "stdafx.h"
 #include "ScreenShakeCP.h"
 
+void ScreenShakeCP::init()
+{
+    timePassed = 0;
+    m_intensity = 2.f;
+    m_speed = 100.f;
+    setScreenShake = false;
+    m_originalView = m_window->getView();
+}
+
 void ScreenShakeCP::update(float deltaTime)
 {
-    timePassed += deltaTime; // Increment timePassed
-
-    if (m_bossGraphicsCP->getAnimationType() == Attack && m_bossGraphicsCP->getAnimationFrame() == 6)
+    if (m_bossGraphicsCP->getAnimationType() == Attack && m_bossGraphicsCP->getAnimationFrame() == ATTACK_FRAME)
     {
-        // Create a temporary view to apply screenshake
-        sf::View shakenView = m_window->getView();
-        sf::Vector2f original_center = shakenView.getCenter();
+        setScreenShake = true;
+        timePassed = 0;
+    }
 
-        // Calculate the screenshake offsets
+    if (setScreenShake)
+    {
+        auto shakenView = m_originalView;
         float shakeOffsetX = m_intensity * std::sin(m_speed * timePassed);
         float shakeOffsetY = m_intensity * std::cos(m_speed * timePassed);
 
-        // Apply the screenshake offsets using the move function
         shakenView.move(shakeOffsetX, shakeOffsetY);
 
-        // Set the modified view back to the window
         m_window->setView(shakenView);
 
- 
-
-
-        // Reduce the remaining duration
-        m_duration -= deltaTime;
-
-        // Check if the duration is over and reset the view's center if needed
-        if (m_duration <= 0) {
-            shakenView.setCenter(original_center);
-            m_window->setView(shakenView);
-// Reset to the original view
+        if (timePassed >= SHAKE_DURATION_THRESHOLD)
+        {
+            setScreenShake = false;
+            m_window->setView(m_originalView);
         }
     }
+    timePassed += deltaTime;
 }
