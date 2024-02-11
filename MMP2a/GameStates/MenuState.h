@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "../GameObject.h"
 #include "../Manager/AssetManager.h"
+#include "../Manager/InputManager.h"
 #include "../DebugDraw.h"
 
 class MenuState : public GameState
@@ -13,7 +14,7 @@ public:
 	void render() override;
 
 private:
-	std::vector<std::shared_ptr<GameObject>> gameObjects;
+	//std::vector<std::shared_ptr<GameObject>> gameObjects;
 	sf::Text createText(std::string text, sf::Font font,int charSize, sf::Vector2f pos, sf::Color fillColor);
 	//sf::RectangleShape createButton(sf::Text name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
 	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
@@ -35,4 +36,8 @@ private:
 
 	std::vector<std::pair<sf::Text, sf::RectangleShape>> buttonList;
 	std::map<std::string, sf::RectangleShape> buttonMap;
+
+	bool isControllerConnected = false;
+	bool isPlaySelected = true;
+	bool isExitSelected = false;
 };

@@ -2,6 +2,10 @@
 #include "CharmBA.h"
 #include "../../Manager/AssetManager.h"
 #include "../Input_Components/InputCP.h"
+#include "../../Components/Transformation_Components/TransformationCP.h"
+#include <iostream>
+
+
 int findRotation(sf::Vector2f direction)
 {
 	float angle = std::atan2(direction.y, direction.x);
@@ -19,6 +23,7 @@ void CharmBA::init()
 	{
 		AssetManager::getInstance().loadTexture(texName, "Assets\\Textures\\heartSpriteSheet.png");
 	}
+
 	sprite = sf::Sprite(*AssetManager::getInstance().Textures[texName]);
 	sprite.setScale(4,4);
 	sprite.setTextureRect(sf::IntRect(0, 0, sprite.getTextureRect().width / 4, sprite.getTextureRect().height));
@@ -30,12 +35,14 @@ void CharmBA::update(float deltaTime)
 	ttl -= deltaTime;
 	animationTimeIndex += deltaTime * animationSpeed;
 	position += direction * moveSpeed * deltaTime;
+
 	if (ttl <= 0)
 	{
 		setDead();
 	}
 	else
 	{
+
 		auto animationFrame = (int)animationTimeIndex % 4; //4->animationFrames for heartSpriteSheet.png
 		sprite.setTextureRect(sf::IntRect(
 			animationFrame * sprite.getTextureRect().width,
@@ -45,6 +52,7 @@ void CharmBA::update(float deltaTime)
 		));
 		sprite.setPosition(position);
 		sprite.setRotation(findRotation(direction));
+
 	}
 	if (charmed)
 	{

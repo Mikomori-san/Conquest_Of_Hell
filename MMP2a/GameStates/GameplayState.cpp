@@ -22,14 +22,17 @@
 #include "../Components/Player_Components/DashCP.h"
 #include "../Components//Player_Components/PlayerAttackCP.h"
 #include "../Enums/Enemy_Animationtype.h"
+#include "../Enums/Boss_Animationtype.h"
 #include "../Components/Enemy_Components/EnemyAttackCP.h"
 #include <iostream>
 #include "../Components/Input_Components/MovementInputGamepadCP.h"
 #include "../Enums/GamepadButton.h"
 #include "../Components/Spawner_Components/SpawnerCP.h"
 #include "../Components/Boss/BossAttackCP.h"
+#include "../Components/Boss/ScreenShakeCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
 #include "../Components/UI/ControlsUI.h"
+
 
 #include "../Manager/GameStateManager.h"
 
@@ -605,16 +608,21 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> bossGraphicsCP = std::make_shared<AnimatedGraphicsCP<Boss_Animationtype>>(
 		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, Boss_Animationtype::Idle
 	);
-
+	
 	bossTemp->addComponent(bossGraphicsCP);
 
+
+	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 2.f, 1.5f, 100.f);
+
+	bossTemp->addComponent(screenShakeCP);
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
 	sf::Vector2f pos(sf::Vector2f(object.getPosition().x, object.getPosition().y));
 
 	std::shared_ptr<TransformationCP> transCP = std::make_shared<TransformationCP>(bossTemp, "BossTransformationCP", pos, object.getRotation(), object.getSize().x);
 	transCP->setOriginalVelocity(VELOCITY);
 	transCP->setBackupVel();
-
+	transCP->setScale(2.f);
+	
 	bossTemp->addComponent(transCP);
 
 	std::shared_ptr<RectCollisionCP> bossCollisionCP = std::make_shared<RectCollisionCP>(bossTemp, "BossCollisionCP",

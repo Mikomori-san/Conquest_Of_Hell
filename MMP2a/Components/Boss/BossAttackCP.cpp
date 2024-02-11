@@ -3,10 +3,13 @@
 #include "../../Components/Transformation_Components/TransformationCP.h"
 #include "../../VectorAlgebra2D.h"
 #include "../../Enums/Boss_Animationtype.h"
+#include <iostream>
 
 void BossAttackCP::init()
 {
 	ability2->init();
+	charmInd->init();
+	meeleeInd->init();
 }
 
 void BossAttackCP::update(float deltaTime)
@@ -23,21 +26,42 @@ void BossAttackCP::update(float deltaTime)
 		sf::Vector2f bossPos = transBoss->getPosition();
 		bossPos += transBoss->getOrigin(); //spawns ability at boss origin
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
+		
+		if ((attackCooldown - 1.f) < timePassed)
+		{
+			if (squaredDistance > swapThreshold )
+			charmInd->setAlive();
+
+			if (squaredDistance <= swapThreshold)
+			meeleeInd->setAlive();
+		}
+		
+
 		if (attackCooldown < timePassed)
 		{
+			charmInd->setDead();
+			meeleeInd->setDead();
 			timePassed = 0;
 			if (squaredDistance < swapThreshold)
 			{
+				
 				executeMeele();
 			}
 			else
-			{
-				executeCharm(bossPos, playerPos);
+			{				
+				if (timePassed <= attackCooldown)
+				{
+					executeCharm(bossPos, playerPos);
+				}
 			}
 		}
 	}
+
 	ability1->update(deltaTime);
 	ability2->update(deltaTime);
+	charmInd->update(deltaTime);
+	meeleeInd->update(deltaTime);
+
 }
 
 void BossAttackCP::executeMeele()

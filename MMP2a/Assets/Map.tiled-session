@@ -127,7 +127,7 @@
             "scale": 1,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 500,
+                "x": 494.5,
                 "y": 271.5
             }
         },
@@ -139,11 +139,11 @@
             "expandedObjectLayers": [
                 4
             ],
-            "scale": 1,
+            "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 475.5,
-                "y": 291
+                "x": 641.3333333333333,
+                "y": 181.83333333333334
             }
         },
         "game.tmj#Background": {
@@ -197,9 +197,9 @@
     "project": "Map.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "game_old.tmj",
-        "game.tmj",
         "MapTiled.tmx",
+        "game.tmj",
+        "game_old.tmj",
         "C:/Users/jenny/Downloads/game.tmj",
         "MapTiled.tmj",
         "C:/Users/jenny/OneDrive/Documents/Fh_Study/_MMP2/Assets/TileSets/Tiles.tsj",

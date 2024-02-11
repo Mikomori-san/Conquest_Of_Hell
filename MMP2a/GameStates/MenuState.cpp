@@ -14,6 +14,7 @@
 
 #include "../Manager/GameStateManager.h"
 
+#include "../../Enums/GamepadButton.h"
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -38,7 +39,6 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackgroundTitle.png");
 	AssetManager::getInstance().loadTexture("startImage", "Assets\\Textures\\start.png");
 	AssetManager::getInstance().loadTexture("exitImage", "Assets\\Textures\\exit.png");
-	AssetManager::getInstance().loadFont("standardFont", "Assets\\Fonts\\Perfect.ttf");
 	
 	if (!AssetManager::getInstance().Textures["BackgroundImage"])
 	{
@@ -78,13 +78,9 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	sf::Color black = sf::Color(0, 0, 0);
 	sf::Color white = sf::Color(255, 255, 255, 255 );
 
-	sf::Font font = *AssetManager::getInstance().Fonts["standardFont"];
-
-	/*start = createText("Start", font, 24, startButtonPos, red);
-	exitText = createText("Exit", font, 24, exitButtonPos, red);*/
 
 	createButton("Start", sf::Vector2f(750, 50), startButtonPos, black);
-	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, red);
+	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, black);
 
 	close = false;
 }
@@ -103,31 +99,65 @@ void MenuState::update(float deltaTime)
 		sf::FloatRect buttonBounds = button.second.getGlobalBounds();
 		sf::Vector2i mousePos = InputManager::getInstance().getMousePosition();
 
+		button.second.setFillColor(sf::Color::Black);
+		button.second.setOutlineColor(sf::Color::Red);
+		button.second.setOutlineThickness(1.f);
+
 		if (buttonBounds.contains(static_cast<sf::Vector2f>(mousePos)))
 		{
 			button.second.setOutlineColor(sf::Color::White);
-			button.second.setOutlineThickness(1.f);
-
 
 			if (button.first == "Start" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "start pressed" << std::endl;
 				GameStateManager::getInstance().setState("Gameplay", *window);
-
 			}
 			if (button.first == "Exit" && InputManager::getInstance().getMouseUp(sf::Mouse::Left))
 			{
-				std::cout << "Exit pressed" << std::endl;
-				GameStateManager::getInstance().setState("Exit", *window);
+				window->close();
+			}
+		}
+		else if (isControllerConnected = sf::Joystick::isConnected(0))
+		{
+			sf::Vector2f joyStickLocation = InputManager::getInstance().getLeftStickPosition(0);
+			if (isPlaySelected)
+			{
+				if (button.first == "Start")
+				{
+					button.second.setOutlineColor(sf::Color::White);
+					if (sf::Joystick::isButtonPressed(0, GamepadButton::A))
+					{
+						GameStateManager::getInstance().setState("Gameplay", *window);
+					}
+				}
+			}
+			
+			if (joyStickLocation.y >= 0.2f)
+			{
+				isPlaySelected = false;
+				isExitSelected = true;
 
 			}
-	
-		}
-		else
-		{
-			button.second.setFillColor(sf::Color::Black);
-			button.second.setOutlineColor(sf::Color::Red);
-			button.second.setOutlineThickness(1.f);
+			else if (joyStickLocation.y <= -0.2f)
+			{
+				isPlaySelected = true;
+				isExitSelected = false;
+			}
+				if (isExitSelected)
+				{
+					if (button.first == "Start")
+					{
+						button.second.setOutlineColor(sf::Color::Red);
+					}
+					else
+					{
+						button.second.setOutlineColor(sf::Color::White);
+					}
+					if (sf::Joystick::isButtonPressed(0, static_cast<GamepadButton>(A)))
+					{
+						window->close();
+
+					}
+				}
 		}
 	}
 }
@@ -137,10 +167,6 @@ void MenuState::render()
 	
 	window->clear(sf::Color::Black);
 	window->draw(backgroundSprite);
-	//window->draw(start);
-	//window->draw(exitText);
-	//window->draw(startButton);
-	//window->draw(exitButton);
 
 	for (auto& pair : buttonMap) {
 		window->draw(pair.second);
@@ -150,30 +176,6 @@ void MenuState::render()
 	window->draw(startSprite);
 	window->draw(exitSprite);
 }
-
-//sf::Text MenuState::createText(std::string text, sf::Font font,int charSize, sf::Vector2f pos, sf::Color fillColor)
-//{
-//	sf::Text words;
-//	words.setFont(font);
-//	words.setString(text);
-//	words.setCharacterSize(charSize);
-//	words.setFillColor(fillColor);
-//	words.setPosition(pos);
-//	
-//	return words;
-//}
-// sf::RectangleShape MenuState::createButton( sf::Text name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor)
-//{
-//	sf::RectangleShape button;
-//	button.setSize(size);
-//	button.setOrigin(sf::Vector2f(button.getSize().x / 2, button.getSize().y / 2));
-//	button.setFillColor(fillColor);
-//	button.setPosition(pos);
-//
-//	buttonList.push_back(std::make_pair(name, button));
-//
-//	return button;
-//}
  sf::RectangleShape MenuState::createButton( std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor)
 {
 	sf::RectangleShape button;

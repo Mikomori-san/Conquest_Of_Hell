@@ -23,11 +23,10 @@ void Game::initialize()
 
 	GameStateManager::getInstance().reg("Menu", std::make_shared<MenuState>());
 	GameStateManager::getInstance().reg("Gameplay", std::make_shared<GameplayState>());
-	GameStateManager::getInstance().reg("Exit", std::make_shared<ExitState>());
 	GameStateManager::getInstance().reg("Win", std::make_shared<WinState>());
 	GameStateManager::getInstance().reg("Loose", std::make_shared<LooseState>());
 
-	GameStateManager::getInstance().setState("Menu", window);
+	GameStateManager::getInstance().setState("Gameplay", window);
 
 	InputManager::getInstance().setRenderWindow(window);
 }
@@ -73,12 +72,6 @@ void Game::update(float deltaTime)
 	if (GameStateManager::getInstance().getState()->hasClosed())
 		state++;
 
-	//if (GameStateManager::getInstance().getState()->hasWon())
-	//	GameStateManager::getInstance().setState("Win", window);
-
-	//if (GameStateManager::getInstance().getState()->hasLost())
-	//	GameStateManager::getInstance().setState("Loose", window);
-
 	switch (state)
 	{
 	case 1:
@@ -86,8 +79,12 @@ void Game::update(float deltaTime)
 			GameStateManager::getInstance().setState("Gameplay", window);
 		break;
 	case 2:
-		if (!std::dynamic_pointer_cast<ExitState>(GameStateManager::getInstance().getState()))
-			GameStateManager::getInstance().setState("Exit", window);
+		if (!std::dynamic_pointer_cast<WinState>(GameStateManager::getInstance().getState()))
+			GameStateManager::getInstance().setState("Win", window);
+		break;
+	case 3:
+		if (!std::dynamic_pointer_cast<LooseState>(GameStateManager::getInstance().getState()))
+			GameStateManager::getInstance().setState("Loose", window);
 		break;
 	default:
 		break;

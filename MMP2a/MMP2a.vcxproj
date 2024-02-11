@@ -160,7 +160,9 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\Boss\CharmIndicator.cpp" />
     <ClCompile Include="GameStates\WinState.cpp" />
+    <ClInclude Include="Components\Boss\CharmIndicator.h" />
     <ClInclude Include="Components\Boss\BossAbility.h" />
     <ClInclude Include="Components\Boss\BossAttackCP.h" />
     <ClInclude Include="Components\Boss\CharmBA.h" />
@@ -235,7 +237,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStates\MenuState.cpp" />
-    <ClCompile Include="GameStates\ExitState.cpp" />
     <ClCompile Include="GameStates\GameplayState.cpp" />
     <ClCompile Include="GameStates\LooseState.cpp" />
     <ClCompile Include="Manager\AssetManager.cpp" />
@@ -243,6 +244,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Manager\InputManager.cpp" />
     <ClCompile Include="Manager\PhysicsManager.cpp" />
     <ClCompile Include="Manager\RenderManager.cpp" />
+    <ClCompile Include="Components\Boss\ScreenShakeCP.cpp" />
+    <ClCompile Include="Components\Boss\MeeleeIndicator.cpp" />
     <ClCompile Include="Slloth-Soft_Main.cpp" />
     <ClCompile Include="Components\Spawner_Components\SpawnerCP.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -255,6 +258,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Manager\RenderManager.h" />
     <ClInclude Include="Components\Spawner_Components\SpawnerCP.h" />
+    <ClInclude Include="Components\Boss\ScreenShakeCP.h" />
+    <ClInclude Include="Components\Boss\MeeleeIndicator.h" />
     <ClInclude Include="tileson.hpp" />
     <ClInclude Include="Trigonometry.h" />
     <ClInclude Include="VectorAlgebra2D.h" />
@@ -271,7 +276,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="GameStates\ExitState.h" />
     <ClInclude Include="GameStates\MenuState.h" />
     <ClInclude Include="GameStates\GameState.h" />
     <ClInclude Include="GameStates\GameplayState.h" />
