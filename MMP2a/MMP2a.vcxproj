@@ -160,11 +160,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="Components\Boss\CharmIndicator.cpp" />
-=======
     <ClCompile Include="Components\UI\StatusEffectCP.cpp" />
->>>>>>> Stun-indicator
     <ClCompile Include="GameStates\WinState.cpp" />
     <ClInclude Include="Components\Boss\CharmIndicator.h" />
     <ClInclude Include="Components\Boss\BossAbility.h" />
