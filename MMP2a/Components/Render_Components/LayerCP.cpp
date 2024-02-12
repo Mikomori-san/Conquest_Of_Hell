@@ -3,9 +3,19 @@
 
 void LayerCP::draw()
 {
+	auto centerPoint = window->getView().getCenter();
+	auto viewSize = window->getView().getSize();
+
 	for (const auto& sprite : layer)
 	{
-		window->draw(*sprite);
+		auto pos = sprite->getPosition();
+
+		if(pos.x <= centerPoint.x + viewSize.x / 2 + 16 &&
+			pos.x >= centerPoint.x - viewSize.x / 2 - 16 &&
+			pos.y <= centerPoint.y + viewSize.y / 2 + 16 &&
+			pos.y >= centerPoint.y - viewSize.y / 2 - 16
+		)
+			window->draw(*sprite);
 	}
 }
 

@@ -42,6 +42,8 @@ public:
 	virtual void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	virtual sf::Vector2f& getPosition() { return position; }
 
+	bool getVelToggle() { return this->velLock; }
+
 	void setOldPos() { position = oldPos - oldDir; rigid->setPos(position); }
 
 	void setPosResetTimer() { this->posResetTimer = 0; }

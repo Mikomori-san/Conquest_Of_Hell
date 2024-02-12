@@ -43,6 +43,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	originalView = rWindow.getView();
 
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
+	//window->setFramerateLimit(144);
 
 	DebugDraw::getInstance().initialize(*window);
 
@@ -83,7 +84,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 }
 void GameplayState::exit()
 {
-	//cot->stop();
+	cot->stop();
 	for (auto& go : gameObjects)
 	{
 		go.reset();
@@ -128,7 +129,7 @@ void GameplayState::update(float deltaTime)
 		}
 	};
 
-	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());		// HIER WERDEN ALLE GOS MIT STATS = 0 GEL�SCHT
+	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());
 
 	if (slainBoss)
 	{
@@ -324,10 +325,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
-			//else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
-			//{
-			//	createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
-			//}
+			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			{
+				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
 				createBoss(object, group);

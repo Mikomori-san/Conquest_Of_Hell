@@ -46,7 +46,7 @@ std::vector<Point> aStar(const std::vector<std::vector<int>> grid, const Point s
     openList.push(Node(start, 0, eucledianDistance(start, goal)));
     gValues[start.y][start.x] = 0;
 
-    while (!openList.empty()) {
+    while (!openList.empty() && openList.size() <= 100) {
         Node current = openList.top();
         openList.pop();
 
@@ -147,7 +147,7 @@ void AStarCP::update(float deltaTime)
         } 
         else
         {
-            go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(myPos.x + 0.1f, myPos.y + 0.1f));
+            go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(myPos.x, myPos.y));
         }
     }
 }
