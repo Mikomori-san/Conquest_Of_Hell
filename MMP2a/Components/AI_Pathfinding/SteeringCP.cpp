@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SteeringCP.h"
 #include "../Transformation_Components/TransformationCP.h"
-#include "../../VectorAlgebra2D.h"
+#include "../../Math/VectorAlgebra2D.h"
 
 void SteeringCP::update(float deltaTime)
 {

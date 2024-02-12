@@ -256,7 +256,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Math\Utils.cpp" />
     <ClInclude Include="Enums\Player_Animationtype.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="Manager\RenderManager.h" />
@@ -264,8 +264,8 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Boss\ScreenShakeCP.h" />
     <ClInclude Include="Components\Boss\MeleeIndicator.h" />
     <ClInclude Include="tileson.hpp" />
-    <ClInclude Include="Trigonometry.h" />
-    <ClInclude Include="VectorAlgebra2D.h" />
+    <ClInclude Include="Math\Trigonometry.h" />
+    <ClInclude Include="Math\VectorAlgebra2D.h" />
     <ClInclude Include="GameStates\WinState.h" />
   </ItemGroup>
   <ItemGroup>
@@ -321,7 +321,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <None Include="Assets\MapTiled.tmx" />
     <None Include="Assets\Music\musicTrack.ogg" />
     <None Include="Assets\Textures\Tiles.png~" />
-    <None Include="VectorAlgebra2D.inl" />
+    <None Include="Math\VectorAlgebra2D.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

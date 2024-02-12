@@ -1,6 +1,9 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include <vector>
 #include "../Components/Render_Components/RenderCP.h"
+#include <vector>
 
 class RenderManager
 {

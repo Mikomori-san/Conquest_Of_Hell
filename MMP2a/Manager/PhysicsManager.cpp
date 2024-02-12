@@ -1,38 +1,22 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "PhysicsManager.h"
+#include "../Components/Boss/BossAttackCP.h"
+#include "../Components/Boss/CharmBA.h"
 #include "../Components/Collision_Components/RectCollisionCP.h"
 #include "../Components/Collision_Components/RigidBodyCP.h"
-#include "../Components/StatsCP.h"
-#include <iostream>
-#include "../Components/Boss/BossAttackCP.h"
-#include "../Components/Transformation_Components/TransformationCP.h"
-#include "../Components/Boss/CharmBA.h"
 #include "../Components/Player_Components/DashCP.h"
+#include "../Components/StatsCP.h"
+#include "../Components/Transformation_Components/TransformationCP.h"
 #include "../Enums/GamepadButton.h"
-
-void positionalCorrection(Manifold& man)
-{
-    const float percent = 0.2f;
-    const float slop = 0.01f;
-
-    std::shared_ptr<RigidBodyCP> r1 = man.body1->getComponentsOfType<RigidBodyCP>().at(0);
-    std::shared_ptr<RigidBodyCP> r2 = man.body2->getComponentsOfType<RigidBodyCP>().at(0);
-
-    sf::Vector2f correction = std::max(man.penetration - slop, 0.0f) / (r1->getInvMass() + r2->getInvMass()) * percent * man.normal;
-
-    r2->setPosNotifyTransf(r1->getPos() + r1->getInvMass() * correction);
-    r2->setPosNotifyTransf(r2->getPos() + r2->getInvMass() * correction);
-}
+#include "PhysicsManager.h"
+#include <iostream>
 
 bool aabbVsAabb(const sf::FloatRect& a, const sf::FloatRect& b, sf::Vector2f& normal, float& penetration)
 {
     auto getCenter = [](const sf::FloatRect& rect) -> sf::Vector2f
         { return sf::Vector2f(rect.left, rect.top) + 0.5F * sf::Vector2f(rect.width, rect.height); };
-
-    // TODO: implement SAT for axis aligned bounding box (AABB) collision
-    // TODO determine separation normal for collision resolution, i.e., the axis
-    // showing the smallest penetration.
-    // TODO determine the corresponding penetration depth for the positional correction step.
 
     const sf::Vector2f n = getCenter(b) - getCenter(a); // Vector from A to B
     const float    aExtentX = a.width * 0.5F;              // Calculate half extents along x axis
@@ -106,8 +90,9 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
             {
                 continue;
             }
-            //no collision between player & enemy
-            if (body1->getId().find("Player") != std::string::npos && body2->getId().find("Skeleton") != std::string::npos)
+
+            //no collision for enemies -> the dead are unstoppable 
+            if (body1->getId().find("Skeleton") != std::string::npos || body2->getId().find("Skeleton") != std::string::npos)
             {
                 continue;
             }
@@ -176,43 +161,22 @@ void PhysicsManager::collisionResolve()
             std::shared_ptr<GameObject> go1 = man->body1;
             std::shared_ptr<GameObject> go2 = man->body2;
             sf::Vector2f separationVector = man->normal * man->penetration;
-            // Collisions against Players are not being detected
-            if (go1->getId().find("Player") != std::string::npos && go2->getId().find("Player") != std::string::npos)
-            {
-                continue;
-            }
 
             if (go1->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger() || go2->getComponentsOfType<RectCollisionCP>().at(0)->isTrigger())
             {
                 if (go1->getComponentsOfType<RigidBodyCP>().size() != 0  && go1->getId().find("Boundary") == std::string::npos)
                 {
-                    if (go2->getId().find("Skeleton") != std::string::npos)
-                    {
-                        // Send Notification to Rigid Body of go1
-                        //go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
-                    }
-                    else
-                    {
-                        sf::Vector2f newPos = go1->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
-                        go1->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
-                        go1->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
-                        go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
-                    }
+                    sf::Vector2f newPos = go1->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
+                    go1->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
+                    go1->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
+                    go1->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go2);
                 }
                 else if(go2->getComponentsOfType<RigidBodyCP>().size() != 0 && go2->getId().find("Boundary") == std::string::npos)
                 {
-                    if (go2->getId().find("Skeleton") != std::string::npos)
-                    {
-                        // Send Notification to Rigid Body of go2
-                        //go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
-                    }
-                    else
-                    {
-                        sf::Vector2f newPos = go2->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
-                        go2->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
-                        go2->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
-                        go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
-                    }
+                    sf::Vector2f newPos = go2->getComponentsOfType<RigidBodyCP>().at(0)->getPos() + separationVector;
+                    go2->getComponentsOfType<RigidBodyCP>().at(0)->setPos(newPos);
+                    go2->getComponentsOfType<TransformationCP>().at(0)->setPosition(newPos);
+                    go2->getComponentsOfType<RigidBodyCP>().at(0)->onCollision(go1);
                 }
             }
     }
@@ -220,7 +184,7 @@ void PhysicsManager::collisionResolve()
 
 void PhysicsManager::update(std::vector<std::shared_ptr<GameObject>> gameObjects, float deltaTime)
 {
-    const float step = 0.02f;
+    const float step = 0.001f;
     accumulator += deltaTime;
 
     while (accumulator > step)

@@ -1,8 +1,12 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include <iostream>
-#include <SFML/Window.hpp>
-#include "Manager/AssetManager.h"
 #include "Game.h"
+#include "Manager/AssetManager.h"
+#include <SFML/Window.hpp>
+#include <iostream>
+
 
 int main()
 {

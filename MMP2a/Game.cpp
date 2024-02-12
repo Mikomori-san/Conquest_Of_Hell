@@ -1,43 +1,46 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "Game.h"
 
-Game::Game() : window(sf::VideoMode(WIDTH, HEIGHT), TITLE)
+Game::Game() : m_window(sf::VideoMode(WIDTH, HEIGHT), TITLE)
 {
-	window.setVerticalSyncEnabled(true);
-	window.setKeyRepeatEnabled(false);
+	m_window.setVerticalSyncEnabled(true);
+	m_window.setKeyRepeatEnabled(false);
 
 }
 
 void Game::closeGame(const sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-		window.close();
+		m_window.close();
 }
 
 void Game::initialize()
 {
 	sf::VideoMode fullscreenMode(1920, 1080);
-	window.create(fullscreenMode, "Fullscreen Window", sf::Style::Fullscreen);
+	m_window.create(fullscreenMode, "Fullscreen Window", sf::Style::Fullscreen);
 	
-	InputManager::getInstance().init(window);
+	InputManager::getInstance().init(m_window);
 
 	GameStateManager::getInstance().reg("Menu", std::make_shared<MenuState>());
 	GameStateManager::getInstance().reg("Gameplay", std::make_shared<GameplayState>());
 	GameStateManager::getInstance().reg("Win", std::make_shared<WinState>());
 	GameStateManager::getInstance().reg("Loose", std::make_shared<LooseState>());
 
-	GameStateManager::getInstance().setState("Menu", window);
+	GameStateManager::getInstance().setState("Menu", m_window);
 
-	InputManager::getInstance().setRenderWindow(window);
+	InputManager::getInstance().setRenderWindow(m_window);
 }
 
 void Game::run()
 {
 	initialize();
 
-	while (window.isOpen())
+	while (m_window.isOpen())
 	{
-		auto deltaTime = clock.restart().asSeconds();
+		auto deltaTime = m_clock.restart().asSeconds();
 
 		handleEvents();
 		update(deltaTime);
@@ -49,10 +52,10 @@ void Game::handleEvents()
 {
 	sf::Event event;
 
-	while (window.pollEvent(event))
+	while (m_window.pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Key::Escape))
-			window.close();
+			m_window.close();
 		
 		InputManager::getInstance().handleEvents(event);
 	}
@@ -60,31 +63,31 @@ void Game::handleEvents()
 
 void Game::draw()
 {
-	window.clear(BG_COLOR);
+	m_window.clear(BG_COLOR);
 
 	GameStateManager::getInstance().render();
 	
-	window.display();
+	m_window.display();
 }
 
 void Game::update(float deltaTime)
 {
 	if (GameStateManager::getInstance().getState()->hasClosed())
-		state++;
+		m_state++;
 
-	switch (state)
+	switch (m_state)
 	{
 	case 1:
 		if(!std::dynamic_pointer_cast<GameplayState>(GameStateManager::getInstance().getState()))
-			GameStateManager::getInstance().setState("Gameplay", window);
+			GameStateManager::getInstance().setState("Gameplay", m_window);
 		break;
 	case 2:
 		if (!std::dynamic_pointer_cast<WinState>(GameStateManager::getInstance().getState()))
-			GameStateManager::getInstance().setState("Win", window);
+			GameStateManager::getInstance().setState("Win", m_window);
 		break;
 	case 3:
 		if (!std::dynamic_pointer_cast<LooseState>(GameStateManager::getInstance().getState()))
-			GameStateManager::getInstance().setState("Loose", window);
+			GameStateManager::getInstance().setState("Loose", m_window);
 		break;
 	default:
 		break;
@@ -98,5 +101,5 @@ void Game::update(float deltaTime)
 	m_fps.update();
 	std::cout << "SLLOTH-SOFT | FPS: " << m_fps.getFps() << std::endl;
 
-	window.setTitle(ss.str());
+	m_window.setTitle(ss.str());
 }

@@ -1,8 +1,12 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include "GameState.h"
+#include "../DebugDraw.h"
 #include "../GameObject.h"
 #include "../Manager/AssetManager.h"
-#include "../DebugDraw.h"
+#include "GameState.h"
+
 
 class LooseState : public GameState
 {

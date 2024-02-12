@@ -1,3 +1,6 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "GameState.h"
 #include <unordered_map>
@@ -32,9 +35,6 @@ private:
 	void createBoundary(tson::Object& object, tson::Layer group);
 	void createSpawner(tson::Object& object, tson::Layer group, sf::Vector2i& aStarGridSize, std::vector<sf::Vector2i>& unMovablePositions, int mapTileSize);
 	void createBoss(tson::Object& object, tson::Layer group);
-
-	//template<typename T>
-	//void doLeftoverComponents(T playerAttackCP, sf::Vector2i aStarGridSize, std::vector<sf::Vector2i> unMovablePositions, int mapTileSize);
 
 	std::unordered_map<std::string, TexturePtr> m_tileSetTexture;
 	const std::filesystem::path m_resourcePath{ "Assets" };

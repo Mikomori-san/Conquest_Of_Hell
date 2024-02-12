@@ -1,40 +1,45 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "GameplayState.h"
-#include "../GameObject.h"
-#include "../Components/Render_Components/LayerCP.h"
-#include "../Manager/RenderManager.h"
-#include "../Manager/AssetManager.h"
-#include "../Components/Graphics_Components/AnimatedGraphicsCP.h"
-#include "../Components/Transformation_Components/TransformationCP.h"
-#include "../Components/Input_Components/MovementInputArrowsCP.h"
-#include "../Components/Input_Components/MovementInputWASDCP.h"
-#include "../Components/Collision_Components/RectCollisionCP.h"
-#include "../Components/Render_Components/SpriteRenderCP.h"
-#include "../DebugDraw.h"
-#include "../Components/Collision_Components/RigidBodyCP.h"
-#include "../Manager/PhysicsManager.h"
-#include "../Components/StatsCP.h"
-#include "../Components/DecisionHandlerCP.h"
+#include "../Components/AI_Pathfinding/AStarCP.h"
+#include "../Components/AI_Pathfinding/AISpriteUpdateCP.h"
 #include "../Components/AI_Pathfinding/ControllerCP.h"
 #include "../Components/AI_Pathfinding/SteeringCP.h"
-#include "../Components/AI_Pathfinding/AISpriteUpdateCP.h"
-#include "../Components/AI_Pathfinding/AStarCP.h"
-#include "../Components/Player_Components/DashCP.h"
-#include "../Components//Player_Components/PlayerAttackCP.h"
-#include "../Enums/Enemy_Animationtype.h"
-#include "../Enums/Boss_Animationtype.h"
-#include "../Enums/MeeleIndicator_Animationtype.h"
-#include "../Components/Enemy_Components/EnemyAttackCP.h"
-#include <iostream>
-#include "../Components/Input_Components/MovementInputGamepadCP.h"
-#include "../Enums/GamepadButton.h"
-#include "../Components/Spawner_Components/SpawnerCP.h"
 #include "../Components/Boss/BossAttackCP.h"
 #include "../Components/Boss/ScreenShakeCP.h"
+#include "../Components/Collision_Components/RectCollisionCP.h"
+#include "../Components/Collision_Components/RigidBodyCP.h"
+#include "../Components/DecisionHandlerCP.h"
+#include "../Components/Enemy_Components/EnemyAttackCP.h"
+#include "../Components/Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
+#include "../Components/Input_Components/MovementInputArrowsCP.h"
+#include "../Components/Input_Components/MovementInputGamepadCP.h"
+#include "../Components/Input_Components/MovementInputWASDCP.h"
+#include "../Components/Player_Components/DashCP.h"
+#include "../Components//Player_Components/PlayerAttackCP.h"
+#include "../Components/Render_Components/LayerCP.h"
+#include "../Components/Render_Components/SpriteRenderCP.h"
+#include "../Components/Spawner_Components/SpawnerCP.h"
+#include "../Components/StatsCP.h"
+#include "../Components/Transformation_Components/TransformationCP.h"
 #include "../Components/UI/ControlsUI.h"
 #include "../Components/UI/StatusEffectCP.h"
+#include "../DebugDraw.h"
+#include "../Enums/Boss_Animationtype.h"
+#include "../Enums/Enemy_Animationtype.h"
+#include "../Enums/GamepadButton.h"
+#include "../Enums/MeeleIndicator_Animationtype.h"
+#include "../GameObject.h"
+#include "../Manager/AssetManager.h"
+#include "../Manager/PhysicsManager.h"
+#include "../Manager/RenderManager.h"
 #include "../Manager/GameStateManager.h"
+#include "GameplayState.h"
+#include <iostream>
+
+
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
@@ -43,7 +48,6 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	originalView = rWindow.getView();
 
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
-	//window->setFramerateLimit(144);
 
 	DebugDraw::getInstance().initialize(*window);
 
@@ -79,7 +83,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	slainBoss = false;
 	slainPlayer = false;
 	
-	view = sf::View(playerPos, sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));			// FOR PLAYER VIEW SETTING
+	view = sf::View(playerPos, sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));// FOR PLAYER VIEW SETTING
 	window->setView(view);
 }
 void GameplayState::exit()
@@ -667,7 +671,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 		sf::Vector2f(bossGraphicsCP->getSprite().getTextureRect().getSize().x,
 			bossGraphicsCP->getSprite().getTextureRect().getSize().y
 		),
-		object.getProp("isTrigger")->getValue<bool>(), 1
+		object.getProp("isTrigger")->getValue<bool>(), 0.5
 	);
 	bossTemp->addComponent(bossCollisionCP);
 

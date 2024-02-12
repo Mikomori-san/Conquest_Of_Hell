@@ -1,9 +1,13 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include "GameState.h"
+#include "../DebugDraw.h"
 #include "../GameObject.h"
 #include "../Manager/AssetManager.h"
 #include "../Manager/InputManager.h"
-#include "../DebugDraw.h"
+#include "GameState.h"
+
 
 class MenuState : public GameState
 {
@@ -14,9 +18,6 @@ public:
 	void render() override;
 
 private:
-	//std::vector<std::shared_ptr<GameObject>> gameObjects;
-	sf::Text createText(std::string text, sf::Font font,int charSize, sf::Vector2f pos, sf::Color fillColor);
-	//sf::RectangleShape createButton(sf::Text name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
 	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
 	std::shared_ptr<sf::RenderWindow> window;
 	sf::Sprite backgroundSprite;

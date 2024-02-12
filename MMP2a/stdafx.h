@@ -1,3 +1,6 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include <memory>
 #include <map>
@@ -10,5 +13,5 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "tileson.hpp"
-#include "Trigonometry.h"
-#include "VectorAlgebra2D.h"
+#include "Math/Trigonometry.h"
+#include "Math/VectorAlgebra2D.h"
