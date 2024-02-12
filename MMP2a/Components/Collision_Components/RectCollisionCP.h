@@ -1,5 +1,9 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "../Component.h"
+
 class RectCollisionCP : public Component
 {
 public:

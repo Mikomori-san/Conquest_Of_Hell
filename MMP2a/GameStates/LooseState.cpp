@@ -6,7 +6,6 @@
 #include "../Components/Collision_Components/RectCollisionCP.h"
 #include "../Components/Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Components/Graphics_Components/StandardGraphicsCP.h"
-#include "../Components/Input_Components/MovementInputArrowsCP.h"
 #include "../Components/Input_Components/MovementInputWASDCP.h"
 #include "../Components/Render_Components/RenderCP.h"
 #include "../Components/Render_Components/SpriteRenderCP.h"

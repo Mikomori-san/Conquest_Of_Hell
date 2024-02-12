@@ -1,8 +1,11 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include "InputCP.h"
 #include "../../Enums/Player_Animationtype.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
+#include "InputCP.h"
 
 class MovementInputWASDCP : public InputCP
 {

@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include "../Component.h"
-#include "../../Manager/InputManager.h"
 #include "../../Enums/Direction.h"
+#include "../../Manager/InputManager.h"
+#include "../Component.h"
 
 class InputCP : public Component
 {

@@ -1,8 +1,11 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "AISpriteUpdateCP.h"
+#include "../../Enums/Enemy_Animationtype.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
-#include "../../Enums/Enemy_Animationtype.h"
+#include "AISpriteUpdateCP.h"
 
 void AISpriteUpdateCP::update(float deltaTime)
 {

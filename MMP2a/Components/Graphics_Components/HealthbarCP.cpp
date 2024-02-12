@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "HealthbarCP.h"
-#include "../Transformation_Components/TransformationCP.h"
 #include "../StatsCP.h"
+#include "../Transformation_Components/TransformationCP.h"
+#include "HealthbarCP.h"
 
 void HealthbarCP::init()
 {

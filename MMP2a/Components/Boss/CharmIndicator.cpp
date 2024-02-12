@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "CharmIndicator.h"
-#include "../../Manager/AssetManager.h"
 #include "../../Components/Transformation_Components/TransformationCP.h"
+#include "../../Manager/AssetManager.h"
+#include "CharmIndicator.h"
 
 void CharmIndicator::init()
 {

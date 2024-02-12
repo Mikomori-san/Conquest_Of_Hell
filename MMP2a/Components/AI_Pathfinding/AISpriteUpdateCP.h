@@ -1,7 +1,9 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "../Component.h"
 #include "../../Enums/Enemy_Animationtype.h"
-
 
 class AISpriteUpdateCP : public Component
 {

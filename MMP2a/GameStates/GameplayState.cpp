@@ -14,7 +14,6 @@
 #include "../Components/Enemy_Components/EnemyAttackCP.h"
 #include "../Components/Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Components/Graphics_Components/HealthbarCP.h"
-#include "../Components/Input_Components/MovementInputArrowsCP.h"
 #include "../Components/Input_Components/MovementInputGamepadCP.h"
 #include "../Components/Input_Components/MovementInputWASDCP.h"
 #include "../Components/Player_Components/DashCP.h"

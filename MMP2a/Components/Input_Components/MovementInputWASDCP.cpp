@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "MovementInputWASDCP.h"
-#include <iostream>
 #include "../DecisionHandlerCP.h"
+#include <iostream>
+#include "MovementInputWASDCP.h"
 
 void MovementInputWASDCP::update(float deltatime)
 {

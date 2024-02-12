@@ -1,7 +1,11 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "SteeringCP.h"
-#include "../Transformation_Components/TransformationCP.h"
 #include "../../Math/VectorAlgebra2D.h"
+#include "../Transformation_Components/TransformationCP.h"
+#include "SteeringCP.h"
+
 
 void SteeringCP::update(float deltaTime)
 {

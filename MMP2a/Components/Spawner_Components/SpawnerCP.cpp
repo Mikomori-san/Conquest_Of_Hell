@@ -1,15 +1,18 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "SpawnerCP.h"
 #include <iostream>
-#include "../Render_Components/SpriteRenderCP.h"
-#include "../StatsCP.h"
+#include "../AI_Pathfinding/AStarCP.h"
+#include "../AI_Pathfinding/AISpriteUpdateCP.h"
+#include "../AI_Pathfinding/ControllerCP.h"
+#include "../AI_Pathfinding/SteeringCP.h"
+#include "../Enemy_Components/EnemyAttackCP.h"
 #include "../Input_Components/MovementInputGamepadCP.h"
 #include "../Player_Components/PlayerAttackCP.h"
-#include "../AI_Pathfinding/ControllerCP.h"
-#include "../AI_Pathfinding/AStarCP.h"
-#include "../AI_Pathfinding/SteeringCP.h"
-#include "../AI_Pathfinding/AISpriteUpdateCP.h"
-#include "../Enemy_Components/EnemyAttackCP.h"
+#include "../Render_Components/SpriteRenderCP.h"
+#include "../StatsCP.h"
+#include "SpawnerCP.h"
 
 void SpawnerCP::late_init_if_enemy_spawned(std::shared_ptr<GameObject> player)
 {

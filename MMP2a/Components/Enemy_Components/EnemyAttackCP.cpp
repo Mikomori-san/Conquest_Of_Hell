@@ -1,12 +1,15 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
-#include <iostream>
+#include "../Input_Components/InputCP.h"
+#include "../StatsCP.h"
 #include "../Transformation_Components/BackgroundTransformationCP.h"
 #include "EnemyAttackCP.h"
 #include "../../Enums/Enemy_Animationtype.h"
 #include "../../Enums/Player_Animationtype.h"
-#include "../Input_Components/InputCP.h"
-#include "../StatsCP.h"
+#include <iostream>
 
 void EnemyAttackCP::doAttackAnimation(std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> ani, std::shared_ptr<TransformationCP> transf)
 {

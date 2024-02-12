@@ -1,3 +1,6 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "RigidBodyCP.h"
 #include "../Transformation_Components/TransformationCP.h"

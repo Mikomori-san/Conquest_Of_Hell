@@ -1,8 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "StandardGraphicsCP.h"
-#include "../Transformation_Components/TransformationCP.h"
 #include "../Transformation_Components/BackgroundTransformationCP.h"
-
+#include "../Transformation_Components/TransformationCP.h"
+#include "StandardGraphicsCP.h"
 
 void StandardGraphicsCP::init()
 {

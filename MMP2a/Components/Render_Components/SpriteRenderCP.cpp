@@ -1,11 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "SpriteRenderCP.h"
 #include "../../DebugDraw.h"
-#include "../Collision_Components/RectCollisionCP.h"
-#include "../Boss/BossAttackCP.h"
-#include "../Boss/BossAbility.h"
 #include "../../Enums/BossAbilites.h"
+#include "../Boss/BossAbility.h"
+#include "../Boss/BossAttackCP.h"
+#include "../Collision_Components/RectCollisionCP.h"
 #include "../UI/StatusEffectCP.h"
+#include "SpriteRenderCP.h"
 #include <iostream>
 
 void SpriteRenderCP::draw()

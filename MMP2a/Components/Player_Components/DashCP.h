@@ -1,11 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "../Component.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
-#include "DashCP.h"
-#include "../Transformation_Components/TransformationCP.h"
 #include "../Input_Components/InputCP.h"
 #include "../Input_Components/MovementInputGamepadCP.h"
+#include "DashCP.h"
 #include "../StatsCP.h"
+#include "../Transformation_Components/TransformationCP.h"
 
 template <typename T>
 class DashCP : public Component

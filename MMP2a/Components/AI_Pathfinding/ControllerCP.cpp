@@ -1,13 +1,16 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "States/AIState.h"
 #include "ControllerCP.h"
+#include "../Enemy_Components/EnemyAttackCP.h"
 #include "../../GameObject.h"
+#include <iostream>
 #include "../StatsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
 #include "States/AttackPlayerState.h"
 #include "SteeringCP.h"
-#include <iostream>
-#include "../Enemy_Components/EnemyAttackCP.h"
 
 void ControllerCP::update(float deltaTime)
 {

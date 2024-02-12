@@ -1,12 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "../../Components/Component.h"
-#include "CharmBA.h"
-#include  "MeleeBA.h"
-#include  "CharmIndicator.h"
-#include  "MeleeIndicator.h"
-
 #include "../../Enums/Boss_Animationtype.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
+#include "CharmBA.h"
+#include "CharmIndicator.h"
+#include "MeleeBA.h"
+#include "MeleeIndicator.h"
 
 class BossAttackCP : public Component
 {

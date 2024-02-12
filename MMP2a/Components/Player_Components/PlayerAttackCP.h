@@ -1,16 +1,18 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
+#include "../../Enums/GamepadButton.h"
 #include "../Component.h"
-#include "../StatsCP.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
-#include "../../Manager/InputManager.h"
-#include "../Transformation_Components/TransformationCP.h"
 #include "../Input_Components/InputCP.h"
 #include "../Input_Components/MovementInputGamepadCP.h"
-#include "../../Enums/GamepadButton.h"
 #include "../Player_Components/DashCP.h"
-#include "../Boss/MeleeBA.h"
+#include "../StatsCP.h"
+#include "../Transformation_Components/TransformationCP.h"
+#include "../../Manager/InputManager.h"
 #include "../Boss/BossAttackCP.h"
-
+#include "../Boss/MeleeBA.h"
 
 template <typename T>
 class PlayerAttackCP : public Component

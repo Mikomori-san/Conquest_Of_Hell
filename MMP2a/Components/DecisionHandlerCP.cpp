@@ -1,9 +1,12 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
+#include "Collision_Components/RigidBodyCP.h"
 #include "DecisionHandlerCP.h"
 #include "../Enums/Direction.h"
 #include "Graphics_Components/AnimatedGraphicsCP.h"
 #include "Transformation_Components/TransformationCP.h"
-#include "Collision_Components/RigidBodyCP.h"
 
 void DecisionHandlerCP::update(float deltaTime)
 {

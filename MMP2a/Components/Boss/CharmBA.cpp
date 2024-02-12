@@ -1,12 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "CharmBA.h"
+#include "../../Components/Transformation_Components/TransformationCP.h"
 #include "../../Manager/AssetManager.h"
 #include "../Input_Components/InputCP.h"
-#include "../../Components/Transformation_Components/TransformationCP.h"
+#include "../UI/StatusEffectCP.h"
+#include "CharmBA.h"
 #include <iostream>
 
-
-#include "../UI/StatusEffectCP.h"
 
 int findRotation(sf::Vector2f direction)
 {

@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "RectCollisionCP.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
+#include "RectCollisionCP.h"
 
 void RectCollisionCP::update(float deltaTime)
 {

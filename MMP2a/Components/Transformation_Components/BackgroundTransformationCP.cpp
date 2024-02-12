@@ -1,7 +1,9 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "BackgroundTransformationCP.h"
 #include "../Graphics_Components/StandardGraphicsCP.h"
-
 
 void BackgroundTransformationCP::init()
 {

@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "TransformationCP.h"
-#include "../Graphics_Components/GraphicsCP.h"
 #include "../Collision_Components/RigidBodyCP.h"
+#include "../Graphics_Components/GraphicsCP.h"
+#include "TransformationCP.h"
 
 void TransformationCP::update(float deltaTime)
 {

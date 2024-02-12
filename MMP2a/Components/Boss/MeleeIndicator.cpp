@@ -1,8 +1,11 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "MeleeIndicator.h"
-#include "../../Manager/AssetManager.h"
 #include "../../Components/Transformation_Components/TransformationCP.h"
+#include "../../Manager/AssetManager.h"
 #include "BossAttackCP.h"
+#include "MeleeIndicator.h"
 
 void MeleeIndicator::init()
 {

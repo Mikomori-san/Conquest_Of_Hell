@@ -1,12 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "AStarCP.h"
-
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <cmath>
 #include "../Transformation_Components/TransformationCP.h"
 #include "SteeringCP.h"
+#include <cmath>
+#include <iostream>
+#include <queue>
+#include <vector>
 
 struct Point {
     int x, y;

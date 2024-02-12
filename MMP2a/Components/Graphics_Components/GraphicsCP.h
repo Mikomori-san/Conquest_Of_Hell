@@ -1,7 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include <SFML/Graphics.hpp>
-#include <memory>
 #include "../Component.h"
+#include <memory>
+#include <SFML/Graphics.hpp>
 
 class GameObject;
 

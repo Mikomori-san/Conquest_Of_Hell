@@ -1,6 +1,9 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "CameraCP.h"
 #include "Transformation_Components/CameraTransformationCP.h"
+#include "CameraCP.h"
 
 void CameraCP::init()
 {

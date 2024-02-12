@@ -1,10 +1,14 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
-#include "MeleeBA.h"
+#include "../../Enums/MeeleIndicator_Animationtype.h"
+#include "../../Components/StatsCP.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Player_Components/DashCP.h"
-#include "../StatsCP.h"
-#include "../../Enums/MeeleIndicator_Animationtype.h"
 #include "BossAttackCP.h"
+#include "MeleeBA.h"
+
 void MeleeBA::init()
 {
 	abilityType = Melee;

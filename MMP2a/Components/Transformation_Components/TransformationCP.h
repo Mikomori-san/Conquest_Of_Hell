@@ -1,8 +1,10 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
+#include "../Collision_Components/RigidBodyCP.h"
 #include "../Component.h"
 #include "../../Manager/InputManager.h"
-#include "../Collision_Components/RigidBodyCP.h"
-
 
 class TransformationCP : public Component
 {

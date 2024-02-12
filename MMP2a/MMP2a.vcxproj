@@ -204,7 +204,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Components\Render_Components\SpriteRenderCP.h" />
     <ClInclude Include="Components\Graphics_Components\StandardGraphicsCP.h" />
     <ClInclude Include="Components\Input_Components\InputCP.h" />
-    <ClInclude Include="Components\Input_Components\MovementInputArrowsCP.h" />
     <ClInclude Include="Components\Input_Components\MovementInputWASDCP.h" />
     <ClInclude Include="Components\Transformation_Components\BackgroundTransformationCP.h" />
     <ClInclude Include="Components\Transformation_Components\CameraTransformationCP.h" />
@@ -228,8 +227,6 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Components\Render_Components\SpriteRenderCP.cpp" />
     <ClCompile Include="Components\Graphics_Components\StandardGraphicsCP.cpp" />
     <ClCompile Include="Components\Graphics_Components\GraphicsCP.cpp" />
-    <ClCompile Include="Components\Input_Components\InputCP.cpp" />
-    <ClCompile Include="Components\Input_Components\MovementInputArrowsCP.cpp" />
     <ClCompile Include="Components\Input_Components\MovementInputWASDCP.cpp" />
     <ClCompile Include="Components\StatsCP.cpp" />
     <ClCompile Include="Components\Transformation_Components\BackgroundTransformationCP.cpp" />

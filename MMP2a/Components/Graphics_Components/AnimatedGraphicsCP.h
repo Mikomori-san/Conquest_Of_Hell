@@ -1,13 +1,16 @@
+//MultiMediaTechnology FHS
+//MultiMediaProjekt 2a
+//Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
-#include "GraphicsCP.h"
-#include "../../Enums/Player_Animationtype.h"
-#include "../../Enums/Enemy_Animationtype.h"
-#include "../../Enums/Boss_Animationtype.h"
-#include "../../Enums/MeeleIndicator_Animationtype.h"
 #include "../../DebugDraw.h"
-#include "../Transformation_Components/TransformationCP.h"
+#include "../../Enums/Boss_Animationtype.h"
+#include "../../Enums/Enemy_Animationtype.h"
+#include "../../Enums/MeeleIndicator_Animationtype.h"
+#include "../../Enums/Player_Animationtype.h"
 #include "../Collision_Components/RectCollisionCP.h"
 #include "../StatsCP.h"
+#include "../Transformation_Components/TransformationCP.h"
+#include "GraphicsCP.h"
 
 template <typename Animationtype>
 class AnimatedGraphicsCP : public GraphicsCP {
