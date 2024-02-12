@@ -18,46 +18,46 @@ template <typename T>
 class PlayerAttackCP : public Component
 {
 public:
-    PlayerAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, int incAR, std::vector<std::weak_ptr<GameObject>> incEnemies, T incKey) : Component(gameObject, id), enemies(incEnemies), attackKey(incKey), attackRange(incAR) {}
+    PlayerAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, int incAR, std::vector<std::weak_ptr<GameObject>> incEnemies, T incKey) : Component(gameObject, id), m_enemies(incEnemies), m_attackKey(incKey), m_attackRange(incAR) {}
 
     void update(float deltaTime) override;
     std::string getComponentId() override { return this->m_componentId; };
     void setComponentId(std::string id) override { this->m_componentId = id; }
     void init() override;
-    void addEnemy(std::weak_ptr<GameObject> enemy) { enemies.push_back(enemy); }
-	void setAttackLock(bool al) { attackLock = al; }
-	void setBoss(std::weak_ptr<GameObject> incBoss) { boss = incBoss; }
+    void addEnemy(std::weak_ptr<GameObject> enemy) { m_enemies.push_back(enemy); }
+	void setAttackLock(bool al) { m_attackLock = al; }
+	void setBoss(std::weak_ptr<GameObject> incBoss) { m_boss = incBoss; }
 private:
-    std::vector<std::weak_ptr<GameObject>> enemies;
-    T attackKey;
-    int attackRange;
+    std::vector<std::weak_ptr<GameObject>> m_enemies;
+    T m_attackKey;
+    int m_attackRange;
 
-	std::weak_ptr<GameObject> boss;
+	std::weak_ptr<GameObject> m_boss;
 
-    bool hasAttacked;
-    bool inputLocked;
-    bool animationLocked;
+    bool m_hasAttacked;
+    bool m_inputLocked;
+    bool m_animationLocked;
 
-    float attackTimer;
-    float attackCooldown;
+    float m_attackTimer;
+    float m_attackCooldown;
 
-    int originalAnimationSpeed;
-    Player_Animationtype lastAnimation;
+    int m_originalAnimationSpeed;
+    Player_Animationtype m_lastAnimation;
 
-    sf::Color lastColor;
+    sf::Color m_lastColor;
 
     void doAttack(std::shared_ptr<TransformationCP> trans, std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani,
         std::shared_ptr<StatsCP> stats, std::shared_ptr<InputCP> input);
 
-	bool attackLock = false;
-	bool useController = false;
+	bool m_attackLock = false;
+	bool m_useController = false;
 };
 
 
 template<typename T>
 void PlayerAttackCP<T>::init()
 {
-	hasAttacked = false;
+	m_hasAttacked = false;
 }
 
 template<typename T>
@@ -68,16 +68,16 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 	sf::Vector2f playerPos;
 	sf::Vector2f enemyPos;
 
-	hasAttacked = true;
-	attackTimer = 0;
-	attackCooldown = 0;
-	inputLocked = true;
-	lastAnimation = ani->getAnimationType();
-	animationLocked = true;
+	m_hasAttacked = true;
+	m_attackTimer = 0;
+	m_attackCooldown = 0;
+	m_inputLocked = true;
+	m_lastAnimation = ani->getAnimationType();
+	m_animationLocked = true;
 		
 	if (!ani->isAnimationLock())
 	{
-		if (lastAnimation == Left || lastAnimation == LeftIdle || lastAnimation == LeftAttack || lastAnimation == LeftDodge)
+		if (m_lastAnimation == Left || m_lastAnimation == LeftIdle || m_lastAnimation == LeftAttack || m_lastAnimation == LeftDodge)
 		{
 			ani->setAnimationType(LeftAttack);
 		}
@@ -85,7 +85,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			ani->setAnimationType(RightAttack);
 
 		ani->resetAnimationTimeIndex();
-		originalAnimationSpeed = ani->getAnimationSpeed();
+		m_originalAnimationSpeed = ani->getAnimationSpeed();
 		ani->setAnimationSpeed(ani->getAnimationSpeed() * 8);
 
 		ani->toggleAnimationLock();
@@ -97,9 +97,9 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 	playerPos = transf->getPosition();
 	std::vector<std::weak_ptr<GameObject>> newEnemies;
 
-	if (!boss.expired())
+	if (!m_boss.expired())
 	{
-		auto daBoss = boss.lock();
+		auto daBoss = m_boss.lock();
 		auto bossPos = daBoss->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 		std::shared_ptr<MeleeBA> abilityPtr = std::dynamic_pointer_cast<MeleeBA>(daBoss->getComponentsOfType<BossAttackCP>().at(0)->getAbility1());
 		bool bossIsAttacking = false;
@@ -111,7 +111,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 		float dist = (playerPos.x - bossPos.x) * (playerPos.x - bossPos.x) + (playerPos.y - bossPos.y) * (playerPos.y - bossPos.y);
 		dist /= 10;
 
-		if (dist <= attackRange)
+		if (dist <= m_attackRange)
 		{
 			if ((bossPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (bossPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 			{
@@ -129,7 +129,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 		}
 	}
 
-	for (auto it = enemies.begin(); it != enemies.end();)
+	for (auto it = m_enemies.begin(); it != m_enemies.end();)
 	{
 		if (!it->expired())
 		{
@@ -142,7 +142,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			distance = (playerPos.x - enemyPos.x) * (playerPos.x - enemyPos.x) + (playerPos.y - enemyPos.y) * (playerPos.y - enemyPos.y);
 			distance /= 10;
 
-			if (distance <= attackRange)
+			if (distance <= m_attackRange)
 			{
 				if ((enemyPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (enemyPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 				{
@@ -161,7 +161,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 		}
 		++it;
 	}
-	enemies = newEnemies;
+	m_enemies = newEnemies;
 }
 
 template<typename T>
@@ -174,13 +174,13 @@ void PlayerAttackCP<T>::update(float deltaTime)
 		auto stats = m_gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
 		auto input = m_gameObject.lock()->getComponentsOfType<InputCP>().at(0);
 
-		if (!attackLock && !hasAttacked)
+		if (!m_attackLock && !m_hasAttacked)
 		{
 			if (!input->getInputLockState())
 			{
 				if (std::is_same_v<T, sf::Keyboard::Key>)
 				{
-					if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(attackKey)))
+					if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(m_attackKey)))
 					{
 						auto dodge = m_gameObject.lock()->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0);
 						dodge->setDodgeLock(true);
@@ -193,26 +193,26 @@ void PlayerAttackCP<T>::update(float deltaTime)
 
 					if (movementCP->isGamepadConnected())
 					{
-						if (sf::Joystick::isButtonPressed(movementCP->getControllerNr(), static_cast<GamepadButton>(attackKey)))
+						if (sf::Joystick::isButtonPressed(movementCP->getControllerNr(), static_cast<GamepadButton>(m_attackKey)))
 						{
 							auto dodge = m_gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0);
 							dodge->setDodgeLock(true);
 							doAttack(transf, ani, stats, input);
-							useController = true;
+							m_useController = true;
 						}
 					}
 				}
 			}
 		}
 		
-		if (attackTimer > 0.2f && hasAttacked)
+		if (m_attackTimer > 0.2f && m_hasAttacked)
 		{
-			if (animationLocked)
+			if (m_animationLocked)
 			{
-				ani->setAnimationSpeed(originalAnimationSpeed);
+				ani->setAnimationSpeed(m_originalAnimationSpeed);
 				ani->toggleAnimationLock();
-				animationLocked = false;
-				if (useController)
+				m_animationLocked = false;
+				if (m_useController)
 					m_gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0)->setDodgeLock(false);
 				else
 					m_gameObject.lock()->getComponentsOfType < DashCP < sf::Keyboard::Key >> ().at(0)->setDodgeLock(false);
@@ -227,23 +227,23 @@ void PlayerAttackCP<T>::update(float deltaTime)
 
 				//ani->setAnimationType(lastAnimation);
 			}
-			if (inputLocked)
+			if (m_inputLocked)
 			{
 				input->toggleInputLock();
-				inputLocked = false;
+				m_inputLocked = false;
 			}
 
-			if (attackCooldown > 0.4f && hasAttacked)
+			if (m_attackCooldown > 0.4f && m_hasAttacked)
 			{
-				hasAttacked = false;
+				m_hasAttacked = false;
 			}
 		}
-		else if (hasAttacked)
+		else if (m_hasAttacked)
 		{
 			transf->setVelocity(0);
 		}
 
-		attackTimer += deltaTime;
-		attackCooldown += deltaTime;
+		m_attackTimer += deltaTime;
+		m_attackCooldown += deltaTime;
 	}
 }

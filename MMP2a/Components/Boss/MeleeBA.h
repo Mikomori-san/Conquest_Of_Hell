@@ -8,7 +8,7 @@
 class MeleeBA : public BossAbility
 {
 public:
-	MeleeBA(std::string id, std::weak_ptr<GameObject> boss, std::weak_ptr<GameObject> player) : BossAbility(id), playerPtr(player), bossPtr(boss) {};
+	MeleeBA(std::string id, std::weak_ptr<GameObject> boss, std::weak_ptr<GameObject> player) : BossAbility(id), m_playerPtr(player), m_bossPtr(boss) {};
 
 	void init() override;
 	void update(float deltaTime) override;
@@ -16,10 +16,10 @@ public:
 	bool isAttacking() { return attacking; };
 private:
 	void attackPlayer();
-	std::weak_ptr<GameObject> playerPtr;
-	std::weak_ptr<GameObject> bossPtr;
+	std::weak_ptr<GameObject> m_playerPtr;
+	std::weak_ptr<GameObject> m_bossPtr;
 	bool attacking = false;
 	int lastAnimationFrame = 0;
-	int damage = 30;
-	float defaultAnimationSpeed = 0;
+	const int DAMAGE = 30;
+	float m_defaultAnimationSpeed = 0;
 };

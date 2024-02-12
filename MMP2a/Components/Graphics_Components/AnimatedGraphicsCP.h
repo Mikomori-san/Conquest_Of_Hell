@@ -16,8 +16,8 @@ template <typename Animationtype>
 class AnimatedGraphicsCP : public GraphicsCP {
 public:
     AnimatedGraphicsCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture, std::vector<int> animationTypeFramesCountVar, float animationSpeed, Animationtype aniType)
-        : GraphicsCP(gameObject, id, texture), animationTypeFramesCount(animationTypeFramesCountVar), animationSpeed(animationSpeed),
-            TILING_X([this]() {
+        : GraphicsCP(gameObject, id, texture), animationTypeFramesCount(animationTypeFramesCountVar), m_animationSpeed(animationSpeed),
+            m_TILING_X([this]() {
                 int max = 0;
                 for (auto& it : animationTypeFramesCount)
                 {
@@ -26,7 +26,7 @@ public:
                 }
                 return max;
             }()), 
-            TILING_Y(animationTypeFramesCount.size()),
+            m_TILING_Y(animationTypeFramesCount.size()),
             m_animationType(aniType)
     {}
 
@@ -38,80 +38,80 @@ public:
     void update(float deltaTime) override;
     void setSprite(std::shared_ptr<sf::Texture> texture) override;
     void setAnimationType(Animationtype type);
-    void setAnimationSpeed(float speed) { if(toggleAllowance) this->animationSpeed = speed; }
-    float getAnimationSpeed() { return this->animationSpeed; }
-    int getAnimationFrame() { return this->animationFrame; }
+    void setAnimationSpeed(float speed) { if(m_toggleAllowance) this->m_animationSpeed = speed; }
+    float getAnimationSpeed() { return this->m_animationSpeed; }
+    int getAnimationFrame() { return this->m_animationFrame; }
     Animationtype getAnimationType() { return m_animationType; }
-    sf::Sprite& getSprite() override { return *sprite; }
-    void toggleAnimationLock() { if(toggleAllowance) animationLock = animationLock ? false : true; }
-    void resetAnimationTimeIndex() { animationTimeIndex = 0; }
-    void resetAnimationFrame() { animationFrame = 0; }
-    bool isAnimationLock() { return this->animationLock; }
-    void setHit() { isHit = true; }
-    void setDying() { isDying = true; std::cout << "Dying" << std::endl; }
-    void setColor(sf::Color col) { sprite->setColor(col); colorTimer = 0; }
+    sf::Sprite& getSprite() override { return *m_sprite; }
+    void toggleAnimationLock() { if(m_toggleAllowance) m_animationLock = m_animationLock ? false : true; }
+    void resetAnimationTimeIndex() { m_animationTimeIndex = 0; }
+    void resetAnimationFrame() { m_animationFrame = 0; }
+    bool isAnimationLock() { return this->m_animationLock; }
+    void setHit() { m_isHit = true; }
+    void setDying() { m_isDying = true; }
+    void setColor(sf::Color col) { m_sprite->setColor(col); m_colorTimer = 0; }
 
 private:
     std::vector<int> animationTypeFramesCount;
     Animationtype m_animationType;
-    float animationTimeIndex = 0;
-    float animationSpeed;
-    int animationFrame;
-    const int TILING_X;
-    const int TILING_Y;
+    float m_animationTimeIndex = 0;
+    float m_animationSpeed;
+    int m_animationFrame;
+    const int m_TILING_X;
+    const int m_TILING_Y;
     void doAnimation();
     void doHitStuff();
     void doDeathStuff();
-    bool animationLock = false;
-    bool textureRectOriginalSet = false;
-    bool isDying;
-    bool isHit;
-    bool setLastAnimation;
-    bool animationFrameZero;
-    sf::IntRect originalIntRect;
-    Animationtype lastAnimationType;
-    float oldAnimationSpeed;
-    bool toggleAllowance;
-    float colorTimer;
-    const float COLOR_THRESHOLD = 0.5f;
+    bool m_animationLock = false;
+    bool m_textureRectOriginalSet = false;
+    bool m_isDying;
+    bool m_isHit;
+    bool m_setLastAnimation;
+    bool m_animationFrameZero;
+    sf::IntRect m_originalIntRect;
+    Animationtype m_lastAnimationType;
+    float m_oldAnimationSpeed;
+    bool m_toggleAllowance;
+    float m_colorTimer;
+    const float m_COLOR_THRESHOLD = 0.5f;
 };
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::init()
 {
-    colorTimer = 0;
-    if (!textureRectOriginalSet)
+    m_colorTimer = 0;
+    if (!m_textureRectOriginalSet)
     {
-        originalIntRect = sprite->getTextureRect();
-        textureRectOriginalSet = true;
+        m_originalIntRect = m_sprite->getTextureRect();
+        m_textureRectOriginalSet = true;
     }
 
-    sprite->setTextureRect(sf::IntRect(
+    m_sprite->setTextureRect(sf::IntRect(
         0,
         0,
-        originalIntRect.width / TILING_X,
-        originalIntRect.height / TILING_Y
+        m_originalIntRect.width / m_TILING_X,
+        m_originalIntRect.height / m_TILING_Y
     ));
 
-    isHit = false;
-    isDying = false;
-    setLastAnimation = false;
-    animationFrameZero = false;
-    toggleAllowance = true;
+    m_isHit = false;
+    m_isDying = false;
+    m_setLastAnimation = false;
+    m_animationFrameZero = false;
+    m_toggleAllowance = true;
 }
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 {
-    colorTimer += deltaTime;
+    m_colorTimer += deltaTime;
 
-    if (colorTimer >= COLOR_THRESHOLD)
+    if (m_colorTimer >= m_COLOR_THRESHOLD)
     {
-        sprite->setColor(sf::Color::White);
+        m_sprite->setColor(sf::Color::White);
     }
 
-    animationTimeIndex += deltaTime * animationSpeed;
-    if (isDying)
+    m_animationTimeIndex += deltaTime * m_animationSpeed;
+    if (m_isDying)
     {
         doDeathStuff();
     }
@@ -131,10 +131,10 @@ inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 
         if (transform)
         {
-            sprite->setPosition(sf::Vector2f(transform->getPosition().x + sprite->getLocalBounds().width / 2, transform->getPosition().y + sprite->getLocalBounds().height / 2));
-            sprite->setRotation(transform->getRotation());
-            sprite->setScale(transform->getScale(), transform->getScale());
-            sprite->setOrigin(sf::Vector2f(sprite->getLocalBounds().width / 2, sprite->getLocalBounds().height / 2));
+            m_sprite->setPosition(sf::Vector2f(transform->getPosition().x + m_sprite->getLocalBounds().width / 2, transform->getPosition().y + m_sprite->getLocalBounds().height / 2));
+            m_sprite->setRotation(transform->getRotation());
+            m_sprite->setScale(transform->getScale(), transform->getScale());
+            m_sprite->setOrigin(sf::Vector2f(m_sprite->getLocalBounds().width / 2, m_sprite->getLocalBounds().height / 2));
         }
     }
 }
@@ -142,51 +142,50 @@ inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::setSprite(std::shared_ptr<sf::Texture> texture)
 {
-    this->sprite->setTexture(*texture);
+    this->m_sprite->setTexture(*texture);
 }
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::setAnimationType(Animationtype type)
 {
-    if (!animationLock && !isDying && !isHit)
+    if (!m_animationLock && !m_isDying && !m_isHit)
         this->m_animationType = type;
 }
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::doAnimation()
 {
-    animationFrame = (int)animationTimeIndex % animationTypeFramesCount[m_animationType];
+    m_animationFrame = (int)m_animationTimeIndex % animationTypeFramesCount[m_animationType];
 
-    if (animationFrame != 0)
-        animationFrameZero = true;
+    if (m_animationFrame != 0)
+        m_animationFrameZero = true;
 
     sf::IntRect textureRect;
-    textureRect.left = animationFrame * sprite->getTextureRect().width;
-    textureRect.top = static_cast<int>(m_animationType) * sprite->getTextureRect().height;
-    textureRect.width = sprite->getTextureRect().width;
-    textureRect.height = sprite->getTextureRect().height;
+    textureRect.left = m_animationFrame * m_sprite->getTextureRect().width;
+    textureRect.top = static_cast<int>(m_animationType) * m_sprite->getTextureRect().height;
+    textureRect.width = m_sprite->getTextureRect().width;
+    textureRect.height = m_sprite->getTextureRect().height;
 
-    sprite->setTextureRect(textureRect);
+    m_sprite->setTextureRect(textureRect);
 }
 
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
 {
-    if (isHit && (std::is_same_v<Animationtype, Enemy_Animationtype> || std::is_same_v<Animationtype, Boss_Animationtype>))
+    if (m_isHit && (std::is_same_v<Animationtype, Enemy_Animationtype> || std::is_same_v<Animationtype, Boss_Animationtype>))
     {
-        if (!setLastAnimation)
+        if (!m_setLastAnimation)
         {
-            toggleAllowance = false;
+            m_toggleAllowance = false;
 
             resetAnimationTimeIndex();
-            setLastAnimation = true;
-            animationFrameZero = false;
-            lastAnimationType = m_animationType;
-            animationLock = true;
-            std::cout << "Reset AnimationFrame to 1" << std::endl;
-            animationFrame = 0;
-            oldAnimationSpeed = animationSpeed;
-            animationSpeed *= 3;
+            m_setLastAnimation = true;
+            m_animationFrameZero = false;
+            m_lastAnimationType = m_animationType;
+            m_animationLock = true;
+            m_animationFrame = 0;
+            m_oldAnimationSpeed = m_animationSpeed;
+            m_animationSpeed *= 3;
 
             if (!m_gameObject.expired())
             {
@@ -194,7 +193,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
-                std::cout << "Toggling VelLock to true!" << std::endl;
             }
         }
 
@@ -214,15 +212,15 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
             m_animationType = (Animationtype)Boss_Animationtype::Scream;
         }
 
-        if (animationFrame == animationTypeFramesCount[m_animationType] - 1)
+        if (m_animationFrame == animationTypeFramesCount[m_animationType] - 1)
         {
-            m_animationType = lastAnimationType;
-            isHit = false;
-            animationLock = false;
-            setLastAnimation = false;
-            animationSpeed = oldAnimationSpeed;
+            m_animationType = m_lastAnimationType;
+            m_isHit = false;
+            m_animationLock = false;
+            m_setLastAnimation = false;
+            m_animationSpeed = m_oldAnimationSpeed;
 
-            toggleAllowance = true;
+            m_toggleAllowance = true;
 
             if (!m_gameObject.expired())
             {
@@ -230,7 +228,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(trans->getOriginalVelocity());
                 trans->toggleVelLock();
-                std::cout << "Toggling Vel Lock to false!" << std::endl;
             }
         }
     }
@@ -239,19 +236,19 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
 template <typename Animationtype>
 inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
 {
-    if (isDying)
+    if (m_isDying)
     {
-        if (!setLastAnimation)
+        if (!m_setLastAnimation)
         {
-            toggleAllowance = false;
+            m_toggleAllowance = false;
 
             resetAnimationTimeIndex();
-            setLastAnimation = true;
-            animationFrameZero = false;
-            lastAnimationType = m_animationType;
-            animationLock = true;
-            animationFrame = 0;
-            animationSpeed *= 2;
+            m_setLastAnimation = true;
+            m_animationFrameZero = false;
+            m_lastAnimationType = m_animationType;
+            m_animationLock = true;
+            m_animationFrame = 0;
+            m_animationSpeed *= 2;
 
             if (!m_gameObject.expired())
             {
@@ -259,7 +256,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
-                std::cout << "Toggling VelLock to true!" << std::endl;
             }
         }
 
@@ -290,7 +286,7 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
             m_animationType = (Animationtype)Boss_Animationtype::Death;
         }
 
-        if (animationFrame == animationTypeFramesCount[m_animationType] - 1)
+        if (m_animationFrame == animationTypeFramesCount[m_animationType] - 1)
         {
             m_gameObject.lock()->getComponentsOfType<StatsCP>().at(0)->setDeath();
         }

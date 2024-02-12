@@ -10,28 +10,28 @@
 class EnemyAttackCP : public Component
 {
 public:
-    EnemyAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> closestPlayer, int attackRange) : Component(gameObject, id), closestPlayer(closestPlayer), attackRange(attackRange) {};
+    EnemyAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> closestPlayer, int attackRange) : Component(gameObject, id), m_closestPlayer(closestPlayer), m_attackRange(attackRange) {};
 
     void update(float deltaTime) override;
     std::string getComponentId() override { return this->m_componentId; };
     void setComponentId(std::string id) override { this->m_componentId = id; };
     void init() override;
-    void setClosestPlayer(std::weak_ptr<GameObject> closePlayer) { this->closestPlayer = closePlayer; }
+    void setClosestPlayer(std::weak_ptr<GameObject> closePlayer) { this->m_closestPlayer = closePlayer; }
 
 private:
-    std::weak_ptr<GameObject> closestPlayer;
-    int attackRange;
-    float attackCD;
+    std::weak_ptr<GameObject> m_closestPlayer;
+    int m_attackRange;
+    float m_attackCD;
 
-    bool hasAttacked;
-    bool inputLocked;
-    bool animationLocked;
+    bool m_hasAttacked;
+    bool m_inputLocked;
+    bool m_animationLocked;
 
-    float attackTimer;
+    float m_attackTimer;
 
-    int originalAnimationSpeed;
-    Enemy_Animationtype lastAnimation;
+    int m_originalAnimationSpeed;
+    Enemy_Animationtype m_lastAnimation;
 
     void doAttackAnimation(std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> ani, std::shared_ptr<TransformationCP> transf);
-    std::weak_ptr<GameObject> lastPlayerAttacked;
+    std::weak_ptr<GameObject> m_lastPlayerAttacked;
 };

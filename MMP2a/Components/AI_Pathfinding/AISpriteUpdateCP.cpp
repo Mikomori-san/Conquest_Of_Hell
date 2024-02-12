@@ -25,29 +25,29 @@ void AISpriteUpdateCP::update(float deltaTime)
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleRight);
-                    lastAnimation = Enemy_Animationtype::IdleRight;
+                    m_lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkRight);
-                    lastAnimation = Enemy_Animationtype::WalkRight;
+                    m_lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(lastAnimation);
+                ani->setAnimationType(m_lastAnimation);
             }
             else
             {
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleRight);
-                    lastAnimation = Enemy_Animationtype::IdleRight;
+                    m_lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkRight);
-                    lastAnimation = Enemy_Animationtype::WalkRight;
+                    m_lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
         }
@@ -58,29 +58,29 @@ void AISpriteUpdateCP::update(float deltaTime)
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleRight);
-                    lastAnimation = Enemy_Animationtype::IdleRight;
+                    m_lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkRight);
-                    lastAnimation = Enemy_Animationtype::WalkRight;
+                    m_lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(lastAnimation);
+                ani->setAnimationType(m_lastAnimation);
             }
             else
             {
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleRight);
-                    lastAnimation = Enemy_Animationtype::IdleRight;
+                    m_lastAnimation = Enemy_Animationtype::IdleRight;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkRight);
-                    lastAnimation = Enemy_Animationtype::WalkRight;
+                    m_lastAnimation = Enemy_Animationtype::WalkRight;
                 }
             }
         }
@@ -91,29 +91,29 @@ void AISpriteUpdateCP::update(float deltaTime)
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleLeft);
-                    lastAnimation = Enemy_Animationtype::IdleLeft;
+                    m_lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkLeft);
-                    lastAnimation = Enemy_Animationtype::WalkLeft;
+                    m_lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(lastAnimation);
+                ani->setAnimationType(m_lastAnimation);
             }
             else
             {
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleLeft);
-                    lastAnimation = Enemy_Animationtype::IdleLeft;
+                    m_lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkLeft);
-                    lastAnimation = Enemy_Animationtype::WalkLeft;
+                    m_lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
         }
@@ -124,30 +124,30 @@ void AISpriteUpdateCP::update(float deltaTime)
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleLeft);
-                    lastAnimation = Enemy_Animationtype::IdleLeft;
+                    m_lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkLeft);
-                    lastAnimation = Enemy_Animationtype::WalkLeft;
+                    m_lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
 
             }
             else if (abs(dir.x) < abs(dir.y) && abs(dir.x) < 0.25f)
             {
-                ani->setAnimationType(lastAnimation);
+                ani->setAnimationType(m_lastAnimation);
             }
             else
             {
                 if (speed == 0)
                 {
                     ani->setAnimationType(Enemy_Animationtype::IdleLeft);
-                    lastAnimation = Enemy_Animationtype::IdleLeft;
+                    m_lastAnimation = Enemy_Animationtype::IdleLeft;
                 }
                 else
                 {
                     ani->setAnimationType(Enemy_Animationtype::WalkLeft);
-                    lastAnimation = Enemy_Animationtype::WalkLeft;
+                    m_lastAnimation = Enemy_Animationtype::WalkLeft;
                 }
             }
         }

@@ -7,7 +7,7 @@
 class RigidBodyCP : public Component
 {
 public:
-    RigidBodyCP(std::weak_ptr<GameObject> go, std::string id, const float newMass, const float newInvMass, sf::Vector2f vel) : Component(go, id), mass(newMass), invMass(newInvMass), velocity(vel) {};
+    RigidBodyCP(std::weak_ptr<GameObject> go, std::string id, const float newMass, const float newInvMass, sf::Vector2f vel) : Component(go, id), m_mass(newMass), m_invMass(newInvMass), m_velocity(vel) {};
     ~RigidBodyCP() = default;
 
     void init() override {};
@@ -16,16 +16,16 @@ public:
     std::string getComponentId() override { return this->m_componentId; }
     void setComponentId(std::string componentId) override { this->m_componentId = componentId; }
 
-    void setMasses(float incMass) { this->mass = incMass; if (incMass == 0) { this->invMass = 0; } else { this->invMass = 1 / incMass; } }
-    float getMass() { return this->mass; }
-    float getInvMass() { return this->invMass; }
+    void setMasses(float incMass) { this->m_mass = incMass; if (incMass == 0) { this->m_invMass = 0; } else { this->m_invMass = 1 / incMass; } }
+    float getMass() { return this->m_mass; }
+    float getInvMass() { return this->m_invMass; }
 
-    sf::Vector2f getPos() { return this->position; }
-    void setPos(sf::Vector2f pos) { this->position = pos; }
+    sf::Vector2f getPos() { return this->m_position; }
+    void setPos(sf::Vector2f pos) { this->m_position = pos; }
     void setPosNotifyTransf(sf::Vector2f pos);
     
-    sf::Vector2f getVel() { return this->velocity; }
-    void setVel(sf::Vector2f vel) { this->velocity = vel; }
+    sf::Vector2f getVel() { return this->m_velocity; }
+    void setVel(sf::Vector2f vel) { this->m_velocity = vel; }
     void setVelNotifyTransf(sf::Vector2f vel);
 
     void onCollision(std::shared_ptr<GameObject> go2);
@@ -33,14 +33,14 @@ public:
     std::weak_ptr<GameObject> getGO() { return this->m_gameObject; }
 
 private:
-    float mass;
-    float invMass;
+    float m_mass;
+    float m_invMass;
 
-    sf::Vector2f position;
+    sf::Vector2f m_position;
 
-    std::vector<sf::Vector2f> forces;
-    std::vector<sf::Vector2f> impulses;
+    std::vector<sf::Vector2f> m_forces;
+    std::vector<sf::Vector2f> m_impulses;
 
-    sf::Vector2f acceleration;
-    sf::Vector2f velocity;
+    sf::Vector2f m_acceleration;
+    sf::Vector2f m_velocity;
 };

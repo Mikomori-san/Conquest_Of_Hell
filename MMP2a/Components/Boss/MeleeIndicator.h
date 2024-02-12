@@ -7,25 +7,25 @@
 class MeleeIndicator
 {
 public:
-	MeleeIndicator(std::weak_ptr<GameObject> go) : bossPtr(go) {};
+	MeleeIndicator(std::weak_ptr<GameObject> go) : m_bossPtr(go) {};
 	void init();
 	void update(float deltaTime);
 
-	const sf::Sprite& getSprite() { return sprite; }
+	const sf::Sprite& getSprite() { return m_sprite; }
 
 	void setAnimationFrame(int frame) { animationFrame = frame; };
 
 	void setAlive();
-	bool getAlive() const { return alive; };
+	bool getAlive() const { return m_alive; };
 	void setDead();
 private:
-	std::weak_ptr<GameObject> bossPtr;
-	sf::Sprite sprite;
-	float animationTimeIndex = 0;
-	float animationSpeed = 4.f;
-	sf::Vector2f position;
-	bool alive = false;
-	int animationFrames = 9;
+	std::weak_ptr<GameObject> m_bossPtr;
+	sf::Sprite m_sprite;
+	float m_animationTimeIndex = 0;
+	float m_animationSpeed = 4.f;
+	sf::Vector2f m_position;
+	bool m_alive = false;
+	const int ANIMATION_FRAMES = 9;
 	int animationFrame = 0;
 };
 

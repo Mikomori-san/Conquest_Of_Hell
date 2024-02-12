@@ -90,7 +90,6 @@ void SpawnerCP::update(float deltaTime)
             if (enemy->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
             {
                 m_enemy1Spawned = false;
-                std::cout << "Enemy 1 is not spawned" << std::endl;
             }
         }
         if (m_enemy2Spawned && enemy->getId().find("1") != std::string::npos)
@@ -98,7 +97,6 @@ void SpawnerCP::update(float deltaTime)
             if (enemy->getComponentsOfType<StatsCP>().at(0)->getHealth() <= 0)
             {
                 m_enemy2Spawned = false;
-                std::cout << "enemy 2 is not spawned" << std::endl;
             }
         }
     }
@@ -108,9 +106,6 @@ void SpawnerCP::update(float deltaTime)
         if (!m_enemy1Spawned)
         {
             m_enemy1Spawned = true;
-
-            std::cout << "------------------------------enemy1 spawned-------" << 0 << std::endl;
-
             m_gameObjects.push_back(m_availableEnemies.at(0));
 
             for (auto& comps : m_availableEnemies.at(0)->getComponents())
@@ -121,9 +116,6 @@ void SpawnerCP::update(float deltaTime)
         else if (!m_enemy2Spawned)
         {
             m_enemy2Spawned = true;
-
-            std::cout << "------------------------------enemy2 spawned-------" << 1 << std::endl;
-
             m_gameObjects.push_back(m_availableEnemies.at(1));
 
             for (auto& comps : m_availableEnemies.at(1)->getComponents())

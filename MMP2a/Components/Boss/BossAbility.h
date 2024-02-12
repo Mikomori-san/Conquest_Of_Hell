@@ -12,9 +12,9 @@ public:
 	virtual void init() {};
 	virtual void update(float deltaTime) {};
 	virtual void execute() {};
-	std::string getId() { return componentId; }
-	const BossAbilites& getAbilityType() { return abilityType; };
+	std::string getId() { return m_componentId; }
+	const BossAbilites& getAbilityType() { return m_abilityType; };
 protected:
-	std::string componentId;
-	BossAbilites abilityType = Default;
+	std::string m_componentId;
+	BossAbilites m_abilityType = Default;
 };

@@ -24,7 +24,7 @@ public:
 
     void init() override;
 
-    void subtracktHealth(int dmg) { m_health -= dmg; std::cout << m_health << std::endl; }
+    void subtracktHealth(int dmg) { m_health -= dmg;}
     void addHealth(int healing) { m_health += healing; }
     int getHealth() { return m_health; }
     void setHealth(int newHealth) { m_health = newHealth; }

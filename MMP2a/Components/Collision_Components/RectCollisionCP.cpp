@@ -20,20 +20,20 @@ void RectCollisionCP::update(float deltaTime)
         if (go->getComponentsOfType<GraphicsCP>().size() != 0)
         {
                 ani = go->getComponentsOfType<GraphicsCP>().at(0);
-                collisionRect = sf::FloatRect(
+                m_collisionRect = sf::FloatRect(
                     transf->getPosition().x,
                     transf->getPosition().y,
-                    ani->getSprite().getGlobalBounds().width * scale,
-                    ani->getSprite().getGlobalBounds().height * scale
+                    ani->getSprite().getGlobalBounds().width * m_scale,
+                    ani->getSprite().getGlobalBounds().height * m_scale
                 );
         }
         else
         {
-            collisionRect = sf::FloatRect(
+            m_collisionRect = sf::FloatRect(
                 transf->getPosition().x,
                 transf->getPosition().y,
-                colliderSize.x * scale,
-                colliderSize.y * scale
+                m_colliderSize.x * m_scale,
+                m_colliderSize.y * m_scale
             );
         }
     }
@@ -54,19 +54,19 @@ void RectCollisionCP::updateCollider(std::shared_ptr<GameObject> go)
 
     if (go->getComponentsOfType<GraphicsCP>().size() == 0)
     {
-        collisionRect = sf::FloatRect(
-            col->getPosition().x - colliderSize.x / 2,
-            col->getPosition().y - colliderSize.y / 2,
-            colliderSize.x,
-            colliderSize.y
+        m_collisionRect = sf::FloatRect(
+            col->getPosition().x - m_colliderSize.x / 2,
+            col->getPosition().y - m_colliderSize.y / 2,
+            m_colliderSize.x,
+            m_colliderSize.y
         );
     }
     else
     {
         std::shared_ptr<GraphicsCP> ani = go->getComponentsOfType<GraphicsCP>().at(0);
-        collisionRect = sf::FloatRect(
-            col->getPosition().x - colliderSize.x / 2,
-            col->getPosition().y - colliderSize.y / 2,
+        m_collisionRect = sf::FloatRect(
+            col->getPosition().x - m_colliderSize.x / 2,
+            col->getPosition().y - m_colliderSize.y / 2,
             ani->getSprite().getGlobalBounds().width,
             ani->getSprite().getGlobalBounds().height
         );

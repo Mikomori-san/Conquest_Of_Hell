@@ -18,7 +18,7 @@ public:
 	void update(float deltatime) override;
 	void init() override;
 
-	void toggleInputLock() override { inputLock = inputLock ? false : true; }
+	void toggleInputLock() override { m_inputLock = m_inputLock ? false : true; }
 
 private:
 	void processInput() override;

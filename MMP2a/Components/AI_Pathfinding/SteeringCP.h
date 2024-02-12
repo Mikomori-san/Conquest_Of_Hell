@@ -12,8 +12,8 @@ public:
 	void setComponentId(std::string id) override;
 	void init() override;
 
-	void setDestination(sf::Vector2f incDest) { destination = incDest; }
+	void setDestination(sf::Vector2f incDest) { m_destination = incDest; }
 
 private:
-	sf::Vector2f destination;
+	sf::Vector2f m_destination;
 };

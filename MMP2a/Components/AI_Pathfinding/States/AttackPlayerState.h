@@ -7,10 +7,10 @@
 class AttackPlayerState : public AIState
 {
 public:
-	AttackPlayerState(std::weak_ptr<GameObject> incGameObject, std::shared_ptr<GameObject> incPlayer) : AIState(incGameObject), player(incPlayer) {};
+	AttackPlayerState(std::weak_ptr<GameObject> incGameObject, std::shared_ptr<GameObject> incPlayer) : AIState(incGameObject), m_player(incPlayer) {};
 	void update(float deltaTime) override;
-	void updateNearestPlayer(std::shared_ptr<GameObject> nearestPlayer) { player = nearestPlayer; };
+	void updateNearestPlayer(std::shared_ptr<GameObject> nearestPlayer) { m_player = nearestPlayer; };
 	void init() override;
 private:
-	std::shared_ptr<GameObject> player;
+	std::shared_ptr<GameObject> m_player;
 };

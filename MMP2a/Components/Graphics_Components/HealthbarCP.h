@@ -12,6 +12,6 @@ public:
 	void update(float deltaTime) override;
 private:
 	void scaleHealthbar();
-	float origWidth = 1;
-	int offset = 20; //used to offset the pos of healthbar above the player
+	float m_origWidth = 1;
+	int m_offset = 20; //used to offset the pos of healthbar above the player
 };
