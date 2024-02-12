@@ -98,7 +98,7 @@ void MenuState::init(sf::RenderWindow& rWindow)
 
 	m_text = sf::Text();
 	m_text.setFont(font);
-	m_text.setString("Press Start to enable Gamepad!");
+	m_text.setString("Press Start Button on Gamepad to enable it!");
 	m_text.setCharacterSize(24);
 	m_text.setFillColor(sf::Color::White);
 
@@ -245,7 +245,7 @@ void MenuState::render()
 	{
 		if (!GameStateManager::getInstance().gamepadUse())
 		{
-			m_text.setString("Press Start to enable Gamepad!");
+			m_text.setString("Press Start Button on Gamepad to enable it!");
 			sf::FloatRect textBounds = m_text.getLocalBounds();
 			m_text.setOrigin(textBounds.left + textBounds.width / 2.0f,
 				textBounds.top + textBounds.height / 2.0f);

@@ -21,7 +21,7 @@ void WinState::init(sf::RenderWindow& rWindow)
 
 	DebugDraw::getInstance().initialize(*m_window);
 
-	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
+	m_window->setView(sf::View(sf::Vector2f(m_window->getSize().x / 2, m_window->getSize().y / 2), (sf::Vector2f)m_window->getSize()));
 
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\winScreen.png");
 	AssetManager::getInstance().loadTexture("restartImage", "Assets\\Textures\\restart.png");
@@ -62,7 +62,7 @@ void WinState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().Music["Win"]->setVolume(30);
 	AssetManager::getInstance().Music["Win"]->play();
 
-	close = false;
+	m_close = false;
 }
 
 void WinState::exit()

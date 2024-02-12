@@ -20,11 +20,6 @@ void LooseState::init(sf::RenderWindow& rWindow)
 
 	DebugDraw::getInstance().initialize(*m_window);
 
-	AssetManager::getInstance().loadMusic("Celestial_Wanderer", "Assets\\Music\\Celestial_Wanderer.mp3");
-	cw = AssetManager::getInstance().Music["Celestial_Wanderer"];
-	cw->setVolume(5);
-	cw->play();
-
 	m_window->setView(sf::View(sf::Vector2f(m_window->getSize().x / 2, m_window->getSize().y / 2), (sf::Vector2f)m_window->getSize()));
 
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\overScreen.png");
@@ -66,7 +61,7 @@ void LooseState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().Music["Laugh"]->setVolume(30);
 	AssetManager::getInstance().Music["Laugh"]->play();
 	
-	close = false;
+	m_close = false;
 }
 
 void LooseState::exit()
