@@ -32,8 +32,8 @@ public:
 
     ~AnimatedGraphicsCP() = default;
 
-    std::string getComponentId() override { return componentId; }
-    void setComponentId(std::string id) override { this->componentId = id; }
+    std::string getComponentId() override { return m_componentId; }
+    void setComponentId(std::string id) override { this->m_componentId = id; }
     void init() override;
     void update(float deltaTime) override;
     void setSprite(std::shared_ptr<sf::Texture> texture) override;
@@ -122,10 +122,10 @@ inline void AnimatedGraphicsCP<Animationtype>::update(float deltaTime)
     
     doAnimation();
 
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
         std::shared_ptr<TransformationCP> transform;
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
 
         transform = std::dynamic_pointer_cast<TransformationCP>(go->getComponentsOfType<TransformationCP>().at(0));
 
@@ -187,9 +187,9 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
             m_oldAnimationSpeed = m_animationSpeed;
             m_animationSpeed *= 3;
 
-            if (!gameObject.expired())
+            if (!m_gameObject.expired())
             {
-                auto go = gameObject.lock();
+                auto go = m_gameObject.lock();
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
@@ -222,9 +222,9 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
 
             m_toggleAllowance = true;
 
-            if (!gameObject.expired())
+            if (!m_gameObject.expired())
             {
-                auto go = gameObject.lock();
+                auto go = m_gameObject.lock();
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(trans->getOriginalVelocity());
                 trans->toggleVelLock();
@@ -250,9 +250,9 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
             m_animationFrame = 0;
             m_animationSpeed *= 2;
 
-            if (!gameObject.expired())
+            if (!m_gameObject.expired())
             {
-                auto go = gameObject.lock();
+                auto go = m_gameObject.lock();
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
@@ -288,7 +288,7 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
 
         if (m_animationFrame == animationTypeFramesCount[m_animationType] - 1)
         {
-            gameObject.lock()->getComponentsOfType<StatsCP>().at(0)->setDeath();
+            m_gameObject.lock()->getComponentsOfType<StatsCP>().at(0)->setDeath();
         }
     }
 }

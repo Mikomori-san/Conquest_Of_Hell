@@ -9,9 +9,9 @@
 
 void SteeringCP::update(float deltaTime)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
 
         std::shared_ptr<TransformationCP> trans = go->getComponentsOfType<TransformationCP>().at(0);
         sf::Vector2f pos = trans->getPosition();
@@ -39,12 +39,12 @@ void SteeringCP::update(float deltaTime)
 
 std::string SteeringCP::getComponentId()
 {
-    return this->componentId;
+    return this->m_componentId;
 }
 
 void SteeringCP::setComponentId(std::string id)
 {
-    this->componentId = id;
+    this->m_componentId = id;
 }
 
 void SteeringCP::init()

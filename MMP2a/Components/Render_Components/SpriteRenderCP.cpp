@@ -17,26 +17,15 @@ void SpriteRenderCP::draw()
 	{
 		auto& sprite = rend->getSprite();
 		m_window->draw(sprite);
-		if (!gameObject.expired())
+		if (!m_gameObject.expired())
 		{
-			std::shared_ptr<GameObject> go = gameObject.lock();
+			std::shared_ptr<GameObject> go = m_gameObject.lock();
 			if (go->getId().find("Player") != std::string::npos)
 			{
 				if (go->getComponentsOfType<StatusEffectCP>().at(0)->getDisplay())
 				{
 					m_window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
 				}
-			}
-			if (go->getId().find("Skeleton") != std::string::npos)
-			{
-				/*DebugDraw::getInstance().drawRectOutline(
-					sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top),
-					static_cast<int>(sprite.getGlobalBounds().width),
-					static_cast<int>(sprite.getGlobalBounds().height),
-					sf::Color::Red
-				);
-				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 			if (go->getId().find("Boss") != std::string::npos)
 			{
@@ -62,13 +51,9 @@ void SpriteRenderCP::draw()
 					if (charm->getAlive())
 					{
 						m_window->draw(charm->getSprite());
-						/*DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);*/
-
 					}
 					break;
 				}
-			/*	std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 		}
 	}
@@ -76,18 +61,18 @@ void SpriteRenderCP::draw()
 
 void SpriteRenderCP::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }
 
 void SpriteRenderCP::init()
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }

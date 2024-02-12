@@ -42,23 +42,23 @@
 
 void GameplayState::init(sf::RenderWindow& rWindow)
 {
-	close = false;
+	m_close = false;
 	
-	originalView = rWindow.getView();
+	m_originalView = rWindow.getView();
 
-	this->window.reset(&rWindow, [](sf::RenderWindow*) {});
+	this->m_window.reset(&rWindow, [](sf::RenderWindow*) {});
 
-	DebugDraw::getInstance().initialize(*window);
+	DebugDraw::getInstance().initialize(*m_window);
 
-	spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
-	spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
-	spriteSheetCounts["Boss"] = { 4,6,5,9,6,7,2,7 };
+	m_spriteSheetCounts["Player1"] = { 15, 15, 8, 8, 11, 11, 15, 15, 15, 15 };
+	m_spriteSheetCounts["Skeleton"] = {11, 11, 13, 13, 18, 18, 4, 4, 8, 8, 15, 15, 15, 15};
+	m_spriteSheetCounts["Boss"] = { 4,6,5,9,6,7,2,7 };
 
 	AssetManager::getInstance().loadMusic("Clash_Of_Titans", "Assets\\Music\\Clash_of_Titans.mp3");
-	cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
-	cot->setVolume(2);
-	cot->setLoop(true);
-	cot->play();
+	m_cot = AssetManager::getInstance().Music["Clash_Of_Titans"];
+	m_cot->setVolume(2);
+	m_cot->setLoop(true);
+	m_cot->play();
 
 	AssetManager::getInstance().loadMusic("Sword_Hit", "Assets\\Sounds\\sword_hit.wav");
 	AssetManager::getInstance().loadMusic("Player_Hit", "Assets\\Sounds\\player_hit.wav");
@@ -71,7 +71,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	
 	sf::Vector2f playerPos;
 	
-	for (auto& go : gameObjects)
+	for (auto& go : m_gameObjects)
 	{
 		go->init();
 
@@ -86,20 +86,20 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 		}
 	}
 	
-	slainBoss = false;
-	slainPlayer = false;
+	m_slainBoss = false;
+	m_slainPlayer = false;
 	
-	view = sf::View(playerPos, sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));// FOR PLAYER VIEW SETTING
-	window->setView(view);
+	m_view = sf::View(playerPos, sf::Vector2f(m_window->getSize().x / 1.5f, m_window->getSize().y / 1.5f));// FOR PLAYER VIEW SETTING
+	m_window->setView(m_view);
 }
 void GameplayState::exit()
 {
-	cot->stop();
-	for (auto& go : gameObjects)
+	m_cot->stop();
+	for (auto& go : m_gameObjects)
 	{
 		go.reset();
 	}
-	gameObjects.clear();
+	m_gameObjects.clear();
 
 	for (auto& comp : RenderManager::getInstance().getLayers())
 	{
@@ -117,15 +117,15 @@ void GameplayState::update(float deltaTime)
 		{
 			if (go->getComponentsOfType<StatsCP>().at(0)->hasDied())
 			{
-				slainPlayer = true;
+				m_slainPlayer = true;
 			}
-			view = sf::View(go->getComponentsOfType<TransformationCP>().at(0)->getPosition(), sf::Vector2f(window->getSize().x / 1.5f, window->getSize().y / 1.5f));
+			m_view = sf::View(go->getComponentsOfType<TransformationCP>().at(0)->getPosition(), sf::Vector2f(m_window->getSize().x / 1.5f, m_window->getSize().y / 1.5f));
 		}
 		else if (go->getId().find("Boss") != std::string::npos)
 		{
 			if (go->getComponentsOfType<StatsCP>().at(0)->hasDied())
 			{
-				slainBoss = true;
+				m_slainBoss = true;
 			}
 		}
 		else
@@ -139,35 +139,35 @@ void GameplayState::update(float deltaTime)
 		return false;
 	};
 
-	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());
+	m_gameObjects.erase(std::remove_if(m_gameObjects.begin(), m_gameObjects.end(), removeCondition), m_gameObjects.end());
 
-	if (slainBoss)
+	if (m_slainBoss)
 	{
 		hasWon = true;
-		view = originalView;
-		window->setView(view);
-		GameStateManager::getInstance().setState("Win", *window);
+		m_view = m_originalView;
+		m_window->setView(m_view);
+		GameStateManager::getInstance().setState("Win", *m_window);
 	}
-	if (slainPlayer)
+	if (m_slainPlayer)
 	{
 		hasLost = true;
-		view = originalView;
-		window->setView(view);
-		GameStateManager::getInstance().setState("Loose", *window);
+		m_view = m_originalView;
+		m_window->setView(m_view);
+		GameStateManager::getInstance().setState("Loose", *m_window);
 	}
 
-	window->setView(view);												// FOR PLAYER VIEW SETTING
+	m_window->setView(m_view);												// FOR PLAYER VIEW SETTING
 
 	std::vector<std::shared_ptr<RenderCP>> renderCPs;
 
 	std::vector<sf::Vector2i> skelPos;
 	int i = 0;
-	for (auto& go : gameObjects)
+	for (auto& go : m_gameObjects)
 	{
 		if (go->getId().find("Skeleton") != std::string::npos)
 		{
 			sf::Vector2f pos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
-			skelPos.push_back(sf::Vector2i(pos.x / mapTileSize, pos.y / mapTileSize));
+			skelPos.push_back(sf::Vector2i(pos.x / m_mapTileSize, pos.y / m_mapTileSize));
 			i++;
 
 			if (i == 4)
@@ -178,11 +178,11 @@ void GameplayState::update(float deltaTime)
 
 		if (go->getId().find("Boss") != std::string::npos)
 		{
-			go->getComponentsOfType<ScreenShakeCP>().at(0)->updateScreen(view);
+			go->getComponentsOfType<ScreenShakeCP>().at(0)->updateScreen(m_view);
 		}
 	}
 
-	for (auto& go : gameObjects)
+	for (auto& go : m_gameObjects)
 	{
 		if (auto astar = go->getComponentsOfType<AStarCP>(); astar.size() > 0)
 		{
@@ -199,7 +199,7 @@ void GameplayState::update(float deltaTime)
 
 	RenderManager::getInstance().resetLayers(renderCPs);
 
-	PhysicsManager::getInstance().update(gameObjects, deltaTime);
+	PhysicsManager::getInstance().update(m_gameObjects, deltaTime);
 }
 
 void GameplayState::render()
@@ -252,7 +252,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 
 		int layerNr = layer.getProp("LayerNr")->getValue<int>();
 
-		layerCP = std::make_shared<LayerCP>(mapGO, "Layer" + std::to_string(layerNr), window, layerNr, std::vector<std::shared_ptr<sf::Sprite>>());
+		layerCP = std::make_shared<LayerCP>(mapGO, "Layer" + std::to_string(layerNr), m_window, layerNr, std::vector<std::shared_ptr<sf::Sprite>>());
 		
 		if (layerNr == 0) // 0 => Background, get all Grid Stats (width, height) for A*
 		{
@@ -281,7 +281,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			const sf::Vector2i tileSize(map->getTileSize().x, map->getTileSize().y);
 			sf::Texture& texture = *m_tileSetTexture[tileSet->getName()];
 			
-			mapTileSize = tileSize.x;
+			m_mapTileSize = tileSize.x;
 
 			// calculate position of tile
 			sf::Vector2f position;
@@ -312,7 +312,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 		mapGO->addComponent(layerCP);
 	}
 
-	this->gameObjects.push_back(mapGO);
+	this->m_gameObjects.push_back(mapGO);
 
 	for (auto group : map->getLayers())
 	{
@@ -337,7 +337,7 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
 			{
-				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+				createSpawner(object, group, aStarGridSize, unMovablePositions, m_mapTileSize);
 			}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
@@ -346,11 +346,11 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 		}
 	}
 
-	for (auto& go : gameObjects)
+	for (auto& go : m_gameObjects)
 	{
 		if (go->getId().find("Boss") != std::string::npos)
 		{
-			for (auto& go1 : gameObjects)
+			for (auto& go1 : m_gameObjects)
 			{
 				if (go1->getId().find("Player") != std::string::npos)
 				{
@@ -372,9 +372,9 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 	//sort gameObjects
 	int playerIndex = 0;
-	for (int i = 0; i < gameObjects.size(); i++)
+	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
-		if (gameObjects[i]->getId().find("Player") != std::string::npos)
+		if (m_gameObjects[i]->getId().find("Player") != std::string::npos)
 		{
 			playerIndex = i;
 			break;
@@ -382,9 +382,9 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 	}
 	for (int i = playerIndex; i > 0; i--)
 	{
-		std::shared_ptr<GameObject> temp = gameObjects[i];
-		gameObjects[i] = gameObjects[i - 1];
-		gameObjects[i - 1] = temp;
+		std::shared_ptr<GameObject> temp = m_gameObjects[i];
+		m_gameObjects[i] = m_gameObjects[i - 1];
+		m_gameObjects[i - 1] = temp;
 	}
 
 }
@@ -402,7 +402,7 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 	int maxEnemy = object.getProp("MaxEnemies")->getValue<int>();
 	float spawnTime = object.getProp("SpawnTime")->getValue<float>();
 
-	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = gameObjects;
+	std::vector<std::shared_ptr<GameObject>>& gameObjectsRef = m_gameObjects;
 
 	//AssetManager::getInstance().loadTexture("start")
 
@@ -410,7 +410,7 @@ void GameplayState::createSpawner(tson::Object& object, tson::Layer group, sf::V
 
 	spawnerTemp->addComponent(spawnerCP);
 
-	gameObjects.push_back(spawnerTemp);
+	m_gameObjects.push_back(spawnerTemp);
 
 }
 void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
@@ -432,7 +432,7 @@ void GameplayState::createBoundary(tson::Object& object, tson::Layer group)
 	//std::weak_ptr<GameObject> go, std::string id, const float newMass, const float newInvMass, sf::Vector2f vel
 	std::shared_ptr<RigidBodyCP> rigid = std::make_shared<RigidBodyCP>(boundaryTemp, id, 1,1,sf::Vector2f(1,1));
 	boundaryTemp->addComponent(rigid);
-	gameObjects.push_back(boundaryTemp);
+	m_gameObjects.push_back(boundaryTemp);
 }
 
 GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer group, std::string id)
@@ -455,7 +455,7 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	Enemy_Animationtype aniType = Enemy_Animationtype::IdleRight;
 
 	std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> enemyGraphicsCP = std::make_shared<AnimatedGraphicsCP<Enemy_Animationtype>>(
-		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
+		enemyTemp, "EnemySpriteCP", *AssetManager::getInstance().Textures.at(texName), m_spriteSheetCounts[object.getProp("EnemyName")->getValue<std::string>()], ANIMATION_SPEED, aniType
 	);
 	enemyTemp->addComponent(enemyGraphicsCP);
 
@@ -481,7 +481,7 @@ GameObjectPtr GameplayState::createEnemies(tson::Object& object, tson::Layer gro
 	);
 	enemyTemp->addComponent(enemyRigidBodyCP);
 
-	std::shared_ptr<SpriteRenderCP> enemyRenderCP = std::make_shared<SpriteRenderCP>(enemyTemp, "EnemyRenderCP", window, group.getProp("LayerNr")->getValue<int>());
+	std::shared_ptr<SpriteRenderCP> enemyRenderCP = std::make_shared<SpriteRenderCP>(enemyTemp, "EnemyRenderCP", m_window, group.getProp("LayerNr")->getValue<int>());
 	enemyTemp->addComponent(enemyRenderCP);
 
 	int hp = object.getProp("Health")->getValue<int>();
@@ -524,7 +524,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	const int PLAYER_ANIMATION_SPEED = object.getProp("AnimationSpeed")->getValue<int>();
 
 	std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> playerGraphicsCP = std::make_shared<AnimatedGraphicsCP<Player_Animationtype>>(
-		playerTemp, "PlayerSpriteCP", *AssetManager::getInstance().Textures.at("PlayerTexture"), spriteSheetCounts[playerTemp->getId()], PLAYER_ANIMATION_SPEED, Player_Animationtype::RightIdle
+		playerTemp, "PlayerSpriteCP", *AssetManager::getInstance().Textures.at("PlayerTexture"), m_spriteSheetCounts[playerTemp->getId()], PLAYER_ANIMATION_SPEED, Player_Animationtype::RightIdle
 	);
 
 	playerTemp->addComponent(playerGraphicsCP);
@@ -541,7 +541,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	);
 	playerTemp->addComponent(playerRigidBodyCP);
 
-	std::shared_ptr<SpriteRenderCP> playerRenderCP = std::make_shared<SpriteRenderCP>(playerTemp, "PlayerRenderCP", window, group.getProp("LayerNr")->getValue<int>());
+	std::shared_ptr<SpriteRenderCP> playerRenderCP = std::make_shared<SpriteRenderCP>(playerTemp, "PlayerRenderCP", m_window, group.getProp("LayerNr")->getValue<int>());
 	playerTemp->addComponent(playerRenderCP);
 	
 	std::vector<std::weak_ptr<GameObject>> weak;
@@ -562,7 +562,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 		{
 			AssetManager::getInstance().loadTexture("keyboardControls", "Assets\\UI\\Keyboard.png");
 		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("keyboardControls"), window);
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("keyboardControls"), m_window);
 		playerTemp->addComponent(ui);
 	}
 	else
@@ -580,7 +580,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 		{
 			AssetManager::getInstance().loadTexture("gamepadControls", "Assets\\UI\\Gamepad.png");
 		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("gamepadControls"), window);
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("gamepadControls"), m_window);
 		playerTemp->addComponent(ui);
 	}
 
@@ -607,7 +607,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	std::shared_ptr<StatusEffectCP> statusCP = std::make_shared<StatusEffectCP>(playerTemp, "StatusEffectCP", *AssetManager::getInstance().Textures.at("stun"));
 	playerTemp->addComponent(statusCP);
 
-	gameObjects.push_back(playerTemp);
+	m_gameObjects.push_back(playerTemp);
 }
 
 void GameplayState::createBoss(tson::Object& object, tson::Layer group)
@@ -633,13 +633,13 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	}
 
 	std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> bossGraphicsCP = std::make_shared<AnimatedGraphicsCP<Boss_Animationtype>>(
-		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, Boss_Animationtype::Idle
+		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), m_spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, Boss_Animationtype::Idle
 	);
 	bossTemp->addComponent(bossGraphicsCP);
 	
 	//std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 10.f, 1.5f, 500.f);
 
-	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window);
+	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", m_window);
 	bossTemp->addComponent(screenShakeCP);
 
 	const float VELOCITY = object.getProp("Velocity")->getValue<int>();
@@ -666,7 +666,7 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 	);
 	bossTemp->addComponent(bossRigidBodyCP);
 
-	std::shared_ptr<SpriteRenderCP> bossRenderCP = std::make_shared<SpriteRenderCP>(bossTemp, "BossRenderCP", window, group.getProp("LayerNr")->getValue<int>());
+	std::shared_ptr<SpriteRenderCP> bossRenderCP = std::make_shared<SpriteRenderCP>(bossTemp, "BossRenderCP", m_window, group.getProp("LayerNr")->getValue<int>());
 	bossTemp->addComponent(bossRenderCP);
 
 	int hp = object.getProp("Health")->getValue<int>();
@@ -680,5 +680,5 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 
 	std::shared_ptr<HealthbarCP> health = std::make_shared<HealthbarCP>(bossTemp, "HealthbarCP", *AssetManager::getInstance().Textures.at("healthbar"));
 	bossTemp->addComponent(health);
-	gameObjects.push_back(bossTemp);
+	m_gameObjects.push_back(bossTemp);
 }

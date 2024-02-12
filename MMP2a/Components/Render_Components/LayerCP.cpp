@@ -21,12 +21,3 @@ void LayerCP::draw()
 			m_window->draw(*sprite);
 	}
 }
-
-void LayerCP::update(float deltaTime)
-{
-
-}
-
-void LayerCP::init()
-{
-}

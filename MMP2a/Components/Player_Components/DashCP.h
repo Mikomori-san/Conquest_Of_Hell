@@ -19,8 +19,8 @@ public:
 	
 	void init() override;
 	void update(float deltaTime) override;
-	std::string getComponentId() override { return this->componentId; };
-	void setComponentId(std::string id) override { this->componentId = id; };
+	std::string getComponentId() override { return this->m_componentId; };
+	void setComponentId(std::string id) override { this->m_componentId = id; };
 	void setDodgeLock(bool dl) { m_dodgeLock = dl; }
 	bool getHasIFrames() { return m_hasCurrentlyIFrames; };
 private:
@@ -94,9 +94,9 @@ void DashCP<T>::init()
 template <typename T>
 void DashCP<T>::update(float deltaTime)
 {
-	if(!m_dodgeLock && !gameObject.expired())
+	if(!m_dodgeLock && !m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani = go->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
 		std::shared_ptr<StatsCP> stats = go->getComponentsOfType<StatsCP>().at(0);
 		std::shared_ptr<TransformationCP> transf = go->getComponentsOfType<TransformationCP>().at(0);

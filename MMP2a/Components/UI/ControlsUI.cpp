@@ -10,7 +10,7 @@ void ControlsUI::init()
 	{
 		std::shared_ptr<sf::RenderWindow> window = m_window.lock();
 		m_sprite->setScale(0.1f, 0.1f);
-		m_sprite->setPosition(window->getView().getCenter() - (window->getView().getSize() / 2.f) + offset);
+		m_sprite->setPosition(window->getView().getCenter() - (window->getView().getSize() / 2.f) + m_offset);
 	}
 }
 
@@ -19,6 +19,6 @@ void ControlsUI::update(float delaTime)
 	if (!m_window.expired())
 	{
 		std::shared_ptr<sf::RenderWindow> window = m_window.lock();
-		m_sprite->setPosition(window->getView().getCenter() - (window->getView().getSize() / 2.f) + offset);
+		m_sprite->setPosition(window->getView().getCenter() - (window->getView().getSize() / 2.f) + m_offset);
 	}
 }

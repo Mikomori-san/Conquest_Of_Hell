@@ -8,9 +8,9 @@
 void RigidBodyCP::setPosNotifyTransf(sf::Vector2f pos)
 {
     this->m_position = pos;
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
         std::shared_ptr<TransformationCP> transCP = go->getComponentsOfType<TransformationCP>().at(0);
         transCP->setPosition(m_position);
     }
@@ -22,9 +22,9 @@ void RigidBodyCP::setVelNotifyTransf(sf::Vector2f vel)
     
     this->m_velocity = vel;
 
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
         std::shared_ptr<TransformationCP> transCP = go->getComponentsOfType<TransformationCP>().at(0);
         if (vel.x == 0)
         {
@@ -41,9 +41,9 @@ void RigidBodyCP::setVelNotifyTransf(sf::Vector2f vel)
 
 void RigidBodyCP::onCollision(std::shared_ptr<GameObject> go2)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
 
         /*
         if (go2->getId().find("Boundary") != std::string::npos)

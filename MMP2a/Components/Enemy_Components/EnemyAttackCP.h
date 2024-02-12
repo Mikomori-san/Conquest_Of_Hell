@@ -13,8 +13,8 @@ public:
     EnemyAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> closestPlayer, int attackRange) : Component(gameObject, id), m_closestPlayer(closestPlayer), m_attackRange(attackRange) {};
 
     void update(float deltaTime) override;
-    std::string getComponentId() override { return this->componentId; };
-    void setComponentId(std::string id) override { this->componentId = id; };
+    std::string getComponentId() override { return this->m_componentId; };
+    void setComponentId(std::string id) override { this->m_componentId = id; };
     void init() override;
     void setClosestPlayer(std::weak_ptr<GameObject> closePlayer) { this->m_closestPlayer = closePlayer; }
 

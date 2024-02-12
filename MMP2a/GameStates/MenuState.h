@@ -19,28 +19,28 @@ public:
 
 private:
 	sf::RectangleShape createButton(std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor);
-	std::shared_ptr<sf::RenderWindow> window;
-	sf::Sprite backgroundSprite;
-	sf::Sprite titleSprite;
-	sf::Sprite gamePadSprite;
+	std::shared_ptr<sf::RenderWindow> m_window;
+	sf::Sprite m_backgroundSprite;
+	sf::Sprite m_titleSprite;
+	sf::Sprite m_gamePadSprite;
 
-	std::shared_ptr<sf::Music> cw;
+	std::shared_ptr<sf::Music> m_cw;
 
-	sf::RectangleShape startButton;
-	sf::RectangleShape exitButton;
+	sf::RectangleShape m_startButton;
+	sf::RectangleShape m_exitButton;
 
-	sf::Sprite startSprite;
-	sf::Sprite exitSprite;
+	sf::Sprite m_startSprite;
+	sf::Sprite m_exitSprite;
 
-	std::vector<std::pair<sf::Text, sf::RectangleShape>> buttonList;
-	std::map<std::string, sf::RectangleShape> buttonMap;
+	std::vector<std::pair<sf::Text, sf::RectangleShape>> m_buttonList;
+	std::map<std::string, sf::RectangleShape> m_buttonMap;
 
-	bool isControllerConnected = false;
-	bool isPlaySelected = true;
-	bool isExitSelected = false;
-	bool playGamePad = true;
-	float buttonTimer;
+	bool m_isControllerConnected = false;
+	bool m_isPlaySelected = true;
+	bool m_isExitSelected = false;
+	bool m_playGamePad = true;
+	float m_buttonTimer;
 	const float CONTROLLER_SWITCH_CD = 0.2f;
-	sf::Text text;
-	float textTimer;
+	sf::Text m_text;
+	float m_textTimer;
 };

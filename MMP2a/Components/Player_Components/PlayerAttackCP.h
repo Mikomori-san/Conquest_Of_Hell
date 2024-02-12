@@ -22,8 +22,8 @@ public:
     PlayerAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, int incAR, std::vector<std::weak_ptr<GameObject>> incEnemies, T incKey) : Component(gameObject, id), m_enemies(incEnemies), m_attackKey(incKey), m_attackRange(incAR) {}
 
     void update(float deltaTime) override;
-    std::string getComponentId() override { return this->componentId; };
-    void setComponentId(std::string id) override { this->componentId = id; }
+    std::string getComponentId() override { return this->m_componentId; };
+    void setComponentId(std::string id) override { this->m_componentId = id; }
     void init() override;
     void addEnemy(std::weak_ptr<GameObject> enemy) { m_enemies.push_back(enemy); }
 	void setAttackLock(bool al) { m_attackLock = al; }
@@ -175,12 +175,12 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 template<typename T>
 void PlayerAttackCP<T>::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		auto transf = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0);
-		auto ani = gameObject.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
-		auto stats = gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
-		auto input = gameObject.lock()->getComponentsOfType<InputCP>().at(0);
+		auto transf = m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0);
+		auto ani = m_gameObject.lock()->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0);
+		auto stats = m_gameObject.lock()->getComponentsOfType<StatsCP>().at(0);
+		auto input = m_gameObject.lock()->getComponentsOfType<InputCP>().at(0);
 
 		if (!m_attackLock && !m_hasAttacked)
 		{
@@ -190,20 +190,20 @@ void PlayerAttackCP<T>::update(float deltaTime)
 				{
 					if (InputManager::getInstance().getKeyDown(static_cast<sf::Keyboard::Key>(m_attackKey)))
 					{
-						auto dodge = gameObject.lock()->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0);
+						auto dodge = m_gameObject.lock()->getComponentsOfType<DashCP<sf::Keyboard::Key>>().at(0);
 						dodge->setDodgeLock(true);
 						doAttack(transf, ani, stats, input);
 					}
 				}
 				else if (std::is_same_v<T, GamepadButton>)
 				{
-					auto movementCP = gameObject.lock()->getComponentsOfType<MovementInputGamepadCP>().at(0);
+					auto movementCP = m_gameObject.lock()->getComponentsOfType<MovementInputGamepadCP>().at(0);
 
 					if (movementCP->isGamepadConnected())
 					{
 						if (sf::Joystick::isButtonPressed(movementCP->getControllerNr(), static_cast<GamepadButton>(m_attackKey)))
 						{
-							auto dodge = gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0);
+							auto dodge = m_gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0);
 							dodge->setDodgeLock(true);
 							doAttack(transf, ani, stats, input);
 							m_useController = true;
@@ -221,9 +221,9 @@ void PlayerAttackCP<T>::update(float deltaTime)
 				ani->toggleAnimationLock();
 				m_animationLocked = false;
 				if (m_useController)
-					gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0)->setDodgeLock(false);
+					m_gameObject.lock()->getComponentsOfType<DashCP<GamepadButton>>().at(0)->setDodgeLock(false);
 				else
-					gameObject.lock()->getComponentsOfType < DashCP < sf::Keyboard::Key >> ().at(0)->setDodgeLock(false);
+					m_gameObject.lock()->getComponentsOfType < DashCP < sf::Keyboard::Key >> ().at(0)->setDodgeLock(false);
 				/*if (lastAnimation == LeftAttack || lastAnimation == LeftDodge)
 				{
 					ani->setAnimationType(lastAnimation);

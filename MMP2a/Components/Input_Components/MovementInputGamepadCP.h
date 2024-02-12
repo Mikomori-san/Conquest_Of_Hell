@@ -13,8 +13,8 @@ class MovementInputGamepadCP : public InputCP
 public:
 	MovementInputGamepadCP(std::weak_ptr<GameObject> gameObject, std::string id, int controllerNr) : InputCP(gameObject, id), m_controllerNr(controllerNr) {}
 
-	std::string getComponentId() override { return this->componentId; }
-	void setComponentId(std::string id) { this->componentId = id; }
+	std::string getComponentId() override { return this->m_componentId; }
+	void setComponentId(std::string id) { this->m_componentId = id; }
 	void update(float deltatime) override;
 	void init() override;
 

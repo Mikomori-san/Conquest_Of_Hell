@@ -18,10 +18,10 @@ void BossAttackCP::init()
 void BossAttackCP::update(float deltaTime)
 {
 	timePassed += deltaTime;
-	if (!m_playerPtr.expired() && !gameObject.expired())
+	if (!m_playerPtr.expired() && !m_gameObject.expired())
 	{
 		std::shared_ptr<GameObject> player = m_playerPtr.lock();
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		std::shared_ptr<TransformationCP> transPlayer = std::dynamic_pointer_cast<TransformationCP>(player->getComponentsOfType<TransformationCP>().at(0));
 		std::shared_ptr<TransformationCP> transBoss = std::dynamic_pointer_cast<TransformationCP>(go->getComponentsOfType<TransformationCP>().at(0));
 		
@@ -57,7 +57,7 @@ void BossAttackCP::update(float deltaTime)
 
 void BossAttackCP::executeMeele()
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
 		std::shared_ptr<MeleeBA> meele = std::dynamic_pointer_cast<MeleeBA>(m_ability1);
 		if (meele)

@@ -8,9 +8,9 @@
 
 void MovementInputWASDCP::update(float deltatime)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        m_vel = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
+        m_vel = m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
 
         if (!m_inputLock)
         {
@@ -20,11 +20,11 @@ void MovementInputWASDCP::update(float deltatime)
         {
             if (m_hadInput)
             {
-                gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(m_lastDirection, m_lastVec, m_vel);
+                m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(m_lastDirection, m_lastVec, m_vel);
             }
             else
             {
-                gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
+                m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
             }
         }
     }
@@ -32,11 +32,11 @@ void MovementInputWASDCP::update(float deltatime)
 
 void MovementInputWASDCP::processInput()
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->setVelocity(0);
+        m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->setVelocity(0);
 
-        std::shared_ptr<DecisionHandlerCP> decHandler = gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0);
+        std::shared_ptr<DecisionHandlerCP> decHandler = m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0);
 
         m_hadInput = true;
 
@@ -89,7 +89,7 @@ void MovementInputWASDCP::processInput()
         else
         {
             m_hadInput = false;
-            gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
+            m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
         }
     }
 }

@@ -13,12 +13,12 @@ public:
 
 	void draw() override;
 	void update(float deltaTime) override;
-	std::string getComponentId() override { return this->componentId; }
-	void setComponentId(std::string id) override { this->componentId = id; }
+	std::string getComponentId() override { return this->m_componentId; }
+	void setComponentId(std::string id) override { this->m_componentId = id; }
 	void init() override;
 	int getLayerNr() override { return m_layerNr; }
 	void setLayerNr(int nr) override { m_layerNr = nr; }
-	std::weak_ptr<GameObject> getGO() override { return gameObject; }
+	std::weak_ptr<GameObject> getGO() override { return m_gameObject; }
 
 
 private:

@@ -22,13 +22,13 @@ public:
 	bool hasWon = false;
 	bool hasLost = false;
 private:
-	std::shared_ptr<sf::RenderWindow> window;
-	std::vector<std::shared_ptr<GameObject>> gameObjects;
-	std::map<std::string, std::vector<int>> spriteSheetCounts;
+	std::shared_ptr<sf::RenderWindow> m_window;
+	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+	std::map<std::string, std::vector<int>> m_spriteSheetCounts;
 
-	bool slainBoss;
-	bool slainPlayer;
-	std::shared_ptr<sf::Music> cot;
+	bool m_slainBoss;
+	bool m_slainPlayer;
+	std::shared_ptr<sf::Music> m_cot;
 	void loadMap(std::string name, const sf::Vector2f& offset);
 	void createPlayers(tson::Object& object, tson::Layer group);
 	GameObjectPtr createEnemies(tson::Object& object, tson::Layer group, std::string id);
@@ -40,7 +40,7 @@ private:
 	const std::filesystem::path m_resourcePath{ "Assets" };
 
 	std::unordered_map<std::string, GameObjectPtr> m_objects;
-	int mapTileSize;
-	sf::View view;
-	sf::View originalView;
+	int m_mapTileSize;
+	sf::View m_view;
+	sf::View m_originalView;
 };

@@ -15,8 +15,8 @@ public:
 
 	virtual ~InputCP() = default;
 
-	virtual std::string getComponentId() override { return this->componentId; }
-	virtual void setComponentId(std::string id) override { this->componentId = id; }
+	virtual std::string getComponentId() override { return this->m_componentId; }
+	virtual void setComponentId(std::string id) override { this->m_componentId = id; }
 	virtual void update(float deltaTime) override {};
 	virtual void processInput() {};
 

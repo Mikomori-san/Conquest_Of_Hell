@@ -13,8 +13,8 @@ public:
     void init() override {};
     void update(float deltaTime) override {};
 
-    std::string getComponentId() override { return this->componentId; }
-    void setComponentId(std::string componentId) override { this->componentId = componentId; }
+    std::string getComponentId() override { return this->m_componentId; }
+    void setComponentId(std::string componentId) override { this->m_componentId = componentId; }
 
     void setMasses(float incMass) { this->m_mass = incMass; if (incMass == 0) { this->m_invMass = 0; } else { this->m_invMass = 1 / incMass; } }
     float getMass() { return this->m_mass; }
@@ -30,7 +30,7 @@ public:
 
     void onCollision(std::shared_ptr<GameObject> go2);
 
-    std::weak_ptr<GameObject> getGO() { return this->gameObject; }
+    std::weak_ptr<GameObject> getGO() { return this->m_gameObject; }
 
 private:
     float m_mass;

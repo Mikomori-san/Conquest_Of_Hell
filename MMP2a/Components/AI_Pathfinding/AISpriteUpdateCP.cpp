@@ -9,9 +9,9 @@
 
 void AISpriteUpdateCP::update(float deltaTime)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
         std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> ani = go->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0);
         std::shared_ptr<TransformationCP> trans = go->getComponentsOfType<TransformationCP>().at(0);
 
@@ -156,12 +156,12 @@ void AISpriteUpdateCP::update(float deltaTime)
 
 std::string AISpriteUpdateCP::getComponentId()
 {
-    return this->componentId;
+    return this->m_componentId;
 }
 
 void AISpriteUpdateCP::setComponentId(std::string id)
 {
-    this->componentId = id;
+    this->m_componentId = id;
 }
 
 void AISpriteUpdateCP::init()

@@ -9,44 +9,44 @@
 void TransformationCP::update(float deltaTime)
 {
 	// for positional correction when hitting a boundary
-	posResetTimer++;
-	if (posResetTimer > 5)
+	m_posResetTimer++;
+	if (m_posResetTimer > 5)
 	{
-		oldPos = position;
-		posResetTimer = 0;
+		m_oldPos = m_position;
+		m_posResetTimer = 0;
 	}
 
 	// for AI
-	if (backupVel != 0 && !velLock)
+	if (m_backupVel != 0 && !m_velLock)
 	{
-		curVelocity = backupVel;
+		m_curVelocity = m_backupVel;
 	}
 
-	position = position + direction * curVelocity * deltaTime;
+	m_position = m_position + m_direction * m_curVelocity * deltaTime;
 	
-	if (rigid)
+	if (m_rigid)
 	{
-		rigid->setPos(position);
+		m_rigid->setPos(m_position);
 	}
 }
 
 void TransformationCP::init()
 {
-	velLock = false;
-	position = originalPos;
-	if (!gameObject.expired())
+	m_velLock = false;
+	m_position = m_originalPos;
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		if (go->getComponentsOfType<GraphicsCP>().size() != 0)
 		{
 			std::shared_ptr<GraphicsCP> ani = go->getComponentsOfType<GraphicsCP>().at(0);
-			origin = sf::Vector2f(ani->getSprite().getTextureRect().width / 2, ani->getSprite().getTextureRect().height / 2);
-			setOrigin(origin);
+			m_origin = sf::Vector2f(ani->getSprite().getTextureRect().width / 2, ani->getSprite().getTextureRect().height / 2);
+			setOrigin(m_origin);
 		}
 		
 		if (go->getComponentsOfType<RigidBodyCP>().size() != 0)
 		{
-			rigid = go->getComponentsOfType<RigidBodyCP>().at(0);
+			m_rigid = go->getComponentsOfType<RigidBodyCP>().at(0);
 		}
 	}
 }
