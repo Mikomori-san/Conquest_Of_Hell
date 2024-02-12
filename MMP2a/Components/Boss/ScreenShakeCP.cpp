@@ -3,6 +3,7 @@
 //Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #include "stdafx.h"
 #include "ScreenShakeCP.h"
+#include "../../Manager/AssetManager.h"
 
 void ScreenShakeCP::init()
 {
@@ -11,10 +12,16 @@ void ScreenShakeCP::init()
     m_speed = 100.f;
     setScreenShake = false;
     m_originalView = m_window->getView();
+    AssetManager::getInstance().Music["Punch"]->setVolume(10);
 }
 
 void ScreenShakeCP::update(float deltaTime)
 {
+    if (m_bossGraphicsCP->getAnimationType() == Attack && m_bossGraphicsCP->getAnimationFrame() == ATTACK_FRAME_BEFORE_HIT && !setScreenShake)
+    {
+        AssetManager::getInstance().Music["Punch"]->play();
+    }
+
     if (m_bossGraphicsCP->getAnimationType() == Attack && m_bossGraphicsCP->getAnimationFrame() == ATTACK_FRAME)
     {
         setScreenShake = true;

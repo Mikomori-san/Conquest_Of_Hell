@@ -25,11 +25,6 @@ void WinState::init(sf::RenderWindow& rWindow)
 
 	DebugDraw::getInstance().initialize(*window);
 
-	AssetManager::getInstance().loadMusic("Celestial_Wanderer", "Assets\\Music\\Celestial_Wanderer.mp3");
-	cw = AssetManager::getInstance().Music["Celestial_Wanderer"];
-	cw->setVolume(10);
-	cw->play();
-
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
 
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\winScreen.png");
@@ -67,13 +62,15 @@ void WinState::init(sf::RenderWindow& rWindow)
 	createButton("Start", sf::Vector2f(750, 50), startButtonPos, black);
 	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, black);
 
-	
+	AssetManager::getInstance().loadMusic("Win", "Assets\\Sounds\\win.wav");
+	AssetManager::getInstance().Music["Win"]->setVolume(30);
+	AssetManager::getInstance().Music["Win"]->play();
+
 	close = false;
 }
 
 void WinState::exit()
 {
-	cw->stop();
 	AssetManager::getInstance().unloadAssets();
 	DebugDraw::getInstance().unload();
 }

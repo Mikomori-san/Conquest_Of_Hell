@@ -38,4 +38,5 @@ private:
 	bool alive = false;
 	bool charmed = false;
 	float m_charmDuration = 1;
+	bool m_charmHit = false;
 };

@@ -36,6 +36,6 @@ private:
 	std::shared_ptr<MeleeIndicator> m_meleeInd = std::make_shared<MeleeIndicator>(MeleeIndicator(gameObject));
 
 	const float SWAP_THRESHOLD = 150.f * 150.f; //->squared distance
-	const float ATTACK_COOLDOWN = 5.f;
+	const float ATTACK_COOLDOWN = 2.5f;
 	float timePassed = 0.f;
 };

@@ -9,6 +9,7 @@
 #include "DashCP.h"
 #include "../StatsCP.h"
 #include "../Transformation_Components/TransformationCP.h"
+#include "../../Manager/AssetManager.h"
 
 template <typename T>
 class DashCP : public Component
@@ -45,6 +46,7 @@ void DashCP<T>::doDash(std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>>
 {
 	if (!m_hasDashed)
 	{
+		AssetManager::getInstance().Music["Dodge"]->play();
 		m_hasDashed = true;
 		m_dashTimer = 0;
 		m_iFramesTimer = 0;
@@ -79,6 +81,7 @@ void DashCP<T>::doDash(std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>>
 template <typename T>
 void DashCP<T>::init()
 {
+	AssetManager::getInstance().Music["Dodge"]->setVolume(10.f);
 	m_dashCooldown = 0;
 	m_dashTimer = 0;
 	m_iFramesTimer = 0;

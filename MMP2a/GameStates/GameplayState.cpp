@@ -60,6 +60,13 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 	cot->setLoop(true);
 	cot->play();
 
+	AssetManager::getInstance().loadMusic("Sword_Hit", "Assets\\Sounds\\sword_hit.wav");
+	AssetManager::getInstance().loadMusic("Player_Hit", "Assets\\Sounds\\player_hit.wav");
+	AssetManager::getInstance().loadMusic("Dodge", "Assets\\Sounds\\swoosh.wav");
+	AssetManager::getInstance().loadMusic("Charm", "Assets\\Sounds\\charmed.wav");
+	AssetManager::getInstance().loadMusic("Bones", "Assets\\Sounds\\bone_plump.wav");
+	AssetManager::getInstance().loadMusic("Punch", "Assets\\Sounds\\punch.wav");
+
 	loadMap("game.tmj", sf::Vector2f());
 	
 	sf::Vector2f playerPos;

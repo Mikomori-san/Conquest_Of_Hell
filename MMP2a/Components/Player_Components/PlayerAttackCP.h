@@ -3,6 +3,7 @@
 //Kevin Raffetseder, Julian Resch, Jennifer Strohmer
 #pragma once
 #include "../../Enums/GamepadButton.h"
+#include "../../Manager/AssetManager.h"
 #include "../Component.h"
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Input_Components/InputCP.h"
@@ -51,6 +52,7 @@ private:
 
 	bool m_attackLock = false;
 	bool m_useController = false;
+	sf::Music m_swordHitSound;
 };
 
 
@@ -58,12 +60,16 @@ template<typename T>
 void PlayerAttackCP<T>::init()
 {
 	m_hasAttacked = false;
+	AssetManager::getInstance().Music["Player_Hit"]->setVolume(6.f);
+	AssetManager::getInstance().Music["Bones"]->setVolume(10);
 }
 
 template<typename T>
 void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::shared_ptr<AnimatedGraphicsCP<Player_Animationtype>> ani,
 	std::shared_ptr<StatsCP> stats, std::shared_ptr<InputCP> input)
 {
+	AssetManager::getInstance().Music["Player_Hit"]->play();
+
 	float distance;
 	sf::Vector2f playerPos;
 	sf::Vector2f enemyPos;
@@ -74,7 +80,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 	m_inputLocked = true;
 	m_lastAnimation = ani->getAnimationType();
 	m_animationLocked = true;
-		
+
 	if (!ani->isAnimationLock())
 	{
 		if (m_lastAnimation == Left || m_lastAnimation == LeftIdle || m_lastAnimation == LeftAttack || m_lastAnimation == LeftDodge)
@@ -116,6 +122,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 			if ((bossPos.x > playerPos.x && ani->getAnimationType() == RightAttack) || (bossPos.x < playerPos.x && ani->getAnimationType() == LeftAttack))
 			{
 				auto bossStats = daBoss->getComponentsOfType<StatsCP>().at(0);
+
 				bossStats->subtracktHealth(stats->getDamage());
 				if (bossStats->getHealth() <= 0)
 				{
@@ -151,6 +158,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 					if (enemyStats->getHealth() <= 0)
 					{
 						enemy->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0)->setDying();
+						AssetManager::getInstance().Music["Bones"]->play();
 					}
 					else
 					{

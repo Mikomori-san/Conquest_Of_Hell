@@ -27,7 +27,7 @@ void LooseState::init(sf::RenderWindow& rWindow)
 
 	AssetManager::getInstance().loadMusic("Celestial_Wanderer", "Assets\\Music\\Celestial_Wanderer.mp3");
 	cw = AssetManager::getInstance().Music["Celestial_Wanderer"];
-	cw->setVolume(10);
+	cw->setVolume(5);
 	cw->play();
 
 	window->setView(sf::View(sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2), (sf::Vector2f)window->getSize()));
@@ -67,7 +67,10 @@ void LooseState::init(sf::RenderWindow& rWindow)
 	createButton("Start", sf::Vector2f(750, 50), startButtonPos, black);
 	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, black);
 
-
+	AssetManager::getInstance().loadMusic("Laugh", "Assets\\Sounds\\lust_laugh.wav");
+	AssetManager::getInstance().Music["Laugh"]->setVolume(30);
+	AssetManager::getInstance().Music["Laugh"]->play();
+	
 	close = false;
 }
 

@@ -32,6 +32,8 @@ void CharmBA::init()
 	m_sprite.setScale(4,4);
 	m_sprite.setTextureRect(sf::IntRect(0, 0, m_sprite.getTextureRect().width / 4, m_sprite.getTextureRect().height));
 	m_sprite.setOrigin(m_sprite.getTextureRect().width / 2, m_sprite.getTextureRect().height / 2);
+	
+	AssetManager::getInstance().Music["Charm"]->setVolume(8);
 }
 
 void CharmBA::update(float deltaTime)
@@ -60,11 +62,17 @@ void CharmBA::update(float deltaTime)
 	}
 	if (charmed)
 	{
+		if (!m_charmHit)
+		{
+			AssetManager::getInstance().Music["Charm"]->play();
+			m_charmHit = true;
+		}
 		m_charmDuration -= deltaTime;
 		if (m_charmDuration <= 0)
 		{
 			m_charmDuration = 1;
 			uncharmPlayer();
+			m_charmHit = false;
 		}
 	}
 

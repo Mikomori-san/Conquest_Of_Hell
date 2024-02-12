@@ -7,6 +7,7 @@
 #include "../StatsCP.h"
 #include "../Transformation_Components/BackgroundTransformationCP.h"
 #include "EnemyAttackCP.h"
+#include "../../Manager/AssetManager.h"
 #include "../../Enums/Enemy_Animationtype.h"
 #include "../../Enums/Player_Animationtype.h"
 #include <iostream>
@@ -63,6 +64,8 @@ void EnemyAttackCP::update(float deltaTime)
 
 				if (!statsPlayer->getIFrameState())
 				{
+					AssetManager::getInstance().Music["Sword_Hit"]->play();
+
 					statsPlayer->subtracktHealth(stats->getDamage());
 					if (statsPlayer->getHealth() <= 0)
 					{
@@ -120,4 +123,5 @@ void EnemyAttackCP::update(float deltaTime)
 void EnemyAttackCP::init()
 {
 	m_attackCD = 0;
+	AssetManager::getInstance().Music["Sword_Hit"]->setVolume(20.f);
 }

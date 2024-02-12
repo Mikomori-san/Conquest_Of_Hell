@@ -27,6 +27,7 @@ private:
     float m_speed;
     float timePassed;
     const int ATTACK_FRAME = 6;
+    const int ATTACK_FRAME_BEFORE_HIT = 3;
     const float SHAKE_DURATION_THRESHOLD = 0.5f;
     bool setScreenShake;
 };
