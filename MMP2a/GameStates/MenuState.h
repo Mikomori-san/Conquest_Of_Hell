@@ -21,12 +21,10 @@ private:
 	std::shared_ptr<sf::RenderWindow> window;
 	sf::Sprite backgroundSprite;
 	sf::Sprite titleSprite;
-	sf::Texture bgTexture;
-	sf::Texture startTexture;
-	sf::Texture exitTexture;
+	sf::Sprite gamePadSprite;
+
 	std::shared_ptr<sf::Music> cw;
-	sf::Text start;
-	sf::Text exitText;
+
 
 	sf::RectangleShape startButton;
 	sf::RectangleShape exitButton;
@@ -40,4 +38,5 @@ private:
 	bool isControllerConnected = false;
 	bool isPlaySelected = true;
 	bool isExitSelected = false;
+	bool playGamePad = true;
 };

@@ -39,6 +39,8 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	AssetManager::getInstance().loadTexture("BackgroundImage", "Assets\\Textures\\TitleScreenBackgroundTitle.png");
 	AssetManager::getInstance().loadTexture("startImage", "Assets\\Textures\\start.png");
 	AssetManager::getInstance().loadTexture("exitImage", "Assets\\Textures\\exit.png");
+	AssetManager::getInstance().loadTexture("gamePad", "Assets\\Textures\\GamePad.png");
+	AssetManager::getInstance().loadTexture("noGamePad", "Assets\\Textures\\noGamePad.png");
 	
 	if (!AssetManager::getInstance().Textures["BackgroundImage"])
 	{
@@ -53,8 +55,7 @@ void MenuState::init(sf::RenderWindow& rWindow)
 		std::cout << "Exit-Image not found " << std::endl;
 	}
 
-	bgTexture = *AssetManager::getInstance().Textures["BackgroundImage"];
-	backgroundSprite.setTexture(bgTexture);
+	backgroundSprite = sf::Sprite(*AssetManager::getInstance().Textures["BackgroundImage"]);
 
 	sf::Vector2f viewCenterVec = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2));
 	sf::Vector2f startButtonPos = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2) + 50);
@@ -62,18 +63,23 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	backgroundSprite.setOrigin(sf::Vector2(backgroundSprite.getGlobalBounds().width / 2, backgroundSprite.getGlobalBounds().height / 2));
 	backgroundSprite.setPosition(viewCenterVec);
 
-	startTexture = *AssetManager::getInstance().Textures["startImage"];
-	startSprite.setTexture(startTexture);
+
+	startSprite = sf::Sprite(*AssetManager::getInstance().Textures["startImage"]);
 	startSprite.setOrigin(sf::Vector2(startSprite.getGlobalBounds().width / 2, startSprite.getGlobalBounds().height / 2));
 	startSprite.setPosition(startButtonPos);
 	startSprite.setScale(0.5f, 0.5f);
 
-	exitTexture = *AssetManager::getInstance().Textures["exitImage"];
-	exitSprite.setTexture(exitTexture);
+	exitSprite = sf::Sprite(*AssetManager::getInstance().Textures["exitImage"]);
 	exitSprite.setOrigin(sf::Vector2(exitSprite.getGlobalBounds().width / 2, exitSprite.getGlobalBounds().height / 2));
 	exitSprite.setPosition(exitButtonPos);
 	exitSprite.setScale(0.5f, 0.5f);
 	
+	gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["gamePad"]);
+	gamePadSprite.setOrigin(sf::Vector2(gamePadSprite.getGlobalBounds().width / 2, gamePadSprite.getGlobalBounds().height / 2));
+	gamePadSprite.setPosition(sf::Vector2f(1800.f, 100.f));
+	//gamePadSprite.setScale(0.5f, 0.5f);
+
+
 	sf::Color red = sf::Color(255, 0, 0, 255);
 	sf::Color black = sf::Color(0, 0, 0);
 	sf::Color white = sf::Color(255, 255, 255, 255 );
@@ -160,6 +166,11 @@ void MenuState::update(float deltaTime)
 				}
 		}
 	}
+
+	if (playGamePad)
+	{
+		gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["gamePad"]);
+	}
 }
 
 void MenuState::render()
@@ -175,6 +186,7 @@ void MenuState::render()
 
 	window->draw(startSprite);
 	window->draw(exitSprite);
+	window->draw(gamePadSprite);
 }
  sf::RectangleShape MenuState::createButton( std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor)
 {
