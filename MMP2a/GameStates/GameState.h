@@ -11,7 +11,7 @@ public:
 	virtual void exit() = 0;
 	virtual void update(float deltaTime) = 0;
 	virtual void render() = 0;
-	virtual bool hasClosed() { return close; }
+	virtual bool hasClosed() { return m_close; }
 protected:
-	bool close;
+	bool m_close;
 };

@@ -15,9 +15,9 @@ void MovementInputGamepadCP::update(float deltatime)
     }
     else
     {
-        if (!gameObject.expired())
+        if (!m_gameObject.expired())
         {
-            vel = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
+            vel = m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
 
             if (!inputLock)
             {
@@ -27,11 +27,11 @@ void MovementInputGamepadCP::update(float deltatime)
             {
                 if (hadInput)
                 {
-                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(lastDirection, lastVec, vel);
+                    m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(lastDirection, lastVec, vel);
                 }
                 else
                 {
-                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
+                    m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
                 }
             }
         }
@@ -40,11 +40,11 @@ void MovementInputGamepadCP::update(float deltatime)
 
 void MovementInputGamepadCP::processInput()
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->setVelocity(0);
+        m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->setVelocity(0);
 
-        std::shared_ptr<DecisionHandlerCP> decHandler = gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0);
+        std::shared_ptr<DecisionHandlerCP> decHandler = m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0);
 
         hadInput = true;
 
@@ -110,7 +110,7 @@ void MovementInputGamepadCP::processInput()
         else
         {
             hadInput = false;
-            gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
+            m_gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
         }
     }
 }

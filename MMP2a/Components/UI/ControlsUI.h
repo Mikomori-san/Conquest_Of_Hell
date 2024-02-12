@@ -13,5 +13,5 @@ public:
 	void update(float delaTime) override;
 private:
 	std::weak_ptr<sf::RenderWindow> m_window;
-	sf::Vector2f offset = sf::Vector2f(10.f,10.f);
+	sf::Vector2f m_offset = sf::Vector2f(10.f,10.f);
 };

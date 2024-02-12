@@ -13,30 +13,19 @@
 
 void SpriteRenderCP::draw()
 {
-	for (auto& rend : renderComponents)
+	for (auto& rend : m_renderComponents)
 	{
 		auto& sprite = rend->getSprite();
-		window->draw(sprite);
-		if (!gameObject.expired())
+		m_window->draw(sprite);
+		if (!m_gameObject.expired())
 		{
-			std::shared_ptr<GameObject> go = gameObject.lock();
+			std::shared_ptr<GameObject> go = m_gameObject.lock();
 			if (go->getId().find("Player") != std::string::npos)
 			{
 				if (go->getComponentsOfType<StatusEffectCP>().at(0)->getDisplay())
 				{
-					window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
+					m_window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
 				}
-			}
-			if (go->getId().find("Skeleton") != std::string::npos)
-			{
-				/*DebugDraw::getInstance().drawRectOutline(
-					sf::Vector2f(sprite.getGlobalBounds().left, sprite.getGlobalBounds().top),
-					static_cast<int>(sprite.getGlobalBounds().width),
-					static_cast<int>(sprite.getGlobalBounds().height),
-					sf::Color::Red
-				);
-				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 			if (go->getId().find("Boss") != std::string::npos)
 			{
@@ -45,11 +34,11 @@ void SpriteRenderCP::draw()
 
 				if (attack->getCharmInd()->getAlive())
 				{
-					window->draw(attack->getCharmInd()->getSprite());
+					m_window->draw(attack->getCharmInd()->getSprite());
 				}
 				if (attack->getMeeleeInd()->getAlive())
 				{
-					window->draw(attack->getMeeleeInd()->getSprite());
+					m_window->draw(attack->getMeeleeInd()->getSprite());
 				}
 				switch (attack->getAbility2()->getAbilityType())
 				{
@@ -61,14 +50,10 @@ void SpriteRenderCP::draw()
 					std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(attack->getAbility2());
 					if (charm->getAlive())
 					{
-						window->draw(charm->getSprite());
-						/*DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);*/
-
+						m_window->draw(charm->getSprite());
 					}
 					break;
 				}
-			/*	std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 		}
 	}
@@ -76,18 +61,18 @@ void SpriteRenderCP::draw()
 
 void SpriteRenderCP::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
-		renderComponents = go->getComponentsOfType<GraphicsCP>();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
+		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }
 
 void SpriteRenderCP::init()
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
-		renderComponents = go->getComponentsOfType<GraphicsCP>();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
+		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }

@@ -16,8 +16,8 @@ public:
 	BossAttackCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<GameObject> player) : Component(gameObject, id), playerPtr(player) {}
 	void init() override;
 	void update(float deltaTime) override;
-	std::string getComponentId() override { return this->componentId; }
-	void setComponentId(std::string id) override { componentId = id; };
+	std::string getComponentId() override { return this->m_componentId; }
+	void setComponentId(std::string id) override { m_componentId = id; };
 
 	std::shared_ptr<BossAbility> const getAbility1() { return ability1; };
 	std::shared_ptr<BossAbility> const getAbility2() { return ability2; };
@@ -30,10 +30,10 @@ private:
 	void executeCharm(const sf::Vector2f& bossPos, const sf::Vector2f& playerPos);
 
 	std::weak_ptr<GameObject> playerPtr;
-	std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA("MeleeBA", gameObject, playerPtr));
+	std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA("MeleeBA", m_gameObject, playerPtr));
 	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
-	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator(gameObject));
-	std::shared_ptr<MeleeIndicator> meeleeInd = std::make_shared<MeleeIndicator>(MeleeIndicator(gameObject));
+	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator(m_gameObject));
+	std::shared_ptr<MeleeIndicator> meeleeInd = std::make_shared<MeleeIndicator>(MeleeIndicator(m_gameObject));
 
 	float swapThreshold = 150.f * 150.f; //->squared distance
 	float attackCooldown = 5.f;

@@ -17,8 +17,8 @@ public:
 
     virtual ~GraphicsCP() = default;
 
-    virtual std::string getComponentId() override { return componentId; }
-    virtual void setComponentId(std::string id) override { this->componentId = id; }
+    virtual std::string getComponentId() override { return m_componentId; }
+    virtual void setComponentId(std::string id) override { this->m_componentId = id; }
 
     virtual void update(float deltaTime) override;
     virtual void init() override;

@@ -8,9 +8,9 @@
 
 void RectCollisionCP::update(float deltaTime)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
         updateCollider(go);
 
         std::shared_ptr<TransformationCP> transf = go->getComponentsOfType<TransformationCP>().at(0);
@@ -41,9 +41,9 @@ void RectCollisionCP::update(float deltaTime)
 
 void RectCollisionCP::init()
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        std::shared_ptr<GameObject> go = gameObject.lock();
+        std::shared_ptr<GameObject> go = m_gameObject.lock();
         updateCollider(go);
     }
 }

@@ -8,19 +8,19 @@
 class StatusEffectCP : public Component
 {
 public:
-	StatusEffectCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture) : Component(gameObject, id), sprite(sf::Sprite(texture)) {};
+	StatusEffectCP(std::weak_ptr<GameObject> gameObject, std::string id, const sf::Texture& texture) : Component(gameObject, id), m_sprite(sf::Sprite(texture)) {};
 
 	void init() override;
 	void update(float deltaTime) override;
-	void toggleDisplayStatus() { display = !display; };
-	bool getDisplay() { return display; };
-	const sf::Sprite& getSprite() { return sprite; };
+	void toggleDisplayStatus() { m_display = !m_display; };
+	bool getDisplay() { return m_display; };
+	const sf::Sprite& getSprite() { return m_sprite; };
 
-	std::string getComponentId() override { return componentId; };
-	void setComponentId(std::string id) override { componentId = id; };
+	std::string getComponentId() override { return m_componentId; };
+	void setComponentId(std::string id) override { m_componentId = id; };
 private:
-	int offsetX = 20;
-	int offsetY = 20;
-	bool display = false;
-	sf::Sprite sprite;
+	const int m_offsetX = 20;
+	const int m_offsetY = 20;
+	bool m_display = false;
+	sf::Sprite m_sprite;
 };

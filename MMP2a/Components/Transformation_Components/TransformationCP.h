@@ -10,7 +10,7 @@ class TransformationCP : public Component
 {
 public:
 	TransformationCP(std::weak_ptr<GameObject> gameObject, std::string id, sf::Vector2f& pos, float rotation, float scale)
-		: Component(gameObject, id), origin(pos), scale(1), rotation(0), originalPos(pos)
+		: Component(gameObject, id), m_origin(pos), m_scale(1), m_rotation(0), m_originalPos(pos)
 	{}
 
 	virtual ~TransformationCP() = default;
@@ -18,53 +18,53 @@ public:
 	virtual void init() override;
 	virtual void update(float deltaTime) override;
 
-	virtual std::string getComponentId() override { return this->componentId; }
-	virtual void setComponentId(std::string id) override { this->componentId = id; }
+	virtual std::string getComponentId() override { return this->m_componentId; }
+	virtual void setComponentId(std::string id) override { this->m_componentId = id; }
 
-	virtual void setVelocity(float vel) { if (!velLock) { this->curVelocity = vel; } }
-	virtual float getVelocity() { return curVelocity; }
+	virtual void setVelocity(float vel) { if (!m_velLock) { this->m_curVelocity = vel; } }
+	virtual float getVelocity() { return m_curVelocity; }
 	
-	virtual float getOriginalVelocity() { return this->originalVel; }
-	virtual void setOriginalVelocity(float vel) { this->originalVel = vel; }
-	virtual void setBackupVel() { this->backupVel = originalVel; }
+	virtual float getOriginalVelocity() { return this->m_originalVel; }
+	virtual void setOriginalVelocity(float vel) { this->m_originalVel = vel; }
+	virtual void setBackupVel() { this->m_backupVel = m_originalVel; }
 
-	virtual void setDirection(sf::Vector2f dir) { this->direction = dir; }
-	virtual void setDirection(float x, float y) { this->direction = sf::Vector2f(x, y); }
-	virtual sf::Vector2f& getDirection() { return direction; }
+	virtual void setDirection(sf::Vector2f dir) { this->m_direction = dir; }
+	virtual void setDirection(float x, float y) { this->m_direction = sf::Vector2f(x, y); }
+	virtual sf::Vector2f& getDirection() { return m_direction; }
 
-	virtual float getRotation() { return rotation; }
-	virtual void setRotation(float rot) { rotation = rot; }
+	virtual float getRotation() { return m_rotation; }
+	virtual void setRotation(float rot) { m_rotation = rot; }
 
-	virtual float getScale() { return scale; }
-	virtual void setScale(float scale) { this->scale = scale; }
+	virtual float getScale() { return m_scale; }
+	virtual void setScale(float scale) { this->m_scale = scale; }
 
-	virtual sf::Vector2f& getOrigin() { return origin; }
-	virtual void setOrigin(sf::Vector2f ori) { origin = ori; }
+	virtual sf::Vector2f& getOrigin() { return m_origin; }
+	virtual void setOrigin(sf::Vector2f ori) { m_origin = ori; }
 
-	virtual void setPosition(sf::Vector2f newPosition) { position = newPosition; }
-	virtual sf::Vector2f& getPosition() { return position; }
+	virtual void setPosition(sf::Vector2f newPosition) { m_position = newPosition; }
+	virtual sf::Vector2f& getPosition() { return m_position; }
 
-	bool getVelToggle() { return this->velLock; }
+	bool getVelToggle() { return this->m_velLock; }
 
-	void setOldPos() { position = oldPos - oldDir; rigid->setPos(position); }
+	void setOldPos() { m_position = m_oldPos - m_oldDir; m_rigid->setPos(m_position); }
 
-	void setPosResetTimer() { this->posResetTimer = 0; }
+	void setPosResetTimer() { this->m_posResetTimer = 0; }
 
-	void toggleVelLock() { velLock = velLock ? false : true; }
+	void toggleVelLock() { m_velLock = m_velLock ? false : true; }
 
 protected:
-	sf::Vector2f position;
-	sf::Vector2f origin;
-	float curVelocity = 0;
-	sf::Vector2f direction = sf::Vector2f(0, 0);
-	float rotation;
-	float scale;
-	std::shared_ptr<RigidBodyCP> rigid;
-	sf::Vector2f oldPos;
-	sf::Vector2f oldDir;
-	float originalVel;
-	float backupVel = 0;
-	int posResetTimer = 0;
-	sf::Vector2f originalPos;
-	bool velLock;
+	sf::Vector2f m_position;
+	sf::Vector2f m_origin;
+	float m_curVelocity = 0;
+	sf::Vector2f m_direction = sf::Vector2f(0, 0);
+	float m_rotation;
+	float m_scale;
+	std::shared_ptr<RigidBodyCP> m_rigid;
+	sf::Vector2f m_oldPos;
+	sf::Vector2f m_oldDir;
+	float m_originalVel;
+	float m_backupVel = 0;
+	int m_posResetTimer = 0;
+	sf::Vector2f m_originalPos;
+	bool m_velLock;
 };

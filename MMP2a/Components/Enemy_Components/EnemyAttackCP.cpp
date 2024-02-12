@@ -5,7 +5,7 @@
 #include "../Graphics_Components/AnimatedGraphicsCP.h"
 #include "../Input_Components/InputCP.h"
 #include "../StatsCP.h"
-#include "../Transformation_Components/BackgroundTransformationCP.h"
+//#include "../Transformation_Components/BackgroundTransformationCP.h"
 #include "EnemyAttackCP.h"
 #include "../../Enums/Enemy_Animationtype.h"
 #include "../../Enums/Player_Animationtype.h"
@@ -36,9 +36,9 @@ void EnemyAttackCP::doAttackAnimation(std::shared_ptr<AnimatedGraphicsCP<Enemy_A
 
 void EnemyAttackCP::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		auto go = gameObject.lock();
+		auto go = m_gameObject.lock();
 		auto trans = go->getComponentsOfType<TransformationCP>().at(0);
 		auto ani = go->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0);
 		auto stats = go->getComponentsOfType<StatsCP>().at(0);

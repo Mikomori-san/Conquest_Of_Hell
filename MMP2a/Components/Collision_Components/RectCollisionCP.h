@@ -11,8 +11,8 @@ public:
     RectCollisionCP(std::weak_ptr<GameObject> gameObject, std::string id, sf::Vector2f size, bool triggerBool, float scale) : Component(gameObject, id), colliderSize(size), trigger(triggerBool), scale(scale){}
 
     void update(float deltaTime) override;
-    std::string getComponentId() override { return this->componentId; };
-    void setComponentId(std::string id) override { this->componentId = id; }
+    std::string getComponentId() override { return this->m_componentId; };
+    void setComponentId(std::string id) override { this->m_componentId = id; }
     void init() override;
     sf::FloatRect& getCollisionRect() { return collisionRect; }
     void setCollisionRect(sf::FloatRect& colRect) { this->collisionRect = colRect; }

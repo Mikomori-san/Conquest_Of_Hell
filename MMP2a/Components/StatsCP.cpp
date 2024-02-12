@@ -4,14 +4,9 @@
 #include "stdafx.h"
 #include "StatsCP.h"
 
-void StatsCP::update(float deltaTime)
-{
-
-}
-
 void StatsCP::init()
 {
-	health = maxHealth;
-	damage = originalDamage;
-	isDead = false;
+	m_health = m_maxHealth;
+	m_damage = m_originalDamage;
+	m_isDead = false;
 }

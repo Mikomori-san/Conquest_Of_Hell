@@ -10,7 +10,7 @@ class GameObject;
 class Component
 {
 public:
-    Component(std::weak_ptr<GameObject> gameObject, std::string id) : gameObject(gameObject), componentId(id) {}
+    Component(std::weak_ptr<GameObject> gameObject, std::string id) : m_gameObject(gameObject), m_componentId(id) {}
 
     virtual ~Component() = default;
     virtual void update(float deltaTime) = 0;
@@ -20,6 +20,6 @@ public:
 private:
 
 protected:
-    std::weak_ptr<GameObject> gameObject;
-    std::string componentId;
+    std::weak_ptr<GameObject> m_gameObject;
+    std::string m_componentId;
 };

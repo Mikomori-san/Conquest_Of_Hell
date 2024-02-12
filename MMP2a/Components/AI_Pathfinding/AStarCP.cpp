@@ -94,9 +94,9 @@ std::vector<Point> aStar(const std::vector<std::vector<int>> grid, const Point s
 
 void AStarCP::updatePositions(std::vector<sf::Vector2i> incSkelPos)
 {
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        auto myPos = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+        auto myPos = m_gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getPosition();
         otherSkeletonPositions = {};
         for (auto skelPos : incSkelPos)
         {
@@ -126,9 +126,9 @@ void AStarCP::update(float deltaTime)
         }
     }
 
-    if (!gameObject.expired())
+    if (!m_gameObject.expired())
     {
-        auto go = gameObject.lock();
+        auto go = m_gameObject.lock();
 
         sf::Vector2f myPos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 
@@ -156,12 +156,12 @@ void AStarCP::update(float deltaTime)
 
 std::string AStarCP::getComponentId()
 {
-    return this->componentId;
+    return this->m_componentId;
 }
 
 void AStarCP::setComponentId(std::string id)
 {
-    this->componentId = id;
+    this->m_componentId = id;
 }
 
 void AStarCP::init()

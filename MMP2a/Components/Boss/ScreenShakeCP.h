@@ -15,8 +15,8 @@ public:
 
     void init() override;
     void update(float deltaTime) override;
-    std::string getComponentId() override { return this->componentId; }
-    void setComponentId(std::string id) override { componentId = id; };
+    std::string getComponentId() override { return this->m_componentId; }
+    void setComponentId(std::string id) override { m_componentId = id; };
     void updateScreen(sf::View& view) { this->m_originalView = view; }
 private:
     std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> m_bossGraphicsCP;
