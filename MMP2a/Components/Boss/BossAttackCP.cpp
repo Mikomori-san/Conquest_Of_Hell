@@ -39,11 +39,8 @@ void BossAttackCP::update(float deltaTime)
 			}
 			else
 			{				
-				if (timePassed <= attackCooldown)
-				{
-					executeCharm(bossPos, playerPos);
-					charmInd->setAlive();
-				}
+				executeCharm(bossPos, playerPos);
+				charmInd->setAlive();
 			}
 		}
 	}

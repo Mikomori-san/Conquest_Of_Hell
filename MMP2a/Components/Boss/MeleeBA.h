@@ -10,7 +10,7 @@ public:
 	void init() override;
 	void update(float deltaTime) override;
 	void execute() override;
-
+	bool isAttacking() { return attacking; };
 private:
 	void attackPlayer();
 	std::weak_ptr<GameObject> playerPtr;
@@ -18,5 +18,5 @@ private:
 	bool attacking = false;
 	int lastAnimationFrame = 0;
 	int damage = 30;
-	float defaultAnimationSpeed;
+	float defaultAnimationSpeed = 0;
 };

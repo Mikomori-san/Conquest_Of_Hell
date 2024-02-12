@@ -8,6 +8,8 @@
 #include "../Input_Components/MovementInputGamepadCP.h"
 #include "../../Enums/GamepadButton.h"
 #include "../Player_Components/DashCP.h"
+#include "../Boss/MeleeBA.h"
+#include "../Boss/BossAttackCP.h"
 
 
 template <typename T>
@@ -97,6 +99,12 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 	{
 		auto daBoss = boss.lock();
 		auto bossPos = daBoss->getComponentsOfType<TransformationCP>().at(0)->getPosition();
+		std::shared_ptr<MeleeBA> abilityPtr = std::dynamic_pointer_cast<MeleeBA>(daBoss->getComponentsOfType<BossAttackCP>().at(0)->getAbility1());
+		bool bossIsAttacking = false;
+		if (abilityPtr)
+		{
+			bossIsAttacking = abilityPtr->isAttacking();
+		}
 
 		float dist = (playerPos.x - bossPos.x) * (playerPos.x - bossPos.x) + (playerPos.y - bossPos.y) * (playerPos.y - bossPos.y);
 		dist /= 10;
@@ -111,7 +119,7 @@ void PlayerAttackCP<T>::doAttack(std::shared_ptr<TransformationCP> transf, std::
 				{
 					daBoss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0)->setDying();
 				}
-				else
+				else if (!bossIsAttacking)
 				{
 					daBoss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0)->setHit();
 				}

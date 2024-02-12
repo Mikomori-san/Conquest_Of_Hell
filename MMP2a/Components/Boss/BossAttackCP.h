@@ -17,7 +17,7 @@ public:
 	std::string getComponentId() override { return this->componentId; }
 	void setComponentId(std::string id) override { componentId = id; };
 
-	//std::shared_ptr<BossAbility> const getAbility1() { return ability1; };
+	std::shared_ptr<BossAbility> const getAbility1() { return ability1; };
 	std::shared_ptr<BossAbility> const getAbility2() { return ability2; };
 	std::shared_ptr<CharmIndicator> const getCharmInd() { return charmInd; };
 	std::shared_ptr<MeleeIndicator> const getMeeleeInd() { return meeleeInd; };
