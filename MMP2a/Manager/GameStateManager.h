@@ -22,6 +22,9 @@ public:
     void render();
     std::shared_ptr<GameState> getState() { return currentState; };
 
+    void toggleGamepadUse() { useGamepad = !useGamepad ? true : false; }
+    bool gamepadUse() { return useGamepad; }
+
 private:
     GameStateManager() {}
     ~GameStateManager() {}
@@ -30,4 +33,5 @@ private:
 
     std::shared_ptr<GameState> currentState;
     std::map<std::string, std::shared_ptr<GameState>> states;
+    bool useGamepad = false;
 };

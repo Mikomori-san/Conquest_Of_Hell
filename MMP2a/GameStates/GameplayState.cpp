@@ -129,7 +129,6 @@ void GameplayState::update(float deltaTime)
 			{
 				return stats.at(0)->hasDied();
 			}
-			
 		}
 		return false;
 	};
@@ -524,9 +523,6 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 
 	playerTemp->addComponent(playerGraphicsCP);
 
-	bool useArrowKeys = object.getProp("ArrowKeys")->getValue<bool>();
-	bool useController = object.getProp("Controller")->getValue<bool>();
-
 	std::shared_ptr<RectCollisionCP> playerCollisionCP = std::make_shared<RectCollisionCP>(playerTemp, "PlayerCollisionCP",
 		sf::Vector2f(object.getSize().x, object.getSize().y),
 		object.getProp("isTrigger")->getValue<bool>(), 1
@@ -545,24 +541,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 	std::vector<std::weak_ptr<GameObject>> weak;
 	int attackRange = object.getProp("AttackRange")->getValue<int>();
 
-	if (useArrowKeys) {
-		std::shared_ptr<MovementInputArrowsCP> movementInputCP = std::make_shared<MovementInputArrowsCP>(
-			playerTemp, "MovementInputCP"
-		);
-		playerTemp->addComponent(movementInputCP);
-		std::shared_ptr<DashCP<sf::Keyboard::Key>> dashCP = std::make_shared<DashCP<sf::Keyboard::Key>>(playerTemp, "EnterDashCP", sf::Keyboard::Enter, PLAYER_ANIMATION_SPEED);
-		playerTemp->addComponent(dashCP);
-
-		std::shared_ptr<PlayerAttackCP<sf::Keyboard::Key>> playerAttackCP = std::make_shared<PlayerAttackCP<sf::Keyboard::Key>>(playerTemp, "PlayerAttackCP", attackRange, weak, sf::Keyboard::RControl);
-		playerTemp->addComponent(playerAttackCP);
-		if (!AssetManager::getInstance().Textures["arrowsControls"])
-		{
-			AssetManager::getInstance().loadTexture("arrowsControls", "Assets\\UI\\Arrow.png");
-		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("arrowsControls"), window);
-		playerTemp->addComponent(ui);
-	}
-	else if(!useController){
+	if(!GameStateManager::getInstance().gamepadUse()){
 		std::shared_ptr<MovementInputWASDCP> movementInputCP = std::make_shared<MovementInputWASDCP>(
 			playerTemp, "MovementInputCP"
 		);
