@@ -125,8 +125,9 @@ void GameplayState::update(float deltaTime)
 			{
 				return stats.at(0)->hasDied();
 			}
-			return false;
+			
 		}
+		return false;
 	};
 
 	gameObjects.erase(std::remove_if(gameObjects.begin(), gameObjects.end(), removeCondition), gameObjects.end());
