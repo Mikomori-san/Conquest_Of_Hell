@@ -44,7 +44,7 @@ void SpriteRenderCP::draw()
 				{
 					window->draw(attack->getCharmInd()->getSprite());
 				}
-				else if (attack->getMeeleeInd()->getAlive())
+				if (attack->getMeeleeInd()->getAlive())
 				{
 					window->draw(attack->getMeeleeInd()->getSprite());
 				}
@@ -64,8 +64,8 @@ void SpriteRenderCP::draw()
 					}
 					break;
 				}
-				std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
-				/*DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
+			/*	std::shared_ptr<RectCollisionCP> collision = go->getComponentsOfType<RectCollisionCP>().at(0);
+				DebugDraw::getInstance().drawRectOutline(collision->getCollisionRect(), sf::Color::Green);*/
 			}
 		}
 	}

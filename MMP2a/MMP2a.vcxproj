@@ -189,6 +189,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Enums\Direction.h" />
     <ClInclude Include="Enums\Enemy_Animationtype.h" />
     <ClInclude Include="Enums\GamepadButton.h" />
+    <ClInclude Include="Enums\MeeleIndicator_Animationtype.h" />
     <ClInclude Include="GameStates\LooseState.h" />
     <ClInclude Include="Manager\PhysicsManager.h" />
     <ClInclude Include="Manifold.h" />
@@ -247,7 +248,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Manager\PhysicsManager.cpp" />
     <ClCompile Include="Manager\RenderManager.cpp" />
     <ClCompile Include="Components\Boss\ScreenShakeCP.cpp" />
-    <ClCompile Include="Components\Boss\MeeleeIndicator.cpp" />
+    <ClCompile Include="Components\Boss\MeleeIndicator.cpp" />
     <ClCompile Include="Slloth-Soft_Main.cpp" />
     <ClCompile Include="Components\Spawner_Components\SpawnerCP.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -261,7 +262,7 @@ sfml-window.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Manager\RenderManager.h" />
     <ClInclude Include="Components\Spawner_Components\SpawnerCP.h" />
     <ClInclude Include="Components\Boss\ScreenShakeCP.h" />
-    <ClInclude Include="Components\Boss\MeeleeIndicator.h" />
+    <ClInclude Include="Components\Boss\MeleeIndicator.h" />
     <ClInclude Include="tileson.hpp" />
     <ClInclude Include="Trigonometry.h" />
     <ClInclude Include="VectorAlgebra2D.h" />

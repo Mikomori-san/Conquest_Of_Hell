@@ -23,6 +23,7 @@
 #include "../Components//Player_Components/PlayerAttackCP.h"
 #include "../Enums/Enemy_Animationtype.h"
 #include "../Enums/Boss_Animationtype.h"
+#include "../Enums/MeeleIndicator_Animationtype.h"
 #include "../Components/Enemy_Components/EnemyAttackCP.h"
 #include <iostream>
 #include "../Components/Input_Components/MovementInputGamepadCP.h"
@@ -82,7 +83,7 @@ void GameplayState::init(sf::RenderWindow& rWindow)
 }
 void GameplayState::exit()
 {
-	cot->stop();
+	//cot->stop();
 	for (auto& go : gameObjects)
 	{
 		go.reset();
@@ -644,6 +645,8 @@ void GameplayState::createBoss(tson::Object& object, tson::Layer group)
 		bossTemp, "BossSpriteCP", *AssetManager::getInstance().Textures.at(texName), spriteSheetCounts[object.getProp("BossName")->getValue<std::string>()], 4, Boss_Animationtype::Idle
 	);
 	bossTemp->addComponent(bossGraphicsCP);
+	
+	//std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window, 10.f, 1.5f, 500.f);
 
 	std::shared_ptr<ScreenShakeCP> screenShakeCP = std::make_shared<ScreenShakeCP>(bossGraphicsCP, bossTemp, "ScreenShakeCP", window);
 	bossTemp->addComponent(screenShakeCP);
