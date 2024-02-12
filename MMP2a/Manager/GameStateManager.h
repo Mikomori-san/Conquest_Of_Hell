@@ -20,10 +20,10 @@ public:
     void setState(std::string name, sf::RenderWindow& window);
     void update(float deltaTime);
     void render();
-    std::shared_ptr<GameState> getState() { return currentState; };
+    std::shared_ptr<GameState> getState() { return m_currentState; };
 
-    void toggleGamepadUse() { useGamepad = !useGamepad ? true : false; }
-    bool gamepadUse() { return useGamepad; }
+    void toggleGamepadUse() { m_useGamepad = !m_useGamepad ? true : false; }
+    bool gamepadUse() { return m_useGamepad; }
 
 private:
     GameStateManager() {}
@@ -31,7 +31,7 @@ private:
     GameStateManager(const GameStateManager&) = delete;
     GameStateManager& operator= (const GameStateManager&) = delete;
 
-    std::shared_ptr<GameState> currentState;
-    std::map<std::string, std::shared_ptr<GameState>> states;
-    bool useGamepad = false;
+    std::shared_ptr<GameState> m_currentState;
+    std::map<std::string, std::shared_ptr<GameState>> m_states;
+    bool m_useGamepad = false;
 };

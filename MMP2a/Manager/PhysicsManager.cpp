@@ -112,7 +112,7 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
                 manifold->normal = normal;
                 manifold->penetration = penetration;
 
-                manifolds.push_back(manifold);
+                m_manifolds.push_back(manifold);
             }
 
             if (body2->getId().find("Boss") != std::string::npos)
@@ -156,7 +156,7 @@ void PhysicsManager::collisionCheck(std::vector<std::shared_ptr<GameObject>>& ga
 
 void PhysicsManager::collisionResolve()
 {
-    for (auto& man : manifolds)
+    for (auto& man : m_manifolds)
     {
             std::shared_ptr<GameObject> go1 = man->body1;
             std::shared_ptr<GameObject> go2 = man->body2;
@@ -185,14 +185,14 @@ void PhysicsManager::collisionResolve()
 void PhysicsManager::update(std::vector<std::shared_ptr<GameObject>> gameObjects, float deltaTime)
 {
     const float step = 0.001f;
-    accumulator += deltaTime;
+    m_accumulator += deltaTime;
 
-    while (accumulator > step)
+    while (m_accumulator > step)
     {
-        manifolds.clear();
+        m_manifolds.clear();
         collisionCheck(gameObjects);
         collisionResolve();
 
-        accumulator -= step;
+        m_accumulator -= step;
     }
 }

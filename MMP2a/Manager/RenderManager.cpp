@@ -11,9 +11,9 @@ bool compareByLayerNr(const std::shared_ptr<RenderCP>& a, const std::shared_ptr<
 
 void RenderManager::render()
 {
-	std::sort(layersToRender.begin(), layersToRender.end(), compareByLayerNr);
+	std::sort(m_layersToRender.begin(), m_layersToRender.end(), compareByLayerNr);
 
-	for (auto& comp : layersToRender)
+	for (auto& comp : m_layersToRender)
 	{
 		comp->draw();
 	}
@@ -21,7 +21,7 @@ void RenderManager::render()
 
 void RenderManager::addToLayers(std::shared_ptr<RenderCP> renderCP)
 {
-	layersToRender.push_back(renderCP);
+	m_layersToRender.push_back(renderCP);
 }
 
 bool compareByLayerNr(const std::shared_ptr<RenderCP>& a, const std::shared_ptr<RenderCP>& b) {
@@ -30,5 +30,5 @@ bool compareByLayerNr(const std::shared_ptr<RenderCP>& a, const std::shared_ptr<
 
 void RenderManager::resetLayers(std::vector<std::shared_ptr<RenderCP>> newLayersToRender) 
 {
-	layersToRender = newLayersToRender;
+	m_layersToRender = newLayersToRender;
 }
