@@ -13,10 +13,10 @@
 
 void SpriteRenderCP::draw()
 {
-	for (auto& rend : renderComponents)
+	for (auto& rend : m_renderComponents)
 	{
 		auto& sprite = rend->getSprite();
-		window->draw(sprite);
+		m_window->draw(sprite);
 		if (!gameObject.expired())
 		{
 			std::shared_ptr<GameObject> go = gameObject.lock();
@@ -24,7 +24,7 @@ void SpriteRenderCP::draw()
 			{
 				if (go->getComponentsOfType<StatusEffectCP>().at(0)->getDisplay())
 				{
-					window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
+					m_window->draw(go->getComponentsOfType<StatusEffectCP>().at(0)->getSprite());
 				}
 			}
 			if (go->getId().find("Skeleton") != std::string::npos)
@@ -45,11 +45,11 @@ void SpriteRenderCP::draw()
 
 				if (attack->getCharmInd()->getAlive())
 				{
-					window->draw(attack->getCharmInd()->getSprite());
+					m_window->draw(attack->getCharmInd()->getSprite());
 				}
 				if (attack->getMeeleeInd()->getAlive())
 				{
-					window->draw(attack->getMeeleeInd()->getSprite());
+					m_window->draw(attack->getMeeleeInd()->getSprite());
 				}
 				switch (attack->getAbility2()->getAbilityType())
 				{
@@ -61,7 +61,7 @@ void SpriteRenderCP::draw()
 					std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(attack->getAbility2());
 					if (charm->getAlive())
 					{
-						window->draw(charm->getSprite());
+						m_window->draw(charm->getSprite());
 						/*DebugDraw::getInstance().drawRectOutline(charm->getHitbox(), sf::Color::Red);*/
 
 					}
@@ -79,7 +79,7 @@ void SpriteRenderCP::update(float deltaTime)
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		renderComponents = go->getComponentsOfType<GraphicsCP>();
+		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }
 
@@ -88,6 +88,6 @@ void SpriteRenderCP::init()
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		renderComponents = go->getComponentsOfType<GraphicsCP>();
+		m_renderComponents = go->getComponentsOfType<GraphicsCP>();
 	}
 }

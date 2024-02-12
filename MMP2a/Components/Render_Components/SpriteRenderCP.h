@@ -16,11 +16,11 @@ public:
 	std::string getComponentId() override { return this->componentId; }
 	void setComponentId(std::string id) override { this->componentId = id; }
 	void init() override;
-	int getLayerNr() override { return layerNr; }
-	void setLayerNr(int nr) override { layerNr = nr; }
+	int getLayerNr() override { return m_layerNr; }
+	void setLayerNr(int nr) override { m_layerNr = nr; }
 	std::weak_ptr<GameObject> getGO() override { return gameObject; }
 
 
 private:
-	std::vector<std::shared_ptr<GraphicsCP>> renderComponents;
+	std::vector<std::shared_ptr<GraphicsCP>> m_renderComponents;
 };

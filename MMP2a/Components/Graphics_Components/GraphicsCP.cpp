@@ -16,5 +16,5 @@ void GraphicsCP::init()
 
 void GraphicsCP::setSprite(std::shared_ptr<sf::Texture> texture)
 {
-	this->sprite->setTexture(*texture);
+	this->m_sprite->setTexture(*texture);
 }

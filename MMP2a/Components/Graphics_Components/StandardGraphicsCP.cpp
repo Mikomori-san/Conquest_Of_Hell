@@ -8,8 +8,8 @@
 
 void StandardGraphicsCP::init()
 {
-    sprite->setScale(sf::Vector2f(1, 1));
-    sprite->setPosition(sf::Vector2f(0, 0));
+    m_sprite->setScale(sf::Vector2f(1, 1));
+    m_sprite->setPosition(sf::Vector2f(0, 0));
 }
 
 void StandardGraphicsCP::update(float deltaTime)
@@ -26,22 +26,22 @@ void StandardGraphicsCP::update(float deltaTime)
 
         if (transform)
         {
-            sprite->setPosition(transform->getPosition());
-            sprite->setRotation(transform->getRotation());
-            sprite->setScale(transform->getScale(), transform->getScale());
-            sprite->setOrigin(transform->getOrigin());
+            m_sprite->setPosition(transform->getPosition());
+            m_sprite->setRotation(transform->getRotation());
+            m_sprite->setScale(transform->getScale(), transform->getScale());
+            m_sprite->setOrigin(transform->getOrigin());
         }
     }
 }
 
 void StandardGraphicsCP::setSprite(std::shared_ptr<sf::Texture> texture)
 {
-    this->sprite->setTexture(*texture);
+    this->m_sprite->setTexture(*texture);
 }
 
 sf::Vector2f StandardGraphicsCP::getSize() {
-    if (sprite && sprite->getTexture()) {
-        sf::Vector2u textureSize = sprite->getTexture()->getSize();
+    if (m_sprite && m_sprite->getTexture()) {
+        sf::Vector2u textureSize = m_sprite->getTexture()->getSize();
         return sf::Vector2f(static_cast<float>(textureSize.x), static_cast<float>(textureSize.y));
     }
     return sf::Vector2f(0.0f, 0.0f);

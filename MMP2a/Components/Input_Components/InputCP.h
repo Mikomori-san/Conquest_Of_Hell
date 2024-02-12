@@ -20,13 +20,13 @@ public:
 	virtual void update(float deltaTime) override {};
 	virtual void processInput() {};
 
-	virtual void toggleInputLock() { inputLock = inputLock ? false : true; }
-	virtual bool getInputLockState() { return inputLock; }
+	virtual void toggleInputLock() { m_inputLock = m_inputLock ? false : true; }
+	virtual bool getInputLockState() { return m_inputLock; }
 
 protected:
-	bool inputLock = false;
-	Direction lastDirection;
-	sf::Vector2f lastVec;
-	float vel;
-	bool hadInput = false;
+	bool m_inputLock = false;
+	Direction m_lastDirection;
+	sf::Vector2f m_lastVec;
+	float m_vel;
+	bool m_hadInput = false;
 };

@@ -76,8 +76,6 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["gamePad"]);
 	gamePadSprite.setOrigin(sf::Vector2(gamePadSprite.getGlobalBounds().width / 2, gamePadSprite.getGlobalBounds().height / 2));
 	gamePadSprite.setPosition(sf::Vector2f(1800.f, 100.f));
-	//gamePadSprite.setScale(0.5f, 0.5f);
-
 
 	sf::Color red = sf::Color(255, 0, 0, 255);
 	sf::Color black = sf::Color(0, 0, 0);

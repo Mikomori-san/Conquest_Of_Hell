@@ -7,7 +7,7 @@
 class RenderCP : public Component
 {
 public:
-	RenderCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<sf::RenderWindow> renderWindow, int incLayerNr) : Component(gameObject, id), window(renderWindow), layerNr(incLayerNr) {}
+	RenderCP(std::weak_ptr<GameObject> gameObject, std::string id, std::weak_ptr<sf::RenderWindow> renderWindow, int incLayerNr) : Component(gameObject, id), m_window(renderWindow), m_layerNr(incLayerNr) {}
 	virtual ~RenderCP() = default;
 
 	virtual void draw() = 0;
@@ -19,6 +19,6 @@ public:
 	virtual void setLayerNr(int nr) = 0;
 	virtual std::weak_ptr<GameObject> getGO() { return gameObject; }
 protected:
-	std::shared_ptr<sf::RenderWindow> window;
-	int layerNr;
+	std::shared_ptr<sf::RenderWindow> m_window;
+	int m_layerNr;
 };

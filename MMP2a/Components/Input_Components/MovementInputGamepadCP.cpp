@@ -8,30 +8,30 @@
 
 void MovementInputGamepadCP::update(float deltatime)
 {
-    if (!sf::Joystick::isConnected(controllerNr))
+    if (!sf::Joystick::isConnected(m_controllerNr))
     {
-        std::cout << "Gamepad " << controllerNr << " is not connected!" << std::endl;
-        isControllerConnected = false;
+        std::cout << "Gamepad " << m_controllerNr << " is not connected!" << std::endl;
+        m_isControllerConnected = false;
     }
     else
     {
         if (!gameObject.expired())
         {
-            vel = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
+            m_vel = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getOriginalVelocity();
 
-            if (!inputLock)
+            if (!m_inputLock)
             {
                 processInput();
             }
             else
             {
-                if (hadInput)
+                if (m_hadInput)
                 {
-                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(lastDirection, lastVec, vel);
+                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleMovement(m_lastDirection, m_lastVec, m_vel);
                 }
                 else
                 {
-                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
+                    gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
                 }
             }
         }
@@ -46,9 +46,9 @@ void MovementInputGamepadCP::processInput()
 
         std::shared_ptr<DecisionHandlerCP> decHandler = gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0);
 
-        hadInput = true;
+        m_hadInput = true;
 
-        sf::Vector2f joyStickLocation = InputManager::getInstance().getLeftStickPosition(controllerNr);
+        sf::Vector2f joyStickLocation = InputManager::getInstance().getLeftStickPosition(m_controllerNr);
         float normLength = std::sqrt(joyStickLocation.x * joyStickLocation.x + joyStickLocation.y * joyStickLocation.y);
         sf::Vector2f joyStickLocationNormalized;
         
@@ -59,73 +59,73 @@ void MovementInputGamepadCP::processInput()
 
         float length = std::sqrt(joyStickLocation.x * joyStickLocation.x + joyStickLocation.y * joyStickLocation.y);
 
-        float adjustedVelocity = std::min(vel * length, vel);
+        float adjustedVelocity = std::min(m_vel * length, m_vel);
 
         if (joyStickLocation.x >= 0.2f && joyStickLocation.y <= -0.2f)
         {
             decHandler->handleMovement(Direction::upRight, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::upRight;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::upRight;
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.x >= 0.2f && joyStickLocation.y >= 0.2f)
         {
             decHandler->handleMovement(Direction::rightDown, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::rightDown;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::rightDown;
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.x <= -0.2f && joyStickLocation.y >= 0.2f)
         {
             decHandler->handleMovement(Direction::downLeft, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::downLeft;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::downLeft;
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.x <= -0.2f && joyStickLocation.y <= -0.2f)
         {
             decHandler->handleMovement(Direction::leftUp, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::leftUp;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::leftUp;
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.x < 0.2f && joyStickLocation.x > -0.2f && joyStickLocation.y < -0.2f)
         {
-            decHandler->handleMovement(lastDirection, joyStickLocation, adjustedVelocity);
-            lastVec = joyStickLocation;
+            decHandler->handleMovement(m_lastDirection, joyStickLocation, adjustedVelocity);
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.y < 0.2f && joyStickLocation.y > -0.2f && joyStickLocation.x < -0.2f)
         {
             decHandler->handleMovement(Direction::left, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::left;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::left;
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.x < 0.2f && joyStickLocation.x > -0.2f && joyStickLocation.y > 0.2f)
         {
-            decHandler->handleMovement(lastDirection, joyStickLocation, adjustedVelocity);
-            lastVec = joyStickLocation;
+            decHandler->handleMovement(m_lastDirection, joyStickLocation, adjustedVelocity);
+            m_lastVec = joyStickLocation;
         }
         else if (joyStickLocation.y < 0.2f && joyStickLocation.y > -0.2f && joyStickLocation.x > 0.2f)
         {
             decHandler->handleMovement(Direction::right, joyStickLocation, adjustedVelocity);
-            lastDirection = Direction::right;
-            lastVec = joyStickLocation;
+            m_lastDirection = Direction::right;
+            m_lastVec = joyStickLocation;
         }
         else
         {
-            hadInput = false;
-            gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(lastDirection);
+            m_hadInput = false;
+            gameObject.lock()->getComponentsOfType<DecisionHandlerCP>().at(0)->handleIdle(m_lastDirection);
         }
     }
 }
 
 void MovementInputGamepadCP::init()
 {
-    if (isControllerConnected = sf::Joystick::isConnected(controllerNr))
+    if (m_isControllerConnected = sf::Joystick::isConnected(m_controllerNr))
     {
         sf::Joystick::update();
-        std::cout << "Gamepad: " << controllerNr << " is connected!" << std::endl;
+        std::cout << "Gamepad: " << m_controllerNr << " is connected!" << std::endl;
     }
     else
     {
         std::cerr << "Gamepad not connected!" << std::endl;
-        isControllerConnected = false;
+        m_isControllerConnected = false;
     }
 }
 
