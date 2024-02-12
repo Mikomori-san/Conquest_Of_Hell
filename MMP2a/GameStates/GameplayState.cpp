@@ -323,10 +323,10 @@ void GameplayState::loadMap(std::string name, const sf::Vector2f& offset)
 			{
 				createBoundary(object, group);
 			}
-			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
-			{
-				createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
-			}
+			//else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Spawner")
+			//{
+			//	createSpawner(object, group, aStarGridSize, unMovablePositions, mapTileSize);
+			//}
 			else if (object.getProp("ObjectGroup")->getValue<std::string>() == "Boss")
 			{
 				createBoss(object, group);
@@ -552,7 +552,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 		{
 			AssetManager::getInstance().loadTexture("arrowsControls", "Assets\\UI\\Arrow.png");
 		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("arrowsControls"));
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("arrowsControls"), window);
 		playerTemp->addComponent(ui);
 	}
 	else if(!useController){
@@ -570,7 +570,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 		{
 			AssetManager::getInstance().loadTexture("keyboardControls", "Assets\\UI\\Keyboard.png");
 		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("keyboardControls"));
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("keyboardControls"), window);
 		playerTemp->addComponent(ui);
 	}
 	else
@@ -588,7 +588,7 @@ void GameplayState::createPlayers(tson::Object& object, tson::Layer group)
 		{
 			AssetManager::getInstance().loadTexture("gamepadControls", "Assets\\UI\\Gamepad.png");
 		}
-		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("gamepadControls"));
+		std::shared_ptr<ControlsUI> ui = std::make_shared<ControlsUI>(playerTemp, "ControlsUI", *AssetManager::getInstance().Textures.at("gamepadControls"), window);
 		playerTemp->addComponent(ui);
 	}
 

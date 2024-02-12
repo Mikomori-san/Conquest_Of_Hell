@@ -28,11 +28,11 @@ private:
 	std::weak_ptr<GameObject> playerPtr;
 	std::shared_ptr<BossAbility> ability1 = std::make_shared<MeleeBA>(MeleeBA("MeleeBA", gameObject, playerPtr));
 	std::shared_ptr<BossAbility> ability2 = std::make_shared<CharmBA>(CharmBA("CharmBA", playerPtr));
-	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator());
+	std::shared_ptr<CharmIndicator> charmInd = std::make_shared<CharmIndicator>(CharmIndicator(gameObject));
 	std::shared_ptr<MeeleeIndicator> meeleeInd = std::make_shared<MeeleeIndicator>(MeeleeIndicator());
 
 	float swapThreshold = 100.f * 100.f; //->squared distance
-	float attackCooldown = 2.f;
+	float attackCooldown = 5.f;
 	float timePassed = 0.f;
 
 };

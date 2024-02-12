@@ -1,30 +1,24 @@
 #pragma once
+#include "../../GameObject.h"
 class CharmIndicator
 {
 public:
-	CharmIndicator() {};
+	CharmIndicator(std::weak_ptr<GameObject> gameObject) : bossPtr(gameObject) {};
 	void init() ;
 	void update(float deltaTime) ;
 
-
-	void setPosition(const sf::Vector2f& vec) { position = vec; };
-	const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 	const sf::Sprite& getSprite() { return sprite; }
-
-	const sf::FloatRect& getHitbox() { return hitbox; };
 
 	void setAlive();
 	bool getAlive() const { return alive; };
 	void setDead();
 private:
+	std::weak_ptr<GameObject> bossPtr;
 	sf::Sprite sprite;
-	sf::Texture texture;
-	sf::FloatRect hitbox;
-	float ttl = 2;
 	float animationTimeIndex = 0;
 	float animationSpeed = 10;
-	sf::Vector2f position;
+	int animationFrames = 4;
 	bool alive = false;
-
+	sf::Vector2f offset = sf::Vector2f(10.f, 10.f);
 };
 
