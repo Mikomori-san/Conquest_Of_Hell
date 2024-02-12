@@ -707,11 +707,6 @@
                          "value":8
                         }, 
                         {
-                         "name":"ArrowKeys",
-                         "type":"bool",
-                         "value":false
-                        }, 
-                        {
                          "name":"AttackButton",
                          "type":"string",
                          "value":"E"
@@ -720,11 +715,6 @@
                          "name":"AttackRange",
                          "type":"int",
                          "value":500
-                        }, 
-                        {
-                         "name":"Controller",
-                         "type":"bool",
-                         "value":false
                         }, 
                         {
                          "name":"ControllerNr",

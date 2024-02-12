@@ -25,7 +25,6 @@ private:
 
 	std::shared_ptr<sf::Music> cw;
 
-
 	sf::RectangleShape startButton;
 	sf::RectangleShape exitButton;
 
@@ -39,4 +38,8 @@ private:
 	bool isPlaySelected = true;
 	bool isExitSelected = false;
 	bool playGamePad = true;
+	float buttonTimer;
+	const float CONTROLLER_SWITCH_CD = 0.2f;
+	sf::Text text;
+	float textTimer;
 };

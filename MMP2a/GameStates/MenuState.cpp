@@ -23,7 +23,7 @@
 void MenuState::init(sf::RenderWindow& rWindow)
 {
 	this->window.reset(&rWindow, [](sf::RenderWindow*) {});	
-
+	buttonTimer = CONTROLLER_SWITCH_CD;
 	//this->window->setSize(sf::Vector2u(960, 540));
 
 	DebugDraw::getInstance().initialize(*window);
@@ -89,6 +89,30 @@ void MenuState::init(sf::RenderWindow& rWindow)
 	createButton("Exit", sf::Vector2f(750, 50), exitButtonPos, black);
 
 	close = false;
+
+	sf::Font font;
+
+	if (!AssetManager::getInstance().Fonts["perfect"]) {
+		AssetManager::getInstance().loadFont("perfect", "Assets\\Fonts\\Perfect.ttf");
+	}
+
+	font = *AssetManager::getInstance().Fonts["perfect"];
+
+	if (font.getInfo().family.empty()) {
+		std::cerr << "Font not loaded properly!" << std::endl;
+	}
+
+	text = sf::Text();
+	text.setFont(font);
+	text.setString("Press Start to enable Gamepad!");
+	text.setCharacterSize(24);
+	text.setFillColor(sf::Color::White);
+
+	sf::FloatRect textBounds = text.getLocalBounds();
+	text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+		textBounds.top + textBounds.height / 2.0f);
+	text.setPosition(window->getSize().x / 2.0f, window->getSize().y / 2.0f);
+	textTimer = 0.f;
 }
 
 void MenuState::exit()
@@ -100,6 +124,30 @@ void MenuState::exit()
 
 void MenuState::update(float deltaTime)
 {
+	buttonTimer += deltaTime;
+	textTimer += deltaTime;
+
+	if (sf::Joystick::isButtonPressed(0, GamepadButton::Start) && buttonTimer >= CONTROLLER_SWITCH_CD)
+	{
+		GameStateManager::getInstance().toggleGamepadUse();
+		buttonTimer = 0.f;
+	}
+
+	if (!sf::Joystick::isConnected(0))
+	{
+		if (GameStateManager::getInstance().gamepadUse())
+			GameStateManager::getInstance().toggleGamepadUse();
+	}
+
+	if (GameStateManager::getInstance().gamepadUse())
+	{
+		gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["gamePad"]);
+	}
+	else
+	{
+		gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["noGamePad"]);
+	}
+
 	for (auto& button : buttonMap)
 	{
 		sf::FloatRect buttonBounds = button.second.getGlobalBounds();
@@ -122,7 +170,7 @@ void MenuState::update(float deltaTime)
 				window->close();
 			}
 		}
-		else if (isControllerConnected = sf::Joystick::isConnected(0))
+		else if (GameStateManager::getInstance().gamepadUse())
 		{
 			sf::Vector2f joyStickLocation = InputManager::getInstance().getLeftStickPosition(0);
 			if (isPlaySelected)
@@ -148,34 +196,28 @@ void MenuState::update(float deltaTime)
 				isPlaySelected = true;
 				isExitSelected = false;
 			}
-				if (isExitSelected)
+			if (isExitSelected)
+			{
+				if (button.first == "Start")
 				{
-					if (button.first == "Start")
-					{
-						button.second.setOutlineColor(sf::Color::Red);
-					}
-					else
-					{
-						button.second.setOutlineColor(sf::Color::White);
-					}
-					if (sf::Joystick::isButtonPressed(0, static_cast<GamepadButton>(A)))
-					{
-						window->close();
-
-					}
+					button.second.setOutlineColor(sf::Color::Red);
 				}
-		}
-	}
+				else
+				{
+					button.second.setOutlineColor(sf::Color::White);
+				}
+				if (sf::Joystick::isButtonPressed(0, static_cast<GamepadButton>(A)))
+				{
+					window->close();
 
-	if (playGamePad)
-	{
-		gamePadSprite = sf::Sprite(*AssetManager::getInstance().Textures["gamePad"]);
+				}
+			}
+		}
 	}
 }
 
 void MenuState::render()
 {
-	
 	window->clear(sf::Color::Black);
 	window->draw(backgroundSprite);
 
@@ -184,9 +226,48 @@ void MenuState::render()
 		
 	}
 
+	int intTextTimer = std::round(textTimer);
+
+	//BECAUSE OF SFML BUG: (Doesn't work "clean")
+	sf::Font font;
+
+	if (!AssetManager::getInstance().Fonts["perfect"]) {
+		AssetManager::getInstance().loadFont("perfect", "Assets\\Fonts\\Perfect.ttf");
+	}
+
+	font = *AssetManager::getInstance().Fonts["perfect"];
+
+	if (font.getInfo().family.empty()) {
+		std::cerr << "Font not loaded properly!" << std::endl;
+	}
+	
+	text.setFont(font);
+		
 	window->draw(startSprite);
 	window->draw(exitSprite);
 	window->draw(gamePadSprite);
+	
+	if (intTextTimer % 2 == 0)
+	{
+		if (!GameStateManager::getInstance().gamepadUse())
+		{
+			text.setString("Press Start to enable Gamepad!");
+			sf::FloatRect textBounds = text.getLocalBounds();
+			text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+				textBounds.top + textBounds.height / 2.0f);
+			text.setPosition(window->getSize().x / 2.0f, window->getSize().y / 2.0f);
+		}
+		else
+		{
+			text.setString("Gamepad connected!");
+			sf::FloatRect textBounds = text.getLocalBounds();
+			text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+				textBounds.top + textBounds.height / 2.0f);
+			text.setPosition(window->getSize().x / 2.0f, window->getSize().y / 2.0f);
+		}
+			
+		window->draw(text);
+	}
 }
  sf::RectangleShape MenuState::createButton( std::string name, sf::Vector2f size, sf::Vector2f pos, sf::Color fillColor)
 {
