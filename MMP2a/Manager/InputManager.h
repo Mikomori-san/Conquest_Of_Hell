@@ -42,15 +42,15 @@ private:
 	InputManager(const InputManager&) = delete;
 	InputManager& operator=(const InputManager&) = delete;
 
-	std::map<sf::Keyboard::Key, bool> isKeyDown;
-	std::map<sf::Keyboard::Key, bool> isKeyPressed;
-	std::map<sf::Keyboard::Key, bool> isKeyUp;
+	std::map<sf::Keyboard::Key, bool> m_isKeyDown;
+	std::map<sf::Keyboard::Key, bool> m_isKeyPressed;
+	std::map<sf::Keyboard::Key, bool> m_isKeyUp;
 
-	std::map<sf::Mouse::Button, bool> isMouseDown;
-	std::map<sf::Mouse::Button, bool> isMouseUp;
-	std::map<sf::Mouse::Button, bool> isMousePressed;
+	std::map<sf::Mouse::Button, bool> m_isMouseDown;
+	std::map<sf::Mouse::Button, bool> m_isMouseUp;
+	std::map<sf::Mouse::Button, bool> m_isMousePressed;
 
-	sf::Vector2i mousePosition;
+	sf::Vector2i m_mousePosition;
 
 	sf::RenderWindow* m_window;
 

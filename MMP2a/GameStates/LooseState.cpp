@@ -42,22 +42,19 @@ void LooseState::init(sf::RenderWindow& rWindow)
 	}
 
 
-	bgTexture = *AssetManager::getInstance().Textures["BackgroundImage"];
-	backgroundSprite.setTexture(bgTexture);
+	backgroundSprite = sf::Sprite(*AssetManager::getInstance().Textures["BackgroundImage"]);
 	sf::Vector2f viewCenterVec = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2));
 	sf::Vector2f startButtonPos = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2) + 180);
 	sf::Vector2f exitButtonPos = sf::Vector2f((window->getSize().x / 2), (window->getSize().y / 2) + 280);
 	backgroundSprite.setOrigin(sf::Vector2(backgroundSprite.getGlobalBounds().width / 2, backgroundSprite.getGlobalBounds().height / 2));
 	backgroundSprite.setPosition(viewCenterVec);
 
-	restartTexture = *AssetManager::getInstance().Textures["restartImage"];
-	restartSprite.setTexture(restartTexture);
+	restartSprite = sf::Sprite(*AssetManager::getInstance().Textures["restartImage"]);
 	restartSprite.setOrigin(sf::Vector2(restartSprite.getGlobalBounds().width / 2, restartSprite.getGlobalBounds().height / 2));
 	restartSprite.setPosition(startButtonPos);
 	restartSprite.setScale(0.5f, 0.5f);
 
-	exitTexture = *AssetManager::getInstance().Textures["exitImage"];
-	exitSprite.setTexture(exitTexture);
+	exitSprite = sf::Sprite(*AssetManager::getInstance().Textures["exitImage"]);
 	exitSprite.setOrigin(sf::Vector2(exitSprite.getGlobalBounds().width / 2, exitSprite.getGlobalBounds().height / 2));
 	exitSprite.setPosition(exitButtonPos);
 	exitSprite.setScale(0.5f, 0.5f);

@@ -25,11 +25,7 @@ private:
 	std::shared_ptr<sf::RenderWindow> window;
 	sf::Sprite backgroundSprite;
 
-	sf::Texture bgTexture;
-	sf::Texture restartTexture;
-	sf::Texture exitTexture;
 	std::shared_ptr<sf::Music> cw;
-
 
 	sf::RectangleShape startButton;
 	sf::RectangleShape exitButton;

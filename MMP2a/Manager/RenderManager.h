@@ -17,11 +17,11 @@ public:
 	void render();
 	void addToLayers(std::shared_ptr<RenderCP> renderCP);
 	void resetLayers(std::vector<std::shared_ptr<RenderCP>> newLayersToRender);
-	std::vector<std::shared_ptr<RenderCP>>& getLayers() { return layersToRender; }
+	std::vector<std::shared_ptr<RenderCP>>& getLayers() { return m_layersToRender; }
 
 private:
 	RenderManager() = default;
 	~RenderManager() = default;
 
-	std::vector<std::shared_ptr<RenderCP>> layersToRender;
+	std::vector<std::shared_ptr<RenderCP>> m_layersToRender;
 };
