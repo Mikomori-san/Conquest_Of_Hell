@@ -10,7 +10,6 @@ void MovementInputGamepadCP::update(float deltatime)
 {
     if (!sf::Joystick::isConnected(controllerNr))
     {
-        std::cout << "Gamepad " << controllerNr << " is not connected!" << std::endl;
         isControllerConnected = false;
     }
     else
@@ -120,23 +119,9 @@ void MovementInputGamepadCP::init()
     if (isControllerConnected = sf::Joystick::isConnected(controllerNr))
     {
         sf::Joystick::update();
-        std::cout << "Gamepad: " << controllerNr << " is connected!" << std::endl;
     }
     else
     {
-        std::cerr << "Gamepad not connected!" << std::endl;
         isControllerConnected = false;
     }
 }
-
-
-/*
-Ganz nach links: X = -100, Y = 0
-Ganz nach rechts: X = 100, Y = 0
-Ganz nach oben: X = 0, Y = -100
-Ganz nach unten: X = 0, Y = 100
-Links oben: X = -100, Y = -100
-Rechts oben: X = 100, Y = -100
-Links unten: X = -100, Y = 100
-Rechts unten: X = 100, Y = 100
-*/

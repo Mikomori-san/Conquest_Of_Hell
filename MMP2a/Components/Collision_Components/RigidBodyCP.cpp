@@ -7,12 +7,12 @@
 
 void RigidBodyCP::setPosNotifyTransf(sf::Vector2f pos)
 {
-    this->position = pos;
+    this->m_position = pos;
     if (!gameObject.expired())
     {
         std::shared_ptr<GameObject> go = gameObject.lock();
         std::shared_ptr<TransformationCP> transCP = go->getComponentsOfType<TransformationCP>().at(0);
-        transCP->setPosition(position);
+        transCP->setPosition(m_position);
     }
 }
 
@@ -20,7 +20,7 @@ void RigidBodyCP::setPosNotifyTransf(sf::Vector2f pos)
 void RigidBodyCP::setVelNotifyTransf(sf::Vector2f vel)
 {
     
-    this->velocity = vel;
+    this->m_velocity = vel;
 
     if (!gameObject.expired())
     {

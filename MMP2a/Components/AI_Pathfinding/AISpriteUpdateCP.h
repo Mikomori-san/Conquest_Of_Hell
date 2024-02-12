@@ -15,5 +15,5 @@ public:
 	void init() override;
 
 private:
-	Enemy_Animationtype lastAnimation = Enemy_Animationtype::IdleRight;
+	Enemy_Animationtype m_lastAnimation = Enemy_Animationtype::IdleRight;
 };

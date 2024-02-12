@@ -7,22 +7,22 @@
 class CharmIndicator
 {
 public:
-	CharmIndicator(std::weak_ptr<GameObject> gameObject) : bossPtr(gameObject) {};
+	CharmIndicator(std::weak_ptr<GameObject> gameObject) : m_bossPtr(gameObject) {};
 	void init() ;
 	void update(float deltaTime) ;
 
-	const sf::Sprite& getSprite() { return sprite; }
+	const sf::Sprite& getSprite() { return m_sprite; }
 
 	void setAlive();
 	bool getAlive() const { return alive; };
 	void setDead();
 private:
-	std::weak_ptr<GameObject> bossPtr;
-	sf::Sprite sprite;
-	float animationTimeIndex = 0;
-	float animationSpeed = 10;
-	int animationFrames = 4;
+	std::weak_ptr<GameObject> m_bossPtr;
+	sf::Sprite m_sprite;
+	float m_animationTimeIndex = 0;
+	float m_animationSpeed = 10;
+	const int ANIMATION_FRAMES = 4;
 	bool alive = false;
-	sf::Vector2f offset = sf::Vector2f(10.f, 10.f);
+	const sf::Vector2f OFFSET = sf::Vector2f(10.f, 10.f);
 };
 

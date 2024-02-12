@@ -9,19 +9,19 @@
 
 void AttackPlayerState::update(float deltaTime)
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 		//steer to player
-		go->getComponentsOfType<AStarCP>().at(0)->setTargetPos(player->getComponentsOfType<TransformationCP>().at(0)->getPosition());
+		go->getComponentsOfType<AStarCP>().at(0)->setTargetPos(m_player->getComponentsOfType<TransformationCP>().at(0)->getPosition());
 		//go->getComponentsOfType<SteeringCP>().at(0)->setDestination(player->getComponentsOfType<TransformationCP>().at(0)->getPosition());
 	}
 }
 
 void AttackPlayerState::init()
 {
-	if (!gameObject.expired())
+	if (!m_gameObject.expired())
 	{
-		std::shared_ptr<GameObject> go = gameObject.lock();
+		std::shared_ptr<GameObject> go = m_gameObject.lock();
 	}
 }

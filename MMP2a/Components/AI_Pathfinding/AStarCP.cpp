@@ -97,29 +97,29 @@ void AStarCP::updatePositions(std::vector<sf::Vector2i> incSkelPos)
     if (!gameObject.expired())
     {
         auto myPos = gameObject.lock()->getComponentsOfType<TransformationCP>().at(0)->getPosition();
-        otherSkeletonPositions = {};
+        m_otherSkeletonPositions = {};
         for (auto skelPos : incSkelPos)
         {
-            if (skelPos != sf::Vector2i(myPos.x / tileSize, myPos.y / tileSize))
-                otherSkeletonPositions.push_back(skelPos);
+            if (skelPos != sf::Vector2i(myPos.x / m_tileSize, myPos.y / m_tileSize))
+                m_otherSkeletonPositions.push_back(skelPos);
         }
     }
 }
 
 void AStarCP::update(float deltaTime)
 {
-    std::vector<sf::Vector2i> updatedUnmovables = unmovablePositions;
-    updatedUnmovables.insert(updatedUnmovables.end(), otherSkeletonPositions.begin(), otherSkeletonPositions.end());
+    std::vector<sf::Vector2i> updatedUnmovables = m_unmovablePositions;
+    updatedUnmovables.insert(updatedUnmovables.end(), m_otherSkeletonPositions.begin(), m_otherSkeletonPositions.end());
 
-    for (int i = 0; i < grid.size(); i++)
+    for (int i = 0; i < m_grid.size(); i++)
     {
-        for (int j = 0; j < grid[0].size(); j++)
+        for (int j = 0; j < m_grid[0].size(); j++)
         {
             for (auto& pos : updatedUnmovables)
             {
                 if (i == pos.x && j == pos.y)
                 {
-                    grid[i][j] = 100;
+                    m_grid[i][j] = 100;
                     break;
                 }
             }
@@ -132,20 +132,20 @@ void AStarCP::update(float deltaTime)
 
         sf::Vector2f myPos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 
-        sf::Vector2i myPosGrid = sf::Vector2i(myPos.x / tileSize, myPos.y / tileSize);
-        sf::Vector2i targetPosGrid = sf::Vector2i(targetPos.x / tileSize, targetPos.y / tileSize);
+        sf::Vector2i myPosGrid = sf::Vector2i(myPos.x / m_tileSize, myPos.y / m_tileSize);
+        sf::Vector2i targetPosGrid = sf::Vector2i(m_targetPos.x / m_tileSize, m_targetPos.y / m_tileSize);
 
         Point myPoint = Point(myPosGrid.x, myPosGrid.y);
         Point targetPoint = Point(targetPosGrid.x, targetPosGrid.y);
 
         Point nextPoint;
 
-        std::vector<Point> targetPoints = aStar(grid, myPoint, targetPoint);
+        std::vector<Point> targetPoints = aStar(m_grid, myPoint, targetPoint);
 
         if (targetPoints.size() > 1)
         {
             nextPoint = targetPoints[1];
-            go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(nextPoint.x * tileSize + tileSize / 2, nextPoint.y * tileSize + tileSize / 2));
+            go->getComponentsOfType<SteeringCP>().at(0)->setDestination(sf::Vector2f(nextPoint.x * m_tileSize + m_tileSize / 2, nextPoint.y * m_tileSize + m_tileSize / 2));
         } 
         else
         {

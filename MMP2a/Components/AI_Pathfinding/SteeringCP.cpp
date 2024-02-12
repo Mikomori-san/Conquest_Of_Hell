@@ -17,9 +17,9 @@ void SteeringCP::update(float deltaTime)
         sf::Vector2f pos = trans->getPosition();
         sf::Vector2f dir;
         
-        if (destination != pos)
+        if (m_destination != pos)
         {
-            dir = MathUtil::unitVector(destination - pos);
+            dir = MathUtil::unitVector(m_destination - pos);
             if (trans->getVelToggle())
                 trans->toggleVelLock();
         }
