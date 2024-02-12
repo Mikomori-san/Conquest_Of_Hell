@@ -10,17 +10,17 @@
 
 void BossAttackCP::init()
 {
-	ability2->init();
-	charmInd->init();
-	meeleeInd->init();
+	m_ability2->init();
+	m_charmInd->init();
+	m_meleeInd->init();
 }
 
 void BossAttackCP::update(float deltaTime)
 {
 	timePassed += deltaTime;
-	if (!playerPtr.expired() && !gameObject.expired())
+	if (!m_playerPtr.expired() && !gameObject.expired())
 	{
-		std::shared_ptr<GameObject> player = playerPtr.lock();
+		std::shared_ptr<GameObject> player = m_playerPtr.lock();
 		std::shared_ptr<GameObject> go = gameObject.lock();
 		std::shared_ptr<TransformationCP> transPlayer = std::dynamic_pointer_cast<TransformationCP>(player->getComponentsOfType<TransformationCP>().at(0));
 		std::shared_ptr<TransformationCP> transBoss = std::dynamic_pointer_cast<TransformationCP>(go->getComponentsOfType<TransformationCP>().at(0));
@@ -31,27 +31,27 @@ void BossAttackCP::update(float deltaTime)
 		float squaredDistance = MathUtil::squaredLength(playerPos - bossPos);
 		
 
-		if (attackCooldown < timePassed)
+		if (ATTACK_COOLDOWN < timePassed)
 		{
-			charmInd->setDead();
-			meeleeInd->setDead();
+			m_charmInd->setDead();
+			m_meleeInd->setDead();
 			timePassed = 0;
-			if (squaredDistance < swapThreshold)
+			if (squaredDistance < SWAP_THRESHOLD)
 			{
 				executeMeele();
 			}
 			else
 			{				
 				executeCharm(bossPos, playerPos);
-				charmInd->setAlive();
+				m_charmInd->setAlive();
 			}
 		}
 	}
 
-	ability1->update(deltaTime);
-	ability2->update(deltaTime);
-	charmInd->update(deltaTime);
-	meeleeInd->update(deltaTime);
+	m_ability1->update(deltaTime);
+	m_ability2->update(deltaTime);
+	m_charmInd->update(deltaTime);
+	m_meleeInd->update(deltaTime);
 
 }
 
@@ -59,10 +59,10 @@ void BossAttackCP::executeMeele()
 {
 	if (!gameObject.expired())
 	{
-		std::shared_ptr<MeleeBA> meele = std::dynamic_pointer_cast<MeleeBA>(ability1);
+		std::shared_ptr<MeleeBA> meele = std::dynamic_pointer_cast<MeleeBA>(m_ability1);
 		if (meele)
 		{
-			meeleeInd->setAlive();
+			m_meleeInd->setAlive();
 			meele->execute();
 		}
 	}
@@ -70,7 +70,7 @@ void BossAttackCP::executeMeele()
 
 void BossAttackCP::executeCharm(const sf::Vector2f& bossPos, const sf::Vector2f& playerPos)
 {
-	std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(ability2);
+	std::shared_ptr<CharmBA> charm = std::dynamic_pointer_cast<CharmBA>(m_ability2);
 	if (charm)
 	{
 		if (!charm->getAlive())

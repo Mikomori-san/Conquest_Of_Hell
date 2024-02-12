@@ -13,20 +13,20 @@
 
 void EnemyAttackCP::doAttackAnimation(std::shared_ptr<AnimatedGraphicsCP<Enemy_Animationtype>> ani, std::shared_ptr<TransformationCP> transf)
 {
-	hasAttacked = true;
-	attackTimer = 0;
-	attackCD = 0;
-	inputLocked = true;
-	lastAnimation = ani->getAnimationType();
-	animationLocked = true;
+	m_hasAttacked = true;
+	m_attackTimer = 0;
+	m_attackCD = 0;
+	m_inputLocked = true;
+	m_lastAnimation = ani->getAnimationType();
+	m_animationLocked = true;
 
-	if (lastAnimation == WalkLeft || lastAnimation == IdleLeft || lastAnimation == HitLeft || lastAnimation == RiseLeft)
+	if (m_lastAnimation == WalkLeft || m_lastAnimation == IdleLeft || m_lastAnimation == HitLeft || m_lastAnimation == RiseLeft)
 		ani->setAnimationType(AttackLeft);
 	else
 		ani->setAnimationType(AttackRight);
 
 	ani->resetAnimationTimeIndex();
-	originalAnimationSpeed = ani->getAnimationSpeed();
+	m_originalAnimationSpeed = ani->getAnimationSpeed();
 	ani->setAnimationSpeed(ani->getAnimationSpeed() * 8);
 
 	ani->toggleAnimationLock();
@@ -43,9 +43,9 @@ void EnemyAttackCP::update(float deltaTime)
 		auto ani = go->getComponentsOfType<AnimatedGraphicsCP<Enemy_Animationtype>>().at(0);
 		auto stats = go->getComponentsOfType<StatsCP>().at(0);
 		
-		if (!closestPlayer.expired())
+		if (!m_closestPlayer.expired())
 		{
-			auto cP = closestPlayer.lock();
+			auto cP = m_closestPlayer.lock();
 			auto transplayer = cP->getComponentsOfType<TransformationCP>().at(0);
 			auto statsPlayer = cP->getComponentsOfType<StatsCP>().at(0);
 
@@ -55,9 +55,9 @@ void EnemyAttackCP::update(float deltaTime)
 			float distance = (myPos.x - playerPos.x) * (myPos.x - playerPos.x) + (myPos.y - playerPos.y) * (myPos.y - playerPos.y);
 			distance /= 10;
 
-			if (distance <= attackRange
+			if (distance <= m_attackRange
 				&& ((playerPos.x > myPos.x && ani->getAnimationType() == Enemy_Animationtype::WalkRight) || (playerPos.x < myPos.x && ani->getAnimationType() == Enemy_Animationtype::WalkLeft))
-				&& attackCD > 2)
+				&& m_attackCD > 2)
 			{	
 				doAttackAnimation(ani, trans);
 
@@ -73,51 +73,51 @@ void EnemyAttackCP::update(float deltaTime)
 						cP->getComponentsOfType<AnimatedGraphicsCP<Player_Animationtype>>().at(0)->setColor(sf::Color::Red);
 					}
 					
-					lastPlayerAttacked = closestPlayer;
+					m_lastPlayerAttacked = m_closestPlayer;
 				}
 			}
 		}
-		if (attackTimer > 0.2f && hasAttacked)
+		if (m_attackTimer > 0.2f && m_hasAttacked)
 		{
-			if (animationLocked)
+			if (m_animationLocked)
 			{
 				ani->toggleAnimationLock();
-				animationLocked = false;
+				m_animationLocked = false;
 
-				if (lastAnimation == AttackLeft || lastAnimation == WalkLeft)
+				if (m_lastAnimation == AttackLeft || m_lastAnimation == WalkLeft)
 				{
 					ani->setAnimationType(IdleLeft);
 				}
-				else if (lastAnimation == AttackRight || lastAnimation == WalkRight)
+				else if (m_lastAnimation == AttackRight || m_lastAnimation == WalkRight)
 				{
 					ani->setAnimationType(IdleRight);
 				}
 
-				ani->setAnimationType(lastAnimation);
+				ani->setAnimationType(m_lastAnimation);
 			}
-			if (inputLocked)
+			if (m_inputLocked)
 			{
-				inputLocked = false;
+				m_inputLocked = false;
 			}
 
-			ani->setAnimationSpeed(originalAnimationSpeed);
+			ani->setAnimationSpeed(m_originalAnimationSpeed);
 
-			if (attackCD > 0.4f && hasAttacked)
+			if (m_attackCD > 0.4f && m_hasAttacked)
 			{
-				hasAttacked = false;
+				m_hasAttacked = false;
 			}
 		}
-		else if (hasAttacked)
+		else if (m_hasAttacked)
 		{
 			trans->setVelocity(0);
 		}
 
-		attackCD += deltaTime;
-		attackTimer += deltaTime;
+		m_attackCD += deltaTime;
+		m_attackTimer += deltaTime;
 	}
 }
 
 void EnemyAttackCP::init()
 {
-	attackCD = 0;
+	m_attackCD = 0;
 }

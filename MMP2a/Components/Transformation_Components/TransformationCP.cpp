@@ -21,8 +21,6 @@ void TransformationCP::update(float deltaTime)
 	{
 		curVelocity = backupVel;
 	}
-	if (velLock)
-		std::cout << "Vel Lock active!" << std::endl;
 
 	position = position + direction * curVelocity * deltaTime;
 	

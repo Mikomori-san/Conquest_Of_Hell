@@ -48,7 +48,7 @@ public:
     void resetAnimationFrame() { m_animationFrame = 0; }
     bool isAnimationLock() { return this->m_animationLock; }
     void setHit() { m_isHit = true; }
-    void setDying() { m_isDying = true; std::cout << "Dying" << std::endl; }
+    void setDying() { m_isDying = true; }
     void setColor(sf::Color col) { m_sprite->setColor(col); m_colorTimer = 0; }
 
 private:
@@ -183,7 +183,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
             m_animationFrameZero = false;
             m_lastAnimationType = m_animationType;
             m_animationLock = true;
-            std::cout << "Reset AnimationFrame to 1" << std::endl;
             m_animationFrame = 0;
             m_oldAnimationSpeed = m_animationSpeed;
             m_animationSpeed *= 3;
@@ -194,7 +193,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
-                std::cout << "Toggling VelLock to true!" << std::endl;
             }
         }
 
@@ -230,7 +228,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doHitStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(trans->getOriginalVelocity());
                 trans->toggleVelLock();
-                std::cout << "Toggling Vel Lock to false!" << std::endl;
             }
         }
     }
@@ -259,7 +256,6 @@ inline void AnimatedGraphicsCP<Animationtype>::doDeathStuff()
                 auto trans = go->getComponentsOfType<TransformationCP>().at(0);
                 trans->setVelocity(0);
                 trans->toggleVelLock();
-                std::cout << "Toggling VelLock to true!" << std::endl;
             }
         }
 

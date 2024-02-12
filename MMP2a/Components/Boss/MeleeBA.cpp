@@ -11,14 +11,14 @@
 
 void MeleeBA::init()
 {
-	abilityType = Melee;
+	m_abilityType = Melee;
 }
 
 void MeleeBA::update(float deltaTime)
 {
-	if (attacking && !bossPtr.expired())
+	if (attacking && !m_bossPtr.expired())
 	{
-		std::shared_ptr<GameObject> boss = bossPtr.lock();
+		std::shared_ptr<GameObject> boss = m_bossPtr.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> animation =
 			std::dynamic_pointer_cast<AnimatedGraphicsCP<Boss_Animationtype>>
 			(boss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0));
@@ -31,7 +31,7 @@ void MeleeBA::update(float deltaTime)
 			if (currFrame < lastAnimationFrame)
 			{
 				animation->setAnimationType(Boss_Animationtype::Idle);
-				animation->setAnimationSpeed(defaultAnimationSpeed);
+				animation->setAnimationSpeed(m_defaultAnimationSpeed);
 				attackPlayer();
 				lastAnimationFrame = 0;
 			}
@@ -46,9 +46,9 @@ void MeleeBA::update(float deltaTime)
 void MeleeBA::execute()
 {
 	attacking = true;
-	if (!bossPtr.expired())
+	if (!m_bossPtr.expired())
 	{
-		std::shared_ptr<GameObject> boss = bossPtr.lock();
+		std::shared_ptr<GameObject> boss = m_bossPtr.lock();
 		std::shared_ptr<AnimatedGraphicsCP<Boss_Animationtype>> animation = 
 			std::dynamic_pointer_cast<AnimatedGraphicsCP<Boss_Animationtype>>(boss->getComponentsOfType<AnimatedGraphicsCP<Boss_Animationtype>>().at(0));
 
@@ -57,7 +57,7 @@ void MeleeBA::execute()
 			animation->setAnimationType(Boss_Animationtype::Attack);
 			animation->resetAnimationTimeIndex();
 			animation->resetAnimationFrame();
-			defaultAnimationSpeed = animation->getAnimationSpeed();
+			m_defaultAnimationSpeed = animation->getAnimationSpeed();
 			animation->setAnimationSpeed(8);
 		}
 	}
@@ -66,9 +66,9 @@ void MeleeBA::execute()
 void MeleeBA::attackPlayer()
 {
 	attacking = false;
-	if (!playerPtr.expired())
+	if (!m_playerPtr.expired())
 	{
-		std::shared_ptr<GameObject> go = playerPtr.lock();
+		std::shared_ptr<GameObject> go = m_playerPtr.lock();
 		if (go->getComponentsOfType<MovementInputGamepadCP>().size() > 0)
 		{
 			std::shared_ptr<DashCP<GamepadButton>> dash = go->getComponentsOfType<DashCP<GamepadButton>>().at(0);
@@ -77,8 +77,7 @@ void MeleeBA::attackPlayer()
 			{
 				if (!dash->getHasIFrames())
 				{
-					std::cout << "Attack" << std::endl;
-					stats->subtracktHealth(damage);
+					stats->subtracktHealth(DAMAGE);
 
 					if (stats->getHealth() <= 0)
 					{
@@ -99,8 +98,7 @@ void MeleeBA::attackPlayer()
 			{
 				if (!dash->getHasIFrames())
 				{
-					std::cout << "Attack" << std::endl;
-					stats->subtracktHealth(damage);
+					stats->subtracktHealth(DAMAGE);
 
 					if (stats->getHealth() <= 0)
 					{

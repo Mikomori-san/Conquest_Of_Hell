@@ -17,14 +17,14 @@ void ControllerCP::update(float deltaTime)
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		health = go->getComponentsOfType<StatsCP>().at(0)->getHealth();
+		m_health = go->getComponentsOfType<StatsCP>().at(0)->getHealth();
 
 		float nearestDistance = std::numeric_limits<float>::max();
 		sf::Vector2f myPos = go->getComponentsOfType<TransformationCP>().at(0)->getPosition();
 		std::shared_ptr<GameObject> nearestPlayer;
 		std::vector<std::weak_ptr<GameObject>> newPlayers;
 		
-		for (auto& player : players)
+		for (auto& player : m_players)
 		{
 			if (!player.expired())
 			{
@@ -41,25 +41,25 @@ void ControllerCP::update(float deltaTime)
 				}
 			}
 		}
-		players = newPlayers;
+		m_players = newPlayers;
 
 		nearestDistance /= 100;
 
 		go->getComponentsOfType<EnemyAttackCP>().at(0)->setClosestPlayer(nearestPlayer);
 		
-		if (!std::dynamic_pointer_cast<AttackPlayerState>(currentState))
+		if (!std::dynamic_pointer_cast<AttackPlayerState>(m_currentState))
 		{
-			currentState = std::make_shared<AttackPlayerState>(gameObject, nearestPlayer);
-			currentState->init();
+			m_currentState = std::make_shared<AttackPlayerState>(gameObject, nearestPlayer);
+			m_currentState->init();
 		}
-		else if(std::shared_ptr<AttackPlayerState> aps = std::dynamic_pointer_cast<AttackPlayerState>(currentState))
+		else if(std::shared_ptr<AttackPlayerState> aps = std::dynamic_pointer_cast<AttackPlayerState>(m_currentState))
 		{
 			aps->updateNearestPlayer(nearestPlayer);
 		}
 
 	}
 
- 	currentState->update(deltaTime);
+ 	m_currentState->update(deltaTime);
 }
 
 void ControllerCP::init()
@@ -67,6 +67,6 @@ void ControllerCP::init()
 	if (!gameObject.expired())
 	{
 		std::shared_ptr<GameObject> go = gameObject.lock();
-		maxHealth = go->getComponentsOfType<StatsCP>().at(0)->getHealth();
+		m_maxHealth = go->getComponentsOfType<StatsCP>().at(0)->getHealth();
 	}
 }
