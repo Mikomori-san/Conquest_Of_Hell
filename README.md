@@ -1,5 +1,5 @@
-3. Semester Project
-Personal Contributions:
+3. Semester Project <br>
+Personal Contributions: <br>
   Engine Programming
   Pathfinding
   Combat
